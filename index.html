@@ -111,21 +111,76 @@
     };
 
     // extract, transform, load data stage
+      
+    var loadStart = performance.now();
 
-    d3.tsv("yearly_parterre_receipts_by_author.tsv", function(error, data) {
+    d3.tsv("warehouse_opt.tsv", function(error, data) {
 
-      var authorNames = d3.keys(data[0]).filter(function (key) { return key !== "year" && key !== "total"; });
+      console.log("load time: " + (performance.now() - loadStart));
 
-      var receipts = authorNames.map(function (name) {
-        return {
-          name: name,
-          values: data.map(function (d) {
-            return { year: +d.year, receipts: +d[name] / +d.total };
-          })
-        };
+      var startTime = performance.now();
+
+      var dateFormat = d3.time.format("%Y-%m-%d");
+
+      // parse data into normal types
+      data = data.map(function (d) {
+        d.date = dateFormat.parse(d.date);
+        d.sold = +d.sold;
+        d.price = +d.price;
+        d.order = +d.order;
+        d.acts = +d.acts;
+        return d;
       });
 
-      viz(receipts);
+      console.log(data.length + " records loaded");
+
+      // only use parterre values
+
+      data = data.filter(function (d) { return d.section === 'parterre'; });
+
+      console.log(data.length + " parterre records");
+
+      // aggregate sales for yearly totals and by author/year
+
+      var authorNames = [ 'Voltaire (François-Marie Arouet dit)',
+                          'Molière (Jean-Baptiste Poquelin dit)',
+                          'Corneille (Pierre)',
+                          'Racine (Jean)' ];
+
+      var yearlyParterreReceiptTotals =
+           d3.nest()
+            .key(function(d) { return d.date.getFullYear(); })
+            .rollup(function(leaves) { return d3.sum(leaves, function (v) { return v.sold * v.price; })})
+           .map(data, d3.map);
+
+      data = data.filter(function (d) { return authorNames.indexOf(d.author) >= 0; });
+
+      var yearlyParterreReceiptsByAuthor =
+           d3.nest()
+            .key(function(d) { return d.author; })
+            .key(function(d) { return +d.date.getFullYear(); })
+            .rollup(function(leaves) {
+              return d3.sum(leaves, function (v) { return v.sold * v.price; });
+            })
+           .entries(data);
+
+      // final munge: rename keys and values appropriately, and weight the receipts by total
+
+      yearlyParterreReceiptsByAuthor = yearlyParterreReceiptsByAuthor.map(function(d) {
+        return {
+          name: d.key,
+          values: d.values.map(function(v) {
+            return {
+              year: v.key,
+              receipts: v.values / yearlyParterreReceiptTotals.get(v.key)
+            };
+          })
+        }
+      });
+
+      console.log("query time: " + (performance.now() - startTime));
+
+      viz(yearlyParterreReceiptsByAuthor);
 
     });
 

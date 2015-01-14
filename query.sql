@@ -39,3 +39,13 @@ COPY (
          parterre_sales as Total 
   FROM author_yearly_receipts_pivot NATURAL JOIN yearly_receipts
 ) TO '/tmp/yearly_parterre_receipts_by_author.tsv' WITH CSV HEADER DELIMITER E'\t';
+
+COPY (
+  SELECT * FROM warehouse
+) TO '/tmp/warehouse.tsv' WITH CSV HEADER DELIMITER E'\t';
+
+COPY (
+  SELECT date, author, section, price, sold FROM warehouse
+  WHERE section = 'parterre'
+) TO '/tmp/warehouse_opt.tsv' WITH CSV HEADER DELIMITER E'\t';
+
