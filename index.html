@@ -21,6 +21,10 @@
       stroke-width: 1.5px;
     }
 
+    .selected {
+      fill: red;
+    }
+
     </style>
   </head>
 <body>
@@ -28,32 +32,139 @@
   <script src="../d3.min.js"></script>
   <script>
 
+    // utility
+
+    var toPairs = function(items) {
+      var temp = d3.map();
+      items.forEach(function(d) {
+        temp.set(d.key, d.value);
+      });
+      return temp;
+    };
+
     // visualization
 
-    var viz = function(data) {
+    var heatmap = function(cfrp, mplex) {
 
-      // record field projection functions
-      var name = function(d) { return d.name; },
-          year = function(d) { return d.year; },
-          receipts = function(d) { return d.receipts; };
-
-      // pull all the data out
-      var pairs = data.map(function(d) { return d.values; })
-                      .reduce(function(a, b) { return a.concat(b); });
+      var sectionDim =        cfrp.dimension(function(d) { return d.section }),
+          receiptsBySection = sectionDim.group().reduceSum(function(d) { return d.sold * d.price; });
 
       var margin = {top: 20, right: 80, bottom: 30, left: 50},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+          width = 400 - margin.left - margin.right,
+          height = 300 - margin.top - margin.bottom;
+
+      var colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"];
+
+      var colorScale = d3.scale.quantile()
+          .range(colors);
+
+      var div = d3.select("body").append("div");
+
+      var paint = function() {
+        var dta = toPairs(receiptsBySection.all());
+        colorScale.domain([0, d3.max(dta.values())]);
+
+        // shouldn't this use a data join?
+        dta.keys().forEach(function(sec) {
+          console.log("repainting heatmap (" + sec + ")");
+          div.select("g." + sec)
+             .style("fill", function(d) { return colorScale(dta.get(sec)); });
+        });
+
+      };
+
+      d3.xml("bordeaux1.svg", function(error, xml) {
+        div[0][0].appendChild(xml.documentElement);
+        var svg = div.select("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom);
+
+/*
+        - How to get standard margins?
+        - (N.B.) SVG file must have <g> elements with class as section names
+
+        svg.select("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+*/          
+      });
+
+      div.on("click", paint);
+
+      mplex.on("change.heatmap", paint);
+
+    };
+
+    // TODO.  because of how aggregation works, filtering on an author doesn't actually
+    // remove the others from the dataset.  Instead all receipt values become zero.
+    // figure out a solution that doesn't involve a global variable
+    var selectedAuthors = 
+      d3.set([ 'Voltaire (François-Marie Arouet dit)',
+               'Molière (Jean-Baptiste Poquelin dit)',
+               'Corneille (Pierre)',
+               'Racine (Jean)' ]);
+
+    var authorsList = function(cfrp, mplex) {
+
+      var author = cfrp.dimension(function(d) { return d.author; }),
+          authorGrp = author.group(),
+          authorNames = toPairs(authorGrp.all()).keys();
+
+      author.filter(function(d) { return selectedAuthors.has(d); });
+
+      var margin = {top: 20, right: 80, bottom: 30, left: 50},
+          width = 260 - margin.left - margin.right,
+          height = 3350 - margin.top - margin.bottom;
+
+      var svg = d3.select("body").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      var paint = function() {
+        console.log("repainting authors");
+
+        var author = svg.selectAll(".author")
+            .data(authorNames);
+
+        author.enter().append("g")
+            .attr("class", "author")
+          .append("text")
+            .attr("y", function(d, i) { return i * 12; })
+            .text(function(d) { return d; })
+            .on("click", function(d) {
+              if (selectedAuthors.has(d)) { selectedAuthors.remove(d);
+              } else { selectedAuthors.add(d); };
+              mplex.change();
+            });
+
+        author.classed("selected", function(d) { return selectedAuthors.has(d); });
+      };
+
+      mplex.on("change.authorsList", paint);
+
+    };
+
+    var timeseries = function(cfrp, mplex) {
+
+      var yearDim =        cfrp.dimension(function(d) { return d.date.getFullYear(); }),
+          receiptsByYear = yearDim.group().reduceSum(function(d) { return d.sold * d.price; }),
+          authorDim =      cfrp.dimension(function(d) { return d.author; });
+
+      var initialParterreReceiptTotals = toPairs(receiptsByYear.all());
+      // console.log(JSON.stringify(initialParterreReceiptTotals));
+
+      var margin = {top: 20, right: 80, bottom: 30, left: 50},
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
 
       var x = d3.scale.linear()
-        .range([0, width])
-        .domain(d3.extent(pairs, year));
+        .range([0, width]);
 
       var y = d3.scale.linear()
-        .range([height, 0])
-        .domain(d3.extent(pairs, receipts));
+        .range([height, 0]);
 
-      var color = d3.scale.category10().domain(data.map(name));
+      var color = d3.scale.category10();
 
       var xAxis = d3.svg.axis()
           .scale(x)
@@ -76,59 +187,121 @@
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      var author = svg.selectAll(".author")
-          .data(data)
-        .enter().append("g")
-          .attr("class", "author");
+      var xAxisElm = svg.append("g")
+          .call(xAxis)
+           .attr("class", "x axis")
+           .attr("transform", "translate(0," + height + ")");
 
-      author.append("path")
-          .attr("class", "line")
-          .attr("d", function(d) { return line(d.values); })
-          .attr("stroke", function (d) { return color(d.name); })
+      var yAxisElm = svg.append("g")
+          .call(yAxis)
+          .attr("class", "y axis")
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("% of Total Receipts");
 
-      author.append("text")
-          .datum(function(d) { return { name: d.name, value: d.values[d.values.length - 1] }; })
-          .attr("transform", function(d) { return "translate(" + x(d.value.year) + "," + y(d.value.receipts) + ")"; })
-          .attr("x", 3)
-          .attr("dy", ".35em")
-          .text(function(d) { return d.name; });
+      var paint = function() {
 
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(xAxis);
+        var timerStart = performance.now();
 
-      svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-          .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("% of Total Parterre Receipts");
+        var authorNames = toPairs(authorDim.group().all()).keys();
 
+        var yearlyParterreReceiptsByAuthor = authorNames.map(function(name) {
+          authorDim.filter(name);
+          return { key: name, values: toPairs(receiptsByYear.all()).entries() };
+        });
+        authorDim.filterAll();
+
+        // final munge: rename keys and values appropriately, and weight the receipts by total
+
+        var data = yearlyParterreReceiptsByAuthor.map(function(d) {
+          return {
+            name: d.key,
+            values: d.values.map(function(v) {
+              return {
+                year: v.key,
+                receipts: v.value / initialParterreReceiptTotals.get(v.key)
+              };
+            })
+          }
+        });
+
+        // this shouldn't be necessary... figure out a better way to deselect authors
+        data = data.filter(function(d) { return selectedAuthors.has(d.name); });
+
+        console.log(JSON.stringify(data.map(function(d) { return d.name; })));
+
+        console.log("query time: " + (performance.now() - timerStart));
+
+        // record field projection functions
+        var name = function(d) { return d.name; },
+            year = function(d) { return d.year; },
+            receipts = function(d) { return d.receipts; };
+
+        // pull all the data out
+        var pairs = data.map(function(d) { return d.values; })
+                        .reduce(function(a, b) { return a.concat(b); });
+
+        color.domain(data.map(name));
+        x.domain(d3.extent(pairs, year));
+        y.domain(d3.extent(pairs, receipts));
+
+        // JOIN
+
+        var author = svg.selectAll(".author")
+            .data(data, function(d) { return d.name; });
+
+        // EXIT
+
+        author.exit().remove();
+
+        // ENTER
+
+        var entryAuthor = author.enter().append("g")
+            .attr("class", "author");
+
+        entryAuthor.append("path")
+            .attr("class", "line");
+
+        entryAuthor.append("text")
+            .attr("x", 3)
+            .attr("dy", ".35em");
+
+        // ENTER + UPDATE
+
+        author.select("path")
+             .attr("d", function(d) { return line(d.values); })
+             .attr("stroke", function (d) { return color(d.name); });
+
+        author.select("text")
+            .datum(function(d) { return { name: d.name, value: d.values[d.values.length - 1] }; })
+            .attr("transform", function(d) { return "translate(" + x(d.value.year) + "," + y(d.value.receipts) + ")"; })
+            .text(function(d) { return d.name; });
+
+        yAxisElm.call(yAxis);
+        xAxisElm.call(xAxis);
+
+        console.log("repainting time series");
+      };
+
+      mplex.on("change.timeseries", paint);
     };
 
     // extract, transform, load data stage
       
-    var timerStart = performance.now(),
-        timerEnd;
+    var timerStart = performance.now();
 
-    var cfrp,
-        section,
-        year,
-        author,
-        receiptsByYear,
-        receiptsByAuthor;
+    d3.tsv("warehouse_opt.tsv", function(error, data) {
 
-    d3.tsv("warehouse.tsv", function(error, data) {
+      // data load and transform
 
-      console.log("load time: " + (performance.now() - timerStart)); timerStart = performance.now();
+      console.log("load time: " + (performance.now() - timerStart)); 
+      timerStart = performance.now();
 
       var dateFormat = d3.time.format("%Y-%m-%d");
 
-      // parse data into normal types
       data = data.map(function (d) {
         d.date = dateFormat.parse(d.date);
         d.sold = +d.sold;
@@ -138,59 +311,23 @@
         return d;
       });
 
-      var authorNames = [ 'Voltaire (François-Marie Arouet dit)',
-                          'Molière (Jean-Baptiste Poquelin dit)',
-                          'Corneille (Pierre)',
-                          'Racine (Jean)' ];
-
       // index and aggregate data
 
-      cfrp = crossfilter(data);
-      section = cfrp.dimension(function(d) { return d.section; });
-      year = cfrp.dimension(function(d) { return d.date.getFullYear(); });
-      author = cfrp.dimension(function(d) { return d.author; });
-      receiptsByYear = year.group().reduceSum(function(d) { return d.sold * d.price; });
+      var cfrp = crossfilter(data),
+          mplex = d3.dispatch("change");
 
+      var section = cfrp.dimension(function(d) { return d.section; });
       section.filter(function(d) { return d === 'parterre'; });
 
-      var freezeReceiptTotals = function() {
-        var temp = d3.map();
-        receiptsByYear.all().forEach(function(d) {
-          temp.set(d.key, d.value);
-        });
-        return temp;
-      };
+      timeseries(cfrp, mplex);
+      // heatmap(cfrp, mplex);
+      authorsList(cfrp, mplex);
 
-      console.log("index time: " + (performance.now() - timerStart)); timerStart = performance.now();
+      console.log("index time: " + (performance.now() - timerStart));
 
-      var yearlyParterreReceiptTotals = freezeReceiptTotals();
-      // console.log(JSON.stringify(yearlyParterreReceiptTotals));
+      // initial render
 
-      var yearlyParterreReceiptsByAuthor = authorNames.map(function(name) {
-        author.filter(name);
-        return { key: name, values: freezeReceiptTotals().entries() };
-      });
-      author.filterAll();
-
-      // final munge: rename keys and values appropriately, and weight the receipts by total
-
-      yearlyParterreReceiptsByAuthor = yearlyParterreReceiptsByAuthor.map(function(d) {
-        return {
-          name: d.key,
-          values: d.values.map(function(v) {
-            return {
-              year: v.key,
-              receipts: v.value / yearlyParterreReceiptTotals.get(v.key)
-            };
-          })
-        }
-      });
-
-      // console.log(JSON.stringify(yearlyParterreReceiptsByAuthor));
-
-      console.log("query time: " + (performance.now() - timerStart)); timerStart = performance.now();
-
-      viz(yearlyParterreReceiptsByAuthor);
+      mplex.change();
 
     });
 
