@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CFRP Chord Test - ETL in D3</title>
+</head>
+<body>
+  <script src="../crossfilter.min.js"></script>
+  <script src="../d3.min.js"></script>
+  <script>
+
+    d3.tsv("warehouse.tsv", function(error, data) {
+
+      var dateFormat = d3.time.format("%Y-%m-%d");
+
+      data = data.map(function (d) {
+        d.date = dateFormat.parse(d.date);
+        d.sold = +d.sold;
+        d.price = +d.price;
+        d.order = +d.order;
+        d.acts = +d.acts;
+        return d;
+      });
+
+      // pivot data into a matrix with authors in rows and columns, and counts in cells
+
+      // step 1. compute a map of date -> [ author1, author2, author_n ]
+
+      var authors_by_date = d3.nest()
+          .key(function(d) { return d.date; })
+          .sortKeys(d3.asending) // not strictly necessary
+          .rollup(function(d) { 
+            var plays = d3.nest()
+              .key(function(e) { return e.order; })
+              .sortKeys(d3.ascending) // authors will appear in performance order
+              .rollup(function(e) { return e[0].author; })
+              .entries(d);
+            return plays.map(function(p) { return p.values; });
+          })
+          .map(data, d3.map);
+
+      // step 2. compute all pairs of [ author_n, author_n+1 ]
+
+      var author_pairs = [];
+      authors_by_date.values().forEach(function(d) {
+        for(var j=0; j<d.length-1; j++) {
+          author_pairs.push(d.slice(j, j+2));
+        };
+      });
+
+      // step 3. count all distinct pairs, producing [ author_n, author_n+1, count ]
+
+      var author_pair_counts = d3.nest()
+        .key(function(d) { return d.join(','); })   // a real hack... no native array equality in javascript
+        .rollup(function(d) {
+          return { 
+            author1: d[0][0],
+            author2: d[0][1],
+            count: d.length };
+        })
+        .entries(author_pairs)
+        .map(function(d) { return d.values; })
+        .sort(function(a,b) { return d3.descending(a.count, b.count); })
+
+      // step 4. de-hairball (only take top elements)
+
+      author_pair_counts = author_pair_counts.slice(0, 40);
+
+      // step 5. convert to matrix
+
+      var range = author_pair_counts.map(function(d) { return [d.author1, d.author2]; });
+      range = range.reduce(function(a, b) { return a.concat(b); });
+      range = d3.set(range).values(); // remove duplicates
+
+      var matrix = d3.range(0, range.length).map(function() {
+        var c = [];
+        for(var j=0; j<range.length; j++) { c[j] = 0; }
+        return c;
+      });
+
+      author_pair_counts.forEach(function(d) {
+        var i1 = range.indexOf(d.author1),
+            i2 = range.indexOf(d.author2);
+        if (!matrix[i1]) { matrix[i1] = []; }
+        matrix[i1][i2] = d.count;
+      });
+
+      matrix.forEach(function(d) { 
+        console.log(JSON.stringify(d));
+      });
+
+      // phew! now we can begin the visualization
+
+      var chord = d3.layout.chord()
+          .padding(.05)
+          .sortSubgroups(d3.descending)
+          .matrix(matrix);
+
+      var width = 960,
+          height = 500,
+          innerRadius = Math.min(width, height) * .41,
+          outerRadius = innerRadius * 1.1;
+
+      var fill = d3.scale.ordinal()
+          .domain(d3.range(4))
+          .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+
+      var svg = d3.select("body").append("svg")
+          .attr("width", width)
+          .attr("height", height)
+        .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+      svg.append("g").selectAll("path")
+          .data(chord.groups)
+        .enter().append("path")
+          .style("fill", function(d) { return fill(d.index); })
+          .style("stroke", function(d) { return fill(d.index); })
+          .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius));
+
+      var ticks = svg.append("g").selectAll("g")
+          .data(chord.groups)
+        .enter().append("g").selectAll("g")
+          .data(groupTicks)
+        .enter().append("g")
+          .attr("transform", function(d) {
+            return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+                + "translate(" + outerRadius + ",0)";
+          });
+
+      ticks.append("line")
+          .attr("x1", 1)
+          .attr("y1", 0)
+          .attr("x2", 5)
+          .attr("y2", 0)
+          .style("stroke", "#000");
+
+      ticks.append("text")
+          .attr("x", 8)
+          .attr("dy", ".35em")
+          .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
+          .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+          .text(function(d) { return d.label; });
+
+      svg.append("g")
+          .attr("class", "chord")
+        .selectAll("path")
+          .data(chord.chords)
+        .enter().append("path")
+          .attr("d", d3.svg.chord().radius(innerRadius))
+          .style("fill", function(d) { return fill(d.target.index); })
+          .style("opacity", 1);
+
+      // Returns an array of tick angles and labels, given a group.
+      function groupTicks(d) {
+        var k = (d.endAngle - d.startAngle) / d.value;
+        return d3.range(0, d.value, 1000).map(function(v, i) {
+          return {
+            angle: v * k + d.startAngle,
+            label: i % 5 ? null : v / 1000 + "k"
+          };
+        });
+      }
+    });
+
+  </script>
+</body>
+</html>

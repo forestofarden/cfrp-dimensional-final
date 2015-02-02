@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Comédie Française Registers Project</title>
+  <style>
+
+    body {
+      font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .line {
+      fill: none;
+      stroke-width: 1.5px;
+    }
+
+    .box, .decoration,
+    .whisker {
+      stroke: #1f77b4;
+      fill: none;
+    }
+
+    .whisker circle {
+      fill: white;
+    }
+
+    .box:not(:hover) text,
+    .whisker:not(:hover) text {
+      display:none;
+    }
+
+    .whisker.outlier {
+      stroke: red;
+    }
+
+    .selected {
+      fill: red;
+    }
+
+    </style>
+  </head>
+<body>
+  <script src="../lib/crossfilter.min.js"></script>
+  <script src="../lib/d3.min.js"></script>
+  <script>
+
+    var cfrp = 42;
+
+    // utility
+
+    var toPairs = function(items) {
+      var temp = d3.map();
+      items.forEach(function(d) {
+        temp.set(d.key, d.value);
+      });
+      return temp;
+    };
+
+    // visualization
+
+    var boxReceipts = function(cfrp, mplex) {
+
+      var sectionDim     = cfrp.dimension(function(d) { return d.section; }),
+          sectionGrp     = sectionDim.group(),
+          sectionNames   = toPairs(sectionGrp.all()).keys();
+
+          yearDim        = cfrp.dimension(function(d) { return d.date.getFullYear(); }),
+          receiptsByYear = yearDim.group().reduceSum(function(d) { return d.sold * d.price; });
+
+      var margin = {top: 10, right: 200, bottom: 20, left: 10},
+          width = 600 - margin.left - margin.right,
+          height = 140 - margin.top - margin.bottom;
+
+      var svg = d3.select("body").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      var receiptFormat = d3.format(",.0f");
+
+      var paint = function() {
+
+        // data munging
+
+        // TODO.  change this back to local when done debugging!
+        data = sectionNames.map(function(section) {
+          sectionDim.filter(section);
+
+          var dupBucket = function(d) { return { key: d.key, value: d.value }; };
+
+          var receiptsByYearInSection = receiptsByYear.top(receiptsByYear.size()).map(dupBucket);
+              receipts = receiptsByYearInSection.map(function(d) { return d.value; }).reverse();
+
+          var median = d3.quantile(receipts, 0.5),
+              irq    = d3.quantile(receipts, 0.75) - d3.quantile(receipts, 0.25),
+              extent = d3.extent(receipts);
+
+          var bracket = function(v) {
+            if (v < extent[0]) { v = extent[0]; }
+            else if (v > extent[1]) { v = extent[1]; }
+            return v;
+          };
+
+          var summary = [ extent[0],                            // minimum
+                          median - (irq / 2.0) - irq * 3.0,     // low outliers
+                          median - (irq / 2.0) - irq * 1.5,     // low whiskers
+                          median - (irq / 2.0),                 // first quartile
+                          median,                               // second quartile
+                          median + (irq / 2.0),                 // third quartile
+                          median + (irq / 2.0) + irq * 1.5,     // high whiskers
+                          median + (irq / 2.0) + irq * 3.0,     // high outliers
+                          extent[1] ];                          // maximum
+          summary = summary.map(bracket);
+
+          var outliers = [];
+          receiptsByYearInSection.forEach(function(d) {
+            if (summary[2] > d.value || summary[6] < d.value) { 
+              outliers.push(d);
+            }
+          });
+
+          // reset the dimension we used to iterate through everything
+          sectionDim.filterAll();
+
+          return {
+            section: section,
+            summary: summary,
+            receipts: receipts,
+            outliers: outliers.sort()
+          };
+
+        });
+
+        // visual display
+
+        var x = d3.scale.linear()
+          .domain(d3.extent(data.map(function(d) { return d.summary; }).reduce(function(a, b) { return a.concat(b); })))
+          .range([100, width]);
+
+        var y = d3.scale.ordinal()
+          .domain(data.map(function(d) { return d.section; }))
+          .rangeRoundBands([0, height], .5);
+
+        // box: Tukey's five point data summaries
+
+        var boxplot = svg.selectAll(".boxplot")
+            .data(data);
+
+        boxplot.enter()
+           .append("g")
+              .attr("class", "boxplot")
+              .attr("transform", function(d) { return "translate(0," + y(d.section) + ")"; })
+            .append("text")
+              .attr("class", "label");
+
+        boxplot.select(".label")
+            .attr("x", 80)
+            .attr("y", y.rangeBand() / 2.0)
+            .attr("text-anchor", "end")
+            .text(function(d) { return d.section; });
+
+        var box = boxplot.selectAll(".box")
+           .data(function(d) { return d.summary.slice(2,7); });
+
+        var box_g = box.enter()
+            .append("g")
+            .attr("class", "box");
+        box_g.append("line");
+        box_g.append("text")
+          .attr("dy", "-5");
+
+        box.select("line")
+           .attr("x1", function(d) { return x(d); })
+           .attr("y1", 0)
+           .attr("x2", function(d) { return x(d); })
+           .attr("y2", y.rangeBand());
+
+        box.select("text")
+           .attr("x", function(d) { return x(d); })
+           .text(function(d) { return "L. " + receiptFormat(d); });
+
+        // decoration: sides of the box between q2 and q4,
+        //             and outriggers to the whiskers
+
+        var decoration = boxplot.append("path")
+                  .attr("class", "decoration");
+
+        decoration.attr("d", function(d) { 
+          console.log(d);
+                        return "M" + x(d.summary[2]) + "," + y.rangeBand() / 2 + "H" + x(d.summary[3]) +
+                               "M" + x(d.summary[3]) + ",0H" + x(d.summary[5]) + 
+                               "M" + x(d.summary[3]) + "," + y.rangeBand() + "H" + x(d.summary[5]) +
+                               "M" + x(d.summary[5]) + "," + y.rangeBand() / 2 + "H" + x(d.summary[6])});
+
+        // whiskers: near and outliers
+
+        var whiskers = boxplot.selectAll(".whisker")
+           .data(function(d) { return d.outliers.map(function(v) { return { key: v.key, value: v.value, summary: d.summary }; }) }); 
+
+        var g = whiskers.enter()
+          .append("g")
+           .attr("class", "whisker");
+        g.append("circle")
+          .attr("cy", y.rangeBand() / 2)
+          .attr("r", 2);
+        g.append("text")
+          .attr("dy", "-5");
+
+        whiskers.classed("outlier", function(d) { 
+          return d.value < d.summary[1] || d.value > d.summary[7];
+        });
+
+        whiskers.select("circle")
+          .attr("cx", function(d) { return x(d.value); });
+
+        whiskers.select("text")
+          .attr("x", function(d) { return x(d.value); })
+          .text(function(d) { return d.key + ": L. " + receiptFormat(d.value); });
+
+      };
+
+      mplex.on("change.boxReceipts", paint);
+    }
+
+    var heatmap = function(cfrp, mplex) {
+
+      var sectionDim =        cfrp.dimension(function(d) { return d.section; }),
+          receiptsBySection = sectionDim.group().reduceSum(function(d) { return d.sold * d.price; });
+
+      var margin = {top: 20, right: 80, bottom: 30, left: 50},
+          width = 400 - margin.left - margin.right,
+          height = 300 - margin.top - margin.bottom;
+
+      var colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"];
+
+      var colorScale = d3.scale.quantile()
+          .range(colors);
+
+      var div = d3.select("body").append("div");
+
+      var paint = function() {
+        var dta = toPairs(receiptsBySection.all());
+        colorScale.domain([0, d3.max(dta.values())]);
+
+        // shouldn't this use a data join?
+        dta.keys().forEach(function(sec) {
+          console.log("repainting heatmap (" + sec + ")");
+          div.select("g." + sec)
+             .style("fill", function(d) { return colorScale(dta.get(sec)); });
+        });
+
+      };
+
+      d3.xml("bordeaux1.svg", function(error, xml) {
+        div[0][0].appendChild(xml.documentElement);
+        var svg = div.select("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom);
+
+/*
+        - How to get standard margins?
+        - (N.B.) SVG file must have <g> elements with class as section names
+
+        svg.select("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+*/          
+      });
+
+      div.on("click", paint);
+
+      mplex.on("change.heatmap", paint);
+
+    };
+
+    // TODO.  because of how aggregation works, filtering on an author doesn't actually
+    // remove the others from the dataset.  Instead all receipt values become zero.
+    // figure out a solution that doesn't involve a global variable
+    var selectedAuthors = 
+      d3.set([ 'Voltaire (François-Marie Arouet dit)',
+               'Molière (Jean-Baptiste Poquelin dit)',
+               'Corneille (Pierre)',
+               'Racine (Jean)' ]);
+
+    var authorsList = function(cfrp, mplex) {
+
+      var author = cfrp.dimension(function(d) { return d.author; }),
+          authorGrp = author.group(),
+          authorNames = toPairs(authorGrp.all()).keys();
+
+      author.filter(function(d) { return selectedAuthors.has(d); });
+
+      var margin = {top: 20, right: 80, bottom: 30, left: 50},
+          width = 260 - margin.left - margin.right,
+          height = 3350 - margin.top - margin.bottom;
+
+      var svg = d3.select("body").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      var paint = function() {
+        console.log("repainting authors");
+
+        var author = svg.selectAll(".author")
+            .data(authorNames);
+
+        author.enter().append("g")
+            .attr("class", "author")
+          .append("text")
+            .attr("y", function(d, i) { return i * 12; })
+            .text(function(d) { return d; })
+            .on("click", function(d) {
+              if (selectedAuthors.has(d)) { selectedAuthors.remove(d);
+              } else { selectedAuthors.add(d); };
+              mplex.change();
+            });
+
+        author.classed("selected", function(d) { return selectedAuthors.has(d); });
+      };
+
+      mplex.on("change.authorsList", paint);
+
+    };
+
+    var timeseries = function(cfrp, mplex) {
+
+      var yearDim =        cfrp.dimension(function(d) { return d.date.getFullYear(); }),
+          receiptsByYear = yearDim.group().reduceSum(function(d) { return d.sold * d.price; }),
+          authorDim =      cfrp.dimension(function(d) { return d.author; });
+
+      var initialParterreReceiptTotals = toPairs(receiptsByYear.all());
+      // console.log(JSON.stringify(initialParterreReceiptTotals));
+
+      var margin = {top: 20, right: 200, bottom: 30, left: 50},
+          width = 1100 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+      var x = d3.scale.linear()
+        .range([0, width]);
+
+      var y = d3.scale.linear()
+        .range([height, 0]);
+
+      var color = d3.scale.category10();
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom")
+          .tickFormat(d3.format("f"));
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left")
+          .tickFormat(d3.format("%"));
+
+      var line = d3.svg.line()
+          .interpolate("basis")
+          .x(function(d) { return x(d.year); })
+          .y(function(d) { return y(d.receipts); });
+
+      var svg = d3.select("body").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      var xAxisElm = svg.append("g")
+          .call(xAxis)
+           .attr("class", "x axis")
+           .attr("transform", "translate(0," + height + ")");
+
+      var yAxisElm = svg.append("g")
+          .call(yAxis)
+          .attr("class", "y axis")
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("% of Total Receipts");
+
+      var paint = function() {
+
+        var timerStart = performance.now();
+
+        var authorNames = toPairs(authorDim.group().all()).keys();
+
+        var yearlyParterreReceiptsByAuthor = authorNames.map(function(name) {
+          authorDim.filter(name);
+          return { key: name, values: toPairs(receiptsByYear.all()).entries() };
+        });
+        authorDim.filterAll();
+
+        // final munge: rename keys and values appropriately, and weight the receipts by total
+
+        var data = yearlyParterreReceiptsByAuthor.map(function(d) {
+          return {
+            name: d.key,
+            values: d.values.map(function(v) {
+              return {
+                year: v.key,
+                receipts: v.value / initialParterreReceiptTotals.get(v.key)
+              };
+            })
+          }
+        });
+
+        // this shouldn't be necessary... figure out a better way to deselect authors
+        data = data.filter(function(d) { return selectedAuthors.has(d.name); });
+
+//        console.log(JSON.stringify(data.map(function(d) { return d.name; })));
+
+        console.log("query time: " + (performance.now() - timerStart));
+
+        // record field projection functions
+        var name = function(d) { return d.name; },
+            year = function(d) { return d.year; },
+            receipts = function(d) { return d.receipts; };
+
+        // pull all the data out
+        var pairs = data.map(function(d) { return d.values; })
+                        .reduce(function(a, b) { return a.concat(b); });
+
+        color.domain(data.map(name));
+        x.domain(d3.extent(pairs, year));
+        y.domain(d3.extent(pairs, receipts));
+
+        // JOIN
+
+        var author = svg.selectAll(".author")
+            .data(data, function(d) { return d.name; });
+
+        // EXIT
+
+        author.exit().remove();
+
+        // ENTER
+
+        var entryAuthor = author.enter().append("g")
+            .attr("class", "author");
+
+        entryAuthor.append("path")
+            .attr("class", "line");
+
+        entryAuthor.append("text")
+            .attr("x", 3)
+            .attr("dy", ".35em");
+
+        // ENTER + UPDATE
+
+        author.select("path")
+             .attr("d", function(d) { return line(d.values); })
+             .attr("stroke", function (d) { return color(d.name); });
+
+        author.select("text")
+            .datum(function(d) { return { name: d.name, value: d.values[d.values.length - 1] }; })
+            .attr("transform", function(d) { return "translate(" + x(d.value.year) + "," + y(d.value.receipts) + ")"; })
+            .text(function(d) { return d.name; });
+
+        yAxisElm.call(yAxis);
+        xAxisElm.call(xAxis);
+
+        console.log("repainting time series");
+      };
+
+      mplex.on("change.timeseries", paint);
+    };
+
+    // extract, transform, load data stage
+      
+    var timerStart = performance.now();
+
+    d3.tsv("../data/warehouse.tsv", function(error, data) {
+
+      // data load and transform
+
+      console.log("load time: " + (performance.now() - timerStart)); 
+      timerStart = performance.now();
+
+      var dateFormat = d3.time.format("%Y-%m-%d");
+
+      data = data.map(function (d) {
+        d.date = dateFormat.parse(d.date);
+        d.sold = +d.sold;
+        d.price = +d.price;
+        d.order = +d.order;
+        d.acts = +d.acts;
+        return d;
+      });
+
+      // index and aggregate data
+
+//      var cfrp = crossfilter(data),
+      cfrp = crossfilter(data);  // set as global for debugging
+
+      var mplex = d3.dispatch("change");
+
+      // for debugging: set a global var with the data
+
+//      var section = cfrp.dimension(function(d) { return d.section; });
+//      section.filter(function(d) { return d === 'parterre'; });
+
+      boxReceipts(cfrp, mplex);
+      timeseries(cfrp, mplex);
+      // heatmap(cfrp, mplex);
+      // authorsList(cfrp, mplex);
+
+      console.log("index time: " + (performance.now() - timerStart));
+
+      // initial render
+
+      mplex.change();
+
+    });
+
+  </script>
+</body>
+</html>

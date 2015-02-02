@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Comédie Française Registers Project</title>
+  <style>
+
+    body {
+      font: 12px sans-serif;
+    }
+
+    .axis {
+      font: 10px sans-serif;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    .axis .domain {
+      fill: none;
+      stroke: #000;
+      stroke-opacity: .3;
+      stroke-width: 2px;
+      stroke-linecap: round;
+    }
+
+    .axis .halo {
+      fill: none;
+      stroke: #ddd;
+      stroke-width: 4px;
+      stroke-linecap: round;
+    }
+
+    .slider .handle {
+      fill: #fff;
+      stroke: #000;
+      stroke-opacity: .5;
+      stroke-width: 1.25px;
+      cursor: pointer;
+    }
+
+    .register .screen {
+      fill: black;
+      fill-opacity: .5;
+    }
+
+    .register text {
+      font: 14px;
+      fill: white;
+      stroke: none;
+    }
+
+  </style>
+</head>
+<body>
+  <script src="../lib/crossfilter.min.js"></script>
+  <script src="../lib/d3.min.js"></script>
+
+  <script>
+
+    var raw_data = 42;
+
+    var dateFormat = d3.time.format("%Y-%m-%d");
+
+    function image_url(image_file) {
+      var re = /M119_02_R(\d+)_(\d+)([rv])?.jpg/;
+      if (image_file) {
+        image_file = image_file.replace(re, "http://hyperstudio.mit.edu/cfrp/flip_books/R$1/M119_02_R$1/M119_02_R$1_$2.jpg");
+      }
+      return image_file;
+    }
+
+    function cfrp_page() {
+
+      var width = 450,
+          height = 550,
+          datasink;
+
+      var cur_date = new Date();
+
+      var x = d3.time.scale()
+        .range([0, width])
+        .clamp(true);
+
+      function cfrp_page(selection) {
+        selection.each(function(d, i) {
+
+          var brush = d3.svg.brush()
+            .x(x)
+            .extent([0, 0])
+            .on("brush", brushed);
+
+          function brushed() {
+            var value = brush.extent()[0];
+            if (d3.event.sourceEvent) {
+              value = x.invert(d3.mouse(this)[0]);
+              brush.extent([value, value]);
+            }
+            cur_date = value;
+            handle.attr("cx", x(cur_date));
+
+            // rather than aggregating the register page out of the crossfilter with group(),
+            // just select the relevant date's entries from the entire dataset
+
+            var bisectByKey = crossfilter.bisect.by(function(d) { return d.key; }),
+                items = datasink.group().all(),
+                ref = items[ bisectByKey(items, cur_date, 0, items.length) ],
+                fmt = "No selection";
+
+            if (ref) {
+              var block = raw_data.filter(function(d) { 
+                return +d.date === +ref.key; 
+              });
+              paint_block(block);
+            }
+          }
+
+          var g = d3.select(this)
+             .datum(cur_date)
+            .append("g");
+
+          var register = g.append("g")
+            .attr("class", "register");
+
+          register.append("image")
+            .attr("x", 0).attr("y", 0)
+            .attr("width", width).attr("height", height);
+
+          register.append("rect")
+            .attr("class", "screen")
+            .attr("x", 50).attr("y", height / 2)
+            .attr("width", width - 100).attr("height", height / 2 - 80);
+
+          var dot_data = datasink.group().all().filter(function(d) { return d.value > 0; });
+
+          var dot = g.append("g")
+             .attr("class", "histogram")
+             .attr("transform", "translate(0," + (height - 70) + ")")
+            .selectAll("dot")
+              .data(dot_data)
+            .enter().append("circle")
+             .attr("class", "dot")
+             .attr("cx", function(d) { return x(d.key); })
+             .attr("cy", 5)
+             .attr("r", 1);
+
+          g.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + (height - 50) + ")")
+              .call(d3.svg.axis()
+                .scale(x)
+                .orient("bottom"))
+            .select(".domain")
+            .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+              .attr("class", "halo");
+
+          var slider = g.append("g")
+              .attr("class", "slider")
+              .call(brush);
+
+          slider.selectAll(".extent,.resize")
+              .remove();
+
+          slider.select(".background")
+              .attr("height", height);
+
+          var handle = slider.append("circle")
+              .attr("class", "handle")
+              .attr("transform", "translate(0," + (height - 50) + ")")
+              .attr("r", 6);
+
+          slider
+              .call(brush.event);       
+
+          function paint_block(items) {
+            // quick and dirty denormalization
+            var reg_plays = d3.nest().key(function(d) { return d.order; })
+                                     .sortKeys()
+                                     .entries(items),
+                reg_sections = d3.nest().key(function(d) { return d.raw_section; })
+                                        .entries(items);
+
+            // munge into a simple list of attributes
+
+            var reg_data = [ [ "Date", dateFormat(items[0].date) ] ];
+
+            reg_plays.forEach(function(d) {
+              reg_data.push( [ "Auteur", d.values[0].author ] );
+              reg_data.push( [ "Piece", d.values[0].title ] );
+              reg_data.push( [ "Genre", d.values[0].genre ] );
+            });
+
+            reg_sections.forEach(function(d) {
+              reg_data.push( [ d.values[0].sold + " " + d.key,
+                               d.values[0].price + " ... " + (d.values[0].sold * d.values[0].price) ] );
+            });
+
+
+            // join to svg
+
+            register.select("image")
+              .attr("xlink:href", function(d) { return image_url(items[0].image_file_name); });
+
+            var attr = register.selectAll(".attr")
+                         .data(reg_data);
+
+            attr.exit().remove();
+            var entry = attr.enter()
+              .append("g")
+              .attr("class", "attr")
+              .attr("transform", "translate(50," + (height / 2 + 20) + ")");
+
+
+            entry.append("text")
+              .attr("class", "label")
+              .attr("x", (width - 100) / 2 - 10)
+              .attr("y", function(d, i) { return i * 15; })
+              .attr("text-anchor", "end");
+
+            entry.append("text")
+              .attr("class", "value")
+              .attr("x", (width - 100) / 2)
+              .attr("y", function(d, i) { return i * 15; });
+
+            attr.select(".label").text(function(d) { return d[0]; });
+            attr.select(".value").text(function(d) { return d[1]; });
+
+          }
+        });
+      };
+
+      cfrp_page.datasink = function(value) {
+        if (!arguments.length) return datasink;
+        datasink = value;
+        var extent = [datasink.bottom(1)[0].date,
+                      datasink.top(1)[0].date];
+        x.domain(extent);
+        return cfrp_page;
+      }
+
+      return cfrp_page;
+    };
+
+    // trial harness
+
+    // images are 1840 × 2550 =~  1024×768
+
+    var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width = 1454 - margin.left - margin.right,
+    height = 868 - margin.bottom - margin.top;
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.tsv("../data/warehouse.tsv", function(error, data) {
+
+      data = data.map(function (d) {
+        d.date = dateFormat.parse(d.date);
+        d.sold = +d.sold;
+        d.price = +d.price;
+        d.order = +d.order;
+        d.acts = +d.acts;
+        return d;
+      });
+
+      // NB global variable!
+      raw_data = data;
+
+      cfrp = crossfilter(data);
+      date_dim = cfrp.dimension(function(d) { return d.date; });
+
+      author_dim = cfrp.dimension(function(d) { return d.author; });
+      author_dim.filter("Destouches");
+
+      var details = cfrp_page()
+        .datasink(date_dim);
+
+      svg.append("g")
+        .call(details);
+    });
+
+  </script>
+</body>
+</html>

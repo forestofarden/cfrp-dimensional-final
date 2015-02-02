@@ -1,0 +1,73 @@
+SNIPPETS
+--------
+
+
+- you need a way to shunt all remaining data into an "other" category often
+
+- all d3 visualizations involve registering a query over a changing base set.  when membership in the base set changes
+  the query (and visualizations based on it) should change.
+
+- components should register for "immediate" or "resting" updates.  one is a low-latency cycle; the other a 
+
+
+
+author-centric chord diagram
+----------------------------
+
+DATA IN SQL
+-----------
+
+SELECT split_part(w1.author, ' ', 1) AS author1, 
+       split_part(w2.author, ' ', 1) AS author2, 
+       count(*)
+FROM warehouse w1, warehouse w2
+WHERE w1.date = w2.date
+  AND w1.order + 1 = w2.order
+GROUP BY author1, author2
+ORDER BY count(*) DESC;
+
+
+R EXAMPLE
+---------
+
+(note that year is filtered before the transform goes forward)
+
+install.packages("dplyr", "tidyr")
+library(dplyr)
+library(tidyr)
+cfr <- read.delim(file = "warehouse_opt.tsv" )
+
+cfr1 <- inner_join(cfr, cfr, by="date") %>% 
+          filter(order.x + 1 == order.y) %>%
+          select(date, genre.x, genre.y) %>%
+          separate(date, c("year", "month", "day"))
+
+cfr2 <- filter(cfr1, year > 1740 & year < 1745)
+
+cfr3 <- group_by(cfr2, genre.x, genre.y) %>%
+        summarize(count = n()) %>%
+        ungroup() %>%
+        arrange(desc(count)) %>%
+        spread(genre.y, count)
+
+
+JULIA EXAMPLE - timeline
+------------------------
+
+using Dates, DataFrames, Gadfly
+
+cfr = readtable("warehouse.tsv")
+cfr[:date] = Date(cfr[:date])
+
+cfr[:year] = year(cfr[:date])
+cfr[:receipts] = cfr[:price] .* cfr[:sold]
+
+agg = by(cfr, [:author, :year], df -> DataFrame(receipts = sum(df[:receipts])))
+
+limit = DataFrame(author = ["Voltaire (François-Marie Arouet dit)", 
+                            "Racine (Jean)",
+                            "Molière (Jean-Baptiste Poquelin dit)",
+                            "Corneille (Pierre)"])
+sub = join(agg, limit, on=:author)
+
+plot(layer(sub, x="year", y="receipts", color="author", Geom.point, Geom.line))
