@@ -5,10 +5,11 @@
   <title>Comédie Française Registers Project</title>
   <style>
     body {
-      font: 12pt sans-serif;
+      font: 14px sans-serif;
     }
     svg {
       clear: none;
+      font: 10px sans-serif;
     }
     .sidebar { 
       float: right; 
@@ -22,14 +23,33 @@
     .viz:not(:hover) .close {
       display:none;
     }
+
+    .viz .background {
+      opacity: 0;
+    }
+
+    /* component-specific css: figure out an export solution for svg */
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .line {
+      fill: none;
+      stroke: orange;
+      stroke-width: 1.5px;
+    }
   </style>
   <script src="lib/d3.min.js"></script>
   <script src="lib/crossfilter.min.js"></script>
+  <script src="mdat.js"></script>
+  <script src="genre_chord.js"></script>
+  <script src="receipts_by_author.js"></script>
+  <script src="receipts_timeseries.js"></script>
 </head>
 <body>
-  <script src="./mdat.js"></script>
-  <script src="./genre_chord.js"></script>
-  <script src="./receipts_by_author.js"></script>
   <script>
     var dateFormat = d3.time.format("%Y-%m-%d");
 
@@ -40,6 +60,7 @@
         d.date = dateFormat.parse(d.date);
         d.sold = +d.sold;
         d.price = +d.price;
+
         return d;
       });
 

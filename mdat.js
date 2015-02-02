@@ -3,7 +3,7 @@ mdat = {};
 mdat.visualization = {};
 
 mdat.mplex = function (){
-  var width  = 600,
+  var width  = 900,
       height = 450,
       datapoint,
       datapoint_dispath = d3.dispatch("change"),
