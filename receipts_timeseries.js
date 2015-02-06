@@ -1,18 +1,19 @@
-// component visualization
+// Total receipts, graphed as a time series
 
 mdat.visualization.receipts_timeseries = function() {
 
   var width = 700, // width = 1024,
       height = 150, //height = 768,
       title = "Receipts timeline",
-      datapoint = undefined,
+      cfrp = undefined,
       uid = 0;
 
   function chart() {
     var namespace = "receipts_timeseries_" + uid++;
 
-    var date = datapoint.dimension(function(d) { return d.date; }),
-        dateAgg = date.group(d3.time.year).reduceSum(function(d) { return d.sold * d.price; });
+    var receiptsByDate = cfrp.date
+      .group(d3.time.year)
+      .reduceSum(function(d) { return d.sold * d.price; });
 
     var x = d3.time.scale()
       .range([0, width]);
@@ -36,7 +37,8 @@ mdat.visualization.receipts_timeseries = function() {
         .x(function(d) { return x(d.key); })
         .y(function(d) { return y(d.value); });
 
-    var root = d3.select(this);
+    var root = d3.select(this)
+        .classed("receipts_timeseries", true);
 
     var background = root.append("rect")
         .attr("class", "background")
@@ -63,10 +65,10 @@ mdat.visualization.receipts_timeseries = function() {
 
     update();
 
-    datapoint.on("change." + namespace, update);
+    cfrp.on("change." + namespace, update);
 
     function update() {
-      var data = dateAgg.all();
+      var data = receiptsByDate.all();
 
       x.domain(d3.extent(data, function(d) { return d.key; }));
       y.domain([0, d3.max(data, function(d) { return d.value; })]);
@@ -79,8 +81,8 @@ mdat.visualization.receipts_timeseries = function() {
   }
 
   chart.datapoint = function(value) {
-    if (!arguments.length) return datapoint;
-    datapoint = value;
+    if (!arguments.length) return cfrp;
+    cfrp = value;
     return chart;
   }
 

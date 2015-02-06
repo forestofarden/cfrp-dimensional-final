@@ -44,6 +44,8 @@
   </style>
   <script src="lib/d3.min.js"></script>
   <script src="lib/crossfilter.min.js"></script>
+  <script src="lib/queue.min.js"></script>
+  <script src="join.js"></script>
   <script src="mdat.js"></script>
   <script src="genre_chord.js"></script>
   <script src="receipts_by_author.js"></script>
@@ -51,25 +53,74 @@
 </head>
 <body>
   <script>
+
     var dateFormat = d3.time.format("%Y-%m-%d");
 
-    d3.tsv("data/cfrp-sales.tsv", function(error, data) {
-      if (error) return console.error(error);
+    queue()
+      .defer(d3.tsv, "data/cfrp-sales.tsv")
+      .defer(d3.tsv, "data/cfrp-performances.tsv")
+      .defer(d3.tsv, "data/cfrp-plays.tsv")
+      .await(function(error, sales, performances, plays) {
+        if (error) return console.error(error);
 
-      data = data.map(function (d) {
-        d.date = dateFormat.parse(d.date);
-        d.sold = +d.sold;
-        d.price = +d.price;
+        // TODO.  decide whether to denormalize the data entirely...
+        //        this embeds the join between sales and playbill in
+        //        a hash dereference
 
-        return d;
+        var playbill = join_hash(performances, plays, ["author", "title"]),
+            playbill_idx = {};
+
+        playbill = playbill.map(function(d) {
+          d.date = dateFormat.parse(d.date);
+          d.prologue = (d.prologue === 't');
+          d.musique_danse_machine = (d.musique_danse_machine === 't');
+          d.ordering = +d.ordering;
+          d.register = +d.register;
+          d.receipts = +d.receipts;
+          d.representation = +d.representation;
+          d.ouverture = (d.ouverture === 't');
+          d.cloture = (d.cloture === 't');
+          d.free_access = (d.free_access === 't');
+          d.firstrun = (d.firstrun === 't');
+          d.firstrun_perfnum = +d.firstrun_perfnum;
+          d.reprise = (d.reprise === 't');
+          d.reprise_perfnum = +d.reprise_perfnum;
+          d.debut = (d.debut === 't');
+          d.acts = +d.acts;
+          return d;
+        });
+
+        playbill.forEach(function(d) {
+          if (!playbill_idx[d.date]) { playbill_idx[d.date] = []; }
+          playbill_idx[d.date].push(d);
+        });
+
+        sales = sales.map(function(d) {
+          d.date = dateFormat.parse(d.date);
+          d.sold = +d.sold;
+          d.price = +d.price;
+          return d;
+        });
+
+        // index relevant columns
+
+        cfrp = crossfilter(sales);
+
+        // TODO. how to share ancillary data?
+        cfrp.sales = sales;
+        cfrp.playbill = playbill;
+        cfrp.playbill_idx = playbill_idx;
+
+        // TODO. best way to share dimensions across visualizations?
+        cfrp.date = cfrp.dimension(function(d) { return d.date; });
+        cfrp.receipts = cfrp.dimension(function(d) { return d.price * d.sold; });
+        cfrp.section = cfrp.dimension(function(d) { return d.section; });
+
+        var mplex = mdat.mplex()
+          .datapoint(cfrp);
+
+        d3.select("body").call(mplex);
       });
-
-      var cfrp = crossfilter(data),
-          mplex = mdat.mplex()
-                      .datapoint(cfrp);
-
-      d3.select("body").call(mplex);
-    });
   </script>
 </body>
 </html>

@@ -1,3 +1,20 @@
 TODO
+----
 
-- IMAGES NOT APPEARING BEHIND REGISTER RECORDS
+chassis
+
+- queue for asynchronous loading                           DONE
+- join data files after loading                            DONE
+- optimise join for speed?                                 DONE
+
+visualizations
+
+- svg templates for seating categories
+- regions in heatmap
+- brush in timeseries
+
+dashboard
+
+- prettier installed visualizations list
+- better automatic layout
+- resize handles for visualizations

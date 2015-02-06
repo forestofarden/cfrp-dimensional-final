@@ -5,7 +5,7 @@ mdat.visualization.receipts_by_author = function() {
   var width = 20,
       height = 20,
       title = "Receipts by Author",
-      datapoint = undefined,
+      cfrp = undefined,
       uid = 0;
 
   function chart() {
@@ -17,10 +17,10 @@ mdat.visualization.receipts_by_author = function() {
      .attr("cy", r)
      .attr("r", r)
      .on("click", function() {
-       datapoint.change();
+       cfrp.change();
      });
 
-    datapoint.on("change." + namespace, function() {
+    cfrp.on("change." + namespace, function() {
       var r = circle.attr("r");
       r = +r + (Math.random() * 20 - 20);
       circle.transition().attr("r", Math.abs(r));
@@ -28,8 +28,8 @@ mdat.visualization.receipts_by_author = function() {
   }
 
   chart.datapoint = function(value) {
-    if (!arguments.length) return datapoint;
-    datapoint = value;
+    if (!arguments.length) return cfrp;
+    cfrp = value;
     return chart;
   }
 
