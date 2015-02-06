@@ -9,6 +9,10 @@ chassis
 
 visualizations
 
+- camera in registers                                      DONE
+- key bindings in register                                 DONE
+- receipts should only use one performance record          DONE
+- fewer marks in registers                                 DONE
 - svg templates for seating categories
 - regions in heatmap
 - brush in timeseries

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
 <head>
   <meta charset="utf-8">
   <title>Comédie Française Registers Project</title>
@@ -23,9 +24,10 @@
     .viz:not(:hover) .close {
       display:none;
     }
-
     .viz .background {
-      opacity: 0;
+      opacity: 0.75;
+      fill: white;
+      stroke: 1px gray;
     }
 
     /* component-specific css: figure out an export solution for svg */
@@ -41,6 +43,16 @@
       stroke: orange;
       stroke-width: 1.5px;
     }
+
+    .registers text {
+      font-size: 12px;
+      fill: black;
+      stroke: none;
+    }
+
+    .registers .date {
+      font-size: 21px;
+    }
   </style>
   <script src="lib/d3.min.js"></script>
   <script src="lib/crossfilter.min.js"></script>
@@ -50,6 +62,7 @@
   <script src="genre_chord.js"></script>
   <script src="receipts_by_author.js"></script>
   <script src="receipts_timeseries.js"></script>
+  <script src="registers.js"></script>
 </head>
 <body>
   <script>
@@ -92,6 +105,13 @@
         cfrp.date = cfrp.dimension(function(d) { return d.date; });
         cfrp.receipts = cfrp.dimension(function(d) { return d.price * d.sold; });
         cfrp.section = cfrp.dimension(function(d) { return d.section; });
+
+        // first shared state is filter across all of cfrp
+        // second is currently selected date:
+
+        // TODO.  example of an operation that's difficult in crossfilter: min of a dimension
+        //        currently just a hack depending on order of sales data
+        cfrp.sel_date = cfrp.sales[1].date;
 
         var mplex = mdat.mplex()
           .datapoint(cfrp);
