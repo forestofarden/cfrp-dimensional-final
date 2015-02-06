@@ -70,37 +70,14 @@
         var playbill = join_hash(performances, plays, ["author", "title"]),
             playbill_idx = {};
 
-        playbill = playbill.map(function(d) {
-          d.date = dateFormat.parse(d.date);
-          d.prologue = (d.prologue === 't');
-          d.musique_danse_machine = (d.musique_danse_machine === 't');
-          d.ordering = +d.ordering;
-          d.register = +d.register;
-          d.receipts = +d.receipts;
-          d.representation = +d.representation;
-          d.ouverture = (d.ouverture === 't');
-          d.cloture = (d.cloture === 't');
-          d.free_access = (d.free_access === 't');
-          d.firstrun = (d.firstrun === 't');
-          d.firstrun_perfnum = +d.firstrun_perfnum;
-          d.reprise = (d.reprise === 't');
-          d.reprise_perfnum = +d.reprise_perfnum;
-          d.debut = (d.debut === 't');
-          d.acts = +d.acts;
-          return d;
-        });
+        playbill = playbill.map(type_playbill);
 
         playbill.forEach(function(d) {
           if (!playbill_idx[d.date]) { playbill_idx[d.date] = []; }
           playbill_idx[d.date].push(d);
         });
 
-        sales = sales.map(function(d) {
-          d.date = dateFormat.parse(d.date);
-          d.sold = +d.sold;
-          d.price = +d.price;
-          return d;
-        });
+        sales = sales.map(type_sales);
 
         // index relevant columns
 
@@ -121,6 +98,34 @@
 
         d3.select("body").call(mplex);
       });
+
+    function type_playbill(d) {
+      d.date = dateFormat.parse(d.date);
+      d.prologue = (d.prologue === 't');
+      d.musique_danse_machine = (d.musique_danse_machine === 't');
+      d.ordering = +d.ordering;
+      d.register = +d.register;
+      d.receipts = +d.receipts;
+      d.representation = +d.representation;
+      d.ouverture = (d.ouverture === 't');
+      d.cloture = (d.cloture === 't');
+      d.free_access = (d.free_access === 't');
+      d.firstrun = (d.firstrun === 't');
+      d.firstrun_perfnum = +d.firstrun_perfnum;
+      d.reprise = (d.reprise === 't');
+      d.reprise_perfnum = +d.reprise_perfnum;
+      d.debut = (d.debut === 't');
+      d.acts = +d.acts;
+      return d;
+    };
+
+    function type_sales(d) {
+      d.date = dateFormat.parse(d.date);
+      d.sold = +d.sold;
+      d.price = +d.price;
+      return d;
+    }
+
   </script>
 </body>
 </html>
