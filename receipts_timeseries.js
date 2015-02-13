@@ -15,7 +15,7 @@ mdat.visualization.receipts_timeseries = function() {
     var namespace = "receipts_timeseries_" + uid++;
 
     var receiptsByDate = cfrp.date
-      .group(d3.time.month)
+      .group(d3.time.week)
       .reduceSum(function(d) { return d.sold * d.price; });
 
     var x = d3.time.scale().range([0, width]),
@@ -83,7 +83,7 @@ mdat.visualization.receipts_timeseries = function() {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Recettes totales (L.)");
+        .text("Recettes par semaine (L.)");
 
     var selection = focus.append("g")
         .attr("class", "selection");
@@ -130,9 +130,10 @@ mdat.visualization.receipts_timeseries = function() {
 
     cfrp.on("change." + namespace, update);
 
-    function focus_domain(extent) {
+    function focus_domain() {
       // TODO.  formula cleanup
-      var brush_range = extent.map(x2),
+      var extent = brush.empty() ? x2.domain() : brush.extent(),
+          brush_range = extent.map(x2),
           width = (brush_range[1] - brush_range[0]) / sel_ratio,
           center = (brush_range[1] + brush_range[0]) / 2.0,
           new_brush = [ center - width / 2.0, center + width / 2.0 ],
@@ -145,7 +146,12 @@ mdat.visualization.receipts_timeseries = function() {
       return [ width / 2.0 - offset, width / 2.0 + offset ];
     }
 
+    // TODO.  better solution for omitting events from self
+    var recursive = false;
+
     function update() {
+      if (recursive) { return; }
+
       var data = receiptsByDate.all();
 
       // TODO... see brushed()
@@ -153,7 +159,7 @@ mdat.visualization.receipts_timeseries = function() {
 
       x2.domain(d3.extent(data, function(d) { return d.key; }));
       y2.domain([0, d3.max(data, function(d) { return d.value; })]);
-      x.domain(focus_domain(x2.domain()));
+      x.domain(focus_domain());
       y.domain(y2.domain());
 
       focus.select(".line")
@@ -171,14 +177,11 @@ mdat.visualization.receipts_timeseries = function() {
     function brushed() {
       d3.event.sourceEvent.stopPropagation();
 
-      var sel_dom = brush.empty() ? x2.domain() : brush.extent(),
-          dom = focus_domain(sel_dom);
+      var dom = focus_domain();
 
       x.domain(dom);
       sel1.text(format(dom[0]));
       sel2.text(format(dom[1]));
-
-      cfrp.date.filter(dom);
 
       // TODO.  data is over-ridden by mdat component list..
       //        how to do this without pushing all data up to
@@ -186,6 +189,11 @@ mdat.visualization.receipts_timeseries = function() {
 
       focus.select(".line").datum(foo).attr("d", line);
       focus.select(".x.axis").call(xAxis);
+
+      recursive = true;
+      cfrp.date.filter(dom);
+      cfrp.change();
+      recursive = false;
     }
   }
 

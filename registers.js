@@ -5,7 +5,7 @@
 mdat.visualization.registers = function() {
 
   var width = 500,
-      height = 500,
+      height = 200,
       title = "Registers",
       cfrp = undefined,
       uid = 0;
@@ -68,9 +68,14 @@ mdat.visualization.registers = function() {
 
       performance.enter().append("g")
          .attr("class", "performance")
-         .attr("transform", function(d, i) { return "translate(" + (300 * i) + ",0)"; })
+         .attr("transform", function(d, i) { return "translate(" + (370 * i) + ",0)"; })
          .html(function(d) { return '<a xlink:href="' + image_url(d.image_file) + '" xlink:show="new">' +
-         '<g><circle cx="15" cy="15" r="5"/><rect x="5" y="5" width="20" height="20" fill="none" stroke="black"/><g></a>'; });
+//         '<g><circle cx="15" cy="15" r="5"/><rect x="5" y="5" width="20" height="20" fill="none" stroke="black"/><g></a>'; 
+           '<g transform="scale(0.07)"><circle cx="255.811" cy="285.309" r="75.217"/>' +
+  '<path d="M477,137H352.718L349,108c0-16.568-13.432-30-30-30H191c-16.568,0-30,13.432-30,30l-3.718,29H34' +
+   ' c-11.046,0-20,8.454-20,19.5v258c0,11.046,8.954,20.5,20,20.5h443c11.046,0,20-9.454,20-20.5v-258C497,145.454,488.046,137,477,137' +
+   ' z M255.595,408.562c-67.928,0-122.994-55.066-122.994-122.993c0-67.928,55.066-122.994,122.994-122.994' +
+   ' c67.928,0,122.994,55.066,122.994,122.994C378.589,353.495,323.523,408.562,255.595,408.562z M474,190H369v-31h105V190z"/></g>'; });
 
       function sel_attrs(d) {
         var entries = d3.entries(d);

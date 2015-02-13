@@ -3,8 +3,8 @@ mdat = {};
 mdat.visualization = {};
 
 mdat.mplex = function (){
-  var width  = 900,
-      height = 450,
+  var width  = 1200,
+      height = 800,
       datapoint,
       datapoint_dispath = d3.dispatch("change"),
       dashboard = [];
@@ -14,8 +14,8 @@ mdat.mplex = function (){
 
     var svg = this.append("svg")
                .attr("class", "dashboard")
-               .attr("width", width)
-               .attr("height", height),
+               .attr("width", "100%") // width)
+               .attr("height", "100%") // height),
         sidebar = this.append("ul")
                     .attr("class", "sidebar");
 
@@ -44,8 +44,8 @@ mdat.mplex = function (){
         .on("click", function(d) {
           dashboard.push({id : serial++,
                                chart : d, 
-                               x : Math.random() * width, 
-                               y : Math.random() * height});
+                               x : width / 2 - d.width() / 2,
+                               y : height / 2 - d.height() / 2 });
           change();
         });
 

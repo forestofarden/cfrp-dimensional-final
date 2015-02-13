@@ -5,18 +5,27 @@
   <meta charset="utf-8">
   <title>Comédie Française Registers Project</title>
   <style>
-    body {
-      font: 14px sans-serif;
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
     svg {
-      clear: none;
+      position: fixed;
+      top:0; bottom:0; left:0; right:0;
       font: 10px sans-serif;
     }
-    .sidebar { 
-      float: right;
-      clear: none;
-      margin: 10px;
-      width: 300px;
+    .sidebar {
+      position: fixed;
+      margin:0; top:0; right:0; bottom:0;
+      width: 200px;
+      font: 14px sans-serif;
+      background: lightgray;
+      padding-top: 20px;
+      padding-left: 20px;
+    }
+    .sidebar li {
+      height: 30px;
     }
     .viz {
       cursor: pointer;
