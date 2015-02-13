@@ -15,7 +15,10 @@ visualizations
 - fewer marks in registers                                 DONE
 - svg templates for seating categories                     DONE
 - regions in heatmap                                       DONE
-- brush in timeseries
+- brush in timeseries                                      DONE
+- link across visualizations
+- camera in registers
+- bring back boxplots
 
 dashboard
 

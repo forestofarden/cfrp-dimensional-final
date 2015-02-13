@@ -6,6 +6,8 @@ mdat.visualization.receipts_timeseries = function() {
       height = 150, //height = 768,
       height2 = 30,
       title = "Receipts timeline",
+      sel_ratio = 7.0/12.0,
+      format = d3.time.format("%e %b %Y");
       cfrp = undefined,
       uid = 0;
 
@@ -13,7 +15,7 @@ mdat.visualization.receipts_timeseries = function() {
     var namespace = "receipts_timeseries_" + uid++;
 
     var receiptsByDate = cfrp.date
-      .group(d3.time.year)
+      .group(d3.time.month)
       .reduceSum(function(d) { return d.sold * d.price; });
 
     var x = d3.time.scale().range([0, width]),
@@ -24,6 +26,12 @@ mdat.visualization.receipts_timeseries = function() {
     var brush = d3.svg.brush()
         .x(x2)
         .on("brush", brushed);
+
+    var drag = d3.behavior.drag()
+        .on("dragstart", function() {
+          // disable mdat drag while brushing
+          d3.event.sourceEvent.stopPropagation();
+        });
 
     var commasFormatter = d3.format(",.0f");
 
@@ -49,7 +57,6 @@ mdat.visualization.receipts_timeseries = function() {
         .attr("width", width)
         .attr("height", height + height2);
 
-    // TODO. garbage collect / detect pre-existing defs / other svg roots / everything is wrong...
     root.append("clipPath")
         .attr("id", namespace + "_clip")
       .append("rect")
@@ -78,6 +85,27 @@ mdat.visualization.receipts_timeseries = function() {
         .style("text-anchor", "end")
         .text("Recettes totales (L.)");
 
+    var selection = focus.append("g")
+        .attr("class", "selection");
+
+    selection.append("path")
+        .attr("d", "M" + focus_sel_range()[0] +",0V" + height);
+
+    selection.append("path")
+        .attr("d", "M" + focus_sel_range()[1] + ",0V" + height);
+
+    var sel1 = selection.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", focus_sel_range()[0] + 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end");
+
+    var sel2 = selection.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", focus_sel_range()[1] + 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end");
+
     var context = root.append("g")
         .attr("class", "context")
         .attr("transform", "translate(0," + (height + 25) + ")");         // TODO.  proper margins?  axes hang down from border
@@ -93,6 +121,7 @@ mdat.visualization.receipts_timeseries = function() {
     context.append("g")
         .attr("class", "x brush")
         .call(brush)
+        .call(drag)
       .selectAll("rect")
         .attr("y", -6)
         .attr("height", height2 + 7);
@@ -101,16 +130,31 @@ mdat.visualization.receipts_timeseries = function() {
 
     cfrp.on("change." + namespace, update);
 
+    function focus_domain(extent) {
+      // TODO.  formula cleanup
+      var brush_range = extent.map(x2),
+          width = (brush_range[1] - brush_range[0]) / sel_ratio,
+          center = (brush_range[1] + brush_range[0]) / 2.0,
+          new_brush = [ center - width / 2.0, center + width / 2.0 ],
+          new_domain = new_brush.map(x2.invert);
+      return new_domain;
+    }
+
+    function focus_sel_range() {
+      var offset = width * sel_ratio / 2.0;
+      return [ width / 2.0 - offset, width / 2.0 + offset ];
+    }
+
     function update() {
       var data = receiptsByDate.all();
 
       // TODO... see brushed()
       foo = data;
 
-      x.domain(d3.extent(data, function(d) { return d.key; }));
-      y.domain([0, d3.max(data, function(d) { return d.value; })]);
-      x2.domain(x.domain());
-      y2.domain(y.domain());
+      x2.domain(d3.extent(data, function(d) { return d.key; }));
+      y2.domain([0, d3.max(data, function(d) { return d.value; })]);
+      x.domain(focus_domain(x2.domain()));
+      y.domain(y2.domain());
 
       focus.select(".line")
         .datum(data)
@@ -126,7 +170,15 @@ mdat.visualization.receipts_timeseries = function() {
 
     function brushed() {
       d3.event.sourceEvent.stopPropagation();
-      x.domain(brush.empty() ? x2.domain() : brush.extent());
+
+      var sel_dom = brush.empty() ? x2.domain() : brush.extent(),
+          dom = focus_domain(sel_dom);
+
+      x.domain(dom);
+      sel1.text(format(dom[0]));
+      sel2.text(format(dom[1]));
+
+      cfrp.date.filter(dom);
 
       // TODO.  data is over-ridden by mdat component list..
       //        how to do this without pushing all data up to
@@ -158,6 +210,12 @@ mdat.visualization.receipts_timeseries = function() {
   chart.title = function(value) {
     if (!arguments.length) return title;
     title = value;
+    return chart;
+  };
+
+  chart.sel_ratio = function(value) {
+    if (!arguments.length) return sel_ratio;
+    sel_ratio = value;
     return chart;
   };
 
