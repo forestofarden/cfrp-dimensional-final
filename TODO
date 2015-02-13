@@ -25,3 +25,4 @@ dashboard
 - prettier installed visualizations list
 - better automatic layout
 - resize handles for visualizations
+- move CSS to somewhere more modular

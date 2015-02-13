@@ -7,13 +7,6 @@
 <metadata>
 Created by potrace 1.11, written by Peter Selinger 2001-2013
 </metadata>
-<g>
-<circle class="mdat parterre" cx="375" cy="520" r="25"></circle>
-<circle class="mdat première_loge" cx="375" cy="430" r="25"></circle>
-<circle class="mdat autre" cx="375" cy="300" r="25"></circle>
-<circle class="mdat autre" cx="190" cy="250" r="25"></circle>
-<circle class="mdat autre" cx="550" cy="250" r="25"></circle>
-</g>
 <g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)"
 fill="#000000" stroke="none">
 <g>
@@ -4578,4 +4571,13 @@ l-3 27 -6 -27z"/>
 <path d="M2653 303 c20 -2 54 -2 75 0 20 2 3 4 -38 4 -41 0 -58 -2 -37 -4z"/>
 </g>
 </g>
+
+<g fill-opacity="0.9">
+<path class="mdat parterre" transform="translate(375,520)"></path>
+<path class="mdat première_loge" transform="translate(375,430)"></path>
+<path class="mdat autre" transform="translate(375,300)"></path>
+<path class="mdat autre" transform="translate(190,250)"></path>
+<path class="mdat autre" transform="translate(550,250)"></path>
+</g>
+
 </svg>

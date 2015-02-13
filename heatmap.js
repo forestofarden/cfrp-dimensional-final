@@ -13,24 +13,28 @@
 
 mdat.visualization.heatmap = function() {
 
-  var width = 550,
-      height = 550,
+  var width = 415,    // 756
+      height = 320,   // 600
       title = "Heatmap",
       cfrp = undefined,
       uid = 0,
       url = "assets/bordeaux1.svg",
       svg;
 
+  var capacity_per_diem = {
+    'parterre': 400,  // 773,
+    'première loge': 100, // 500,
+    'autre': 100 }; // 2697 };
+
 
   function chart() {
     var namespace = "heatmap_" + uid++;
 
+    var days = cfrp.dimension(function(d) { return d.date; });
+
     var receiptsBySection = cfrp.section
       .group()
-      .reduceSum(function(d) { return d.price * d.sold; });
-
-    var color = d3.scale.quantile()
-      .range(colorbrewer.YlGnBu[9]);
+      .reduceSum(function(d) { return d.sold; });
 
     var root = d3.select(this)
         .classed("heatmap", true);
@@ -53,23 +57,43 @@ mdat.visualization.heatmap = function() {
 
     function update() {
       var data = receiptsBySection.all(),
-          data_ndx = d3.map(data, function(d) { return d.key; });
+          data_ndx = d3.map(data, function(d) { return d.key; }),
+          day_count = days.group().all().filter(function(d) { return d.value > 0}).length;
 
-      color.domain(data.map(function(d) { return d.value; }));
+      var color = d3.scale.linear()
+        .range(["#ef8a62","#67a9cf"]);
+
+      var angle = d3.scale.linear()
+        .range([0, 2 * Math.PI]);
 
       var marks = root.selectAll(".mdat")
         .datum(function() {
-          // Join data on the SVG class instead of D3 default          
-          var classes = d3.select(this).attr("class").split(" ");
-          classes = classes.filter(function(d) { return d !== "mdat"; });
-          var k = classes[0].replace("_", " ");
-          return data_ndx[k];
+          // Join data on the SVG class instead of D3 default
+          var k = elem_section(this);
+          return data_ndx.get(k);
         });
 
-      marks.attr("fill", function(d, i) { 
-        console.log("[heatmap]" + d3.select(this).attr("class") + ": " + d);
-        return color(d) || "red";
-      });
+      var arc = d3.svg.arc()
+          .innerRadius(0)
+          .outerRadius(25)
+          .startAngle(0);
+
+      marks.attr("d", arc.endAngle(function(d) {
+//        angle.domain([0, capacity_per_diem[d.key] * day_count]);
+//        return angle(d.value);
+        return Math.PI * 2.0;
+      }))
+        .attr("fill", function(d) {
+          color.domain([0, capacity_per_diem[d.key] * day_count]);
+          return color(d.value);
+        });
+    }
+
+    function elem_section(elem) { 
+      var classes = d3.select(elem).attr("class").split(" ");
+      classes = classes.filter(function(d) { return d !== "mdat"; });
+      var k = classes[0].replace("_", " ");
+      return k;
     }
   }
 
