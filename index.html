@@ -85,6 +85,36 @@
       fill-opacity: 0.2;
     }
 
+    // boxplots
+
+    .box line {
+      fill: none;
+      stroke-width: 1.5px;
+    }
+
+    .box, .decoration,
+    .whisker {
+      stroke: #1f77b4;
+      fill: none;
+    }
+
+    .whisker circle {
+      fill: white;
+    }
+
+    .box:not(:hover) text,
+    .whisker:not(:hover) text {
+      display:none;
+    }
+
+    .whisker.outlier {
+      stroke: red;
+    }
+
+    .selected {
+      fill: red;
+    }
+
   </style>
   <script src="lib/d3.min.js"></script>
   <script src="lib/crossfilter.min.js"></script>
@@ -92,8 +122,7 @@
   <script src="lib/colorbrewer.js"></script>
   <script src="join.js"></script>
   <script src="mdat.js"></script>
-  <script src="genre_chord.js"></script>
-  <script src="receipts_by_author.js"></script>
+  <script src="receipts_by_section.js"></script>
   <script src="receipts_timeseries.js"></script>
   <script src="registers.js"></script>
   <script src="heatmap.js"></script>

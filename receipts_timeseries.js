@@ -15,7 +15,7 @@ mdat.visualization.receipts_timeseries = function() {
     var namespace = "receipts_timeseries_" + uid++;
 
     var receiptsByDate = cfrp.date
-      .group(d3.time.week)
+      .group(d3.time.month)
       .reduceSum(function(d) { return d.sold * d.price; });
 
     var x = d3.time.scale().range([0, width]),
@@ -83,7 +83,7 @@ mdat.visualization.receipts_timeseries = function() {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Recettes par semaine (L.)");
+        .text("Recettes par mois (L.)");
 
     var selection = focus.append("g")
         .attr("class", "selection");
