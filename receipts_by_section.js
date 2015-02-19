@@ -2,7 +2,7 @@
 
 mdat.visualization.receipts_by_section = function() {
 
-  var width = 300,
+  var width = 600,
       height = 150,
       title = "Yearly Receipts by Section",
       cfrp = undefined,
@@ -14,7 +14,7 @@ mdat.visualization.receipts_by_section = function() {
 
     var namespace = "receipts_by_section" + uid++;
 
-    var sectionDim     = cfrp.dimension(function(d) { return d.section; }),
+    var sectionDim     = cfrp.dimension(function(d) { return d.raw_section; }),
         sectionNames   = sectionDim.group().all().map(function(d) { return d.key; }),
 
         yearDim        = cfrp.dimension(function(d) { return d.date; }),
@@ -27,7 +27,7 @@ mdat.visualization.receipts_by_section = function() {
     sectionNames = [ 'Places de Parterre', 'Premières Places', 'Troisièmes Places', 'Secondes Places', 'Loge basse',
                      'Irregular Receipts', 'Petites Loges', 'Secondes Loges 3', 'Loge haute', 'Secondes Loges',
                      'Parterre', 'Theatre', 'Premieres loges', 'Troisiemes Loges' ];
-    */                     
+    */
 
     var root = d3.select(this).append("g")
         .classed("receipts_by_section", true);
@@ -37,6 +37,59 @@ mdat.visualization.receipts_by_section = function() {
         .attr("width", width)
         .attr("height", height);
 
+    var data = section_summaries();
+
+    var all_points = data.map(function(d) { return d.summary; })
+          .reduce(function(a, b) { return a.concat(b); });
+
+    var x = d3.scale.linear()
+      .domain([0, d3.max(all_points)])
+      .range([100, width]);
+
+    var y = d3.scale.ordinal()
+      .domain(data.map(function(d) { return d.section; }))
+      .rangeRoundBands([0, height], .5);
+
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("top")
+      .tickFormat(receiptFormat);
+
+    root.append("g")
+        .call(xAxis)
+        .attr("class", "x axis");
+
+    var boxplot = root.selectAll(".boxplot")
+          .data(data);
+
+    boxplot.enter().append("g")
+          .attr("class", "boxplot")
+          .attr("transform", function(d) { return "translate(0," + y(d.section) + ")"; })
+        .append("text")
+          .attr("class", "label")
+          .attr("x", 80)
+          .attr("y", y.rangeBand() / 2.0)
+          .attr("text-anchor", "end")
+          .text(function(d) { return d.section; });
+
+    var box = boxplot.selectAll(".box")
+       .data(function(d) { return d.summary.slice(2,7); });
+
+    var box_g = box.enter()
+        .append("g")
+        .attr("class", "box");
+    box_g.append("line")
+       .attr("y1", 0)
+       .attr("y2", y.rangeBand());
+    box_g.append("text")
+      .attr("dy", "-5");
+
+    // decoration: sides of the box between q2 and q4,
+    //             and the whiskers
+
+    var decoration = boxplot.append("path")
+       .attr("class", "decoration");
+
     update();
 
     cfrp.on("change." + namespace, update);
@@ -44,58 +97,21 @@ mdat.visualization.receipts_by_section = function() {
     function update() {
       var data = section_summaries();
 
-      var all_points = data.map(function(d) { return d.summary; })
-            .reduce(function(a, b) { return a.concat(b); });
-
-      var x = d3.scale.linear()
-        .domain(d3.extent(all_points))
-        .range([100, width]);
-
-      var y = d3.scale.ordinal()
-        .domain(data.map(function(d) { return d.section; }))
-        .rangeRoundBands([0, height], .5);
-
       var boxplot = root.selectAll(".boxplot")
           .data(data);
-
-      boxplot.enter()
-         .append("g")
-            .attr("class", "boxplot")
-            .attr("transform", function(d) { return "translate(0," + y(d.section) + ")"; })
-          .append("text")
-            .attr("class", "label");
-
-      boxplot.select(".label")
-          .attr("x", 80)
-          .attr("y", y.rangeBand() / 2.0)
-          .attr("text-anchor", "end")
-          .text(function(d) { return d.section; });
 
       var box = boxplot.selectAll(".box")
          .data(function(d) { return d.summary.slice(2,7); });
 
-      var box_g = box.enter()
-          .append("g")
-          .attr("class", "box");
-      box_g.append("line");
-      box_g.append("text")
-        .attr("dy", "-5");          
-
       box.select("line")
          .attr("x1", function(d) { return x(d); })
-         .attr("y1", 0)
-         .attr("x2", function(d) { return x(d); })
-         .attr("y2", y.rangeBand());
+         .attr("x2", function(d) { return x(d); });
 
       box.select("text")
          .attr("x", function(d) { return x(d); })
          .text(function(d) { return "L. " + receiptFormat(d); });
 
-      // decoration: sides of the box between q2 and q4,
-      //             and outriggers to the whiskers
-
-      var decoration = boxplot.append("path")
-                .attr("class", "decoration");
+      var decoration = boxplot.select(".decoration");
 
       decoration.attr("d", function(d) {
                       return "M" + x(d.summary[2]) + "," + y.rangeBand() / 2 + "H" + x(d.summary[3]) +
@@ -103,39 +119,42 @@ mdat.visualization.receipts_by_section = function() {
                              "M" + x(d.summary[3]) + "," + y.rangeBand() + "H" + x(d.summary[5]) +
                              "M" + x(d.summary[5]) + "," + y.rangeBand() / 2 + "H" + x(d.summary[6])});
 
-        // whiskers: near and outliers
+      // outliers
 
-        var whiskers = boxplot.selectAll(".whisker")
-           .data(function(d) { return d.outliers.map(function(v) { return { key: v.key, value: v.value, summary: d.summary }; }) }); 
+      var outlier = boxplot.selectAll(".outlier")
+         .data(function(d) {
+           return d.outliers.map(function(v) { return { key: v.key, value: v.value, summary: d.summary }; }) });
 
-        var g = whiskers.enter()
-          .append("g")
-           .attr("class", "whisker");
-        g.append("circle")
-          .attr("cy", y.rangeBand() / 2)
-          .attr("r", 2);
-        g.append("text")
-          .attr("dy", "-5");
+      outlier.exit().remove();
 
-        whiskers.classed("outlier", function(d) { 
-          return d.value < d.summary[1] || d.value > d.summary[7];
-        });
+      var outlier_e = outlier.enter()
+        .append("g")
+         .attr("class", "outlier");
+      outlier_e.append("circle")
+         .attr("cy", y.rangeBand() / 2)
+         .attr("r", 2);
+      outlier_e.append("text")
+         .attr("dy", "-5");
 
-        whiskers.select("circle")
-          .attr("cx", function(d) { return x(d.value); });
+      outlier.classed("extreme", function(d) {
+        return d.value < d.summary[1] || d.value > d.summary[7];
+      });
 
-        whiskers.select("text")
-          .attr("x", function(d) { return x(d.value); })
-          .text(function(d) { return d.key + ": L. " + receiptFormat(d.value); });
+      outlier.select("circle")
+        .attr("cx", function(d) { return x(d.value); });
+
+      outlier.select("text")
+        .attr("x", function(d) { return x(d.value); })
+        .text(function(d) { return d.key + ": L. " + receiptFormat(d.value); });
     }
 
     function section_summaries() {
       var data = sectionNames.map(function(section) {
         sectionDim.filter(section);
 
-        var sectionReceiptsByYear = receipts.top(receipts.size()).map(dup_bucket).reverse(),
-            points = sectionReceiptsByYear.map(function(d) { return d.value; }).filter(function(d) { return d > 0.0; });
-         
+        var sectionReceiptsByYear = receipts.top(receipts.size()).map(dup_bucket).filter(function(d) { return d.value > 0.0; }).reverse(),
+            points = sectionReceiptsByYear.map(function(d) { return d.value; });
+
         var median = d3.quantile(points, 0.5),
             irq    = d3.quantile(points, 0.75) - d3.quantile(points, 0.25),
             extent = [ points[0], points[points.length-1] ];
