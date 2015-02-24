@@ -60,15 +60,16 @@ mdat.mplex = function (){
          .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
         .call(drag);
 
-      enter.each(function(d, i) { d.chart.datapoint(datapoint).call(this); })
-         .attr("opacity", 0)
-        .transition().duration(1000)
-         .attr("opacity", 1);
+      enter.append("rect")
+           .attr("class", "background")
+           .attr("width", function(d) { return d.chart.width(); })
+           .attr("height", function(d) { return d.chart.height(); });
 
       enter.append("circle")
            .attr("class", "close")
            .attr("cx", function(d) { return d.chart.width(); })
-           .attr("r", 5)
+           .attr("cy", 6)
+           .attr("r", 4)
            .attr("stroke", "black")
            .attr("stroke-width", "2")
            .attr("fill", "white")
@@ -76,6 +77,31 @@ mdat.mplex = function (){
            dashboard = dashboard.filter(function(d0) { return d0.id !== d.id; });
            change();
          });
+
+      var download_link = enter.append("a")
+           .attr("xlink:href", "#");
+
+      download_link.append("path")
+           .attr("class", "download")
+           .attr("d", function(d) { return "M" + (d.chart.width() - 15) + " 0 V 10 h 3 l -3 3 l -3 -3 h 3 z"; })
+           .attr("stroke", "black")
+           .attr("stroke-width", "1");
+
+      enter.each(function(d, i) {
+        // render visualization
+        var elem = d.chart.datapoint(datapoint).call(this);
+
+        // attach download handler
+        download_link.on("click", function() {
+            xml = '<svg xmlns="http://www.w3.org/2000/svg" width="' + d.chart.width() + '" height="'
+                                                                    + d.chart.height() + '">'
+                                                                    + elem.html() + '</svg>';
+           download_link.attr("xlink:href", 'data:application/octet-stream;base64,' + btoa(xml));
+        });
+      })
+         .attr("opacity", 0)
+        .transition().duration(1000)
+         .attr("opacity", 1);
     };
   }
 

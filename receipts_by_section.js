@@ -8,13 +8,47 @@ mdat.visualization.receipts_by_section = function() {
       cfrp = undefined,
       uid = 0;
 
+  // should be in CDATA
+  var css = "\
+    text { \
+      font: 10px sans-serif; \
+    } \
+    .axis path, \
+    .axis line { \
+    fill: none; \
+    stroke: #000; \
+    shape-rendering: crispEdges; \
+    } \
+    .box line { \
+      fill: none; \
+      stroke-width: 1.5px; \
+    } \
+    .box, .decoration, \
+    .outlier { \
+      stroke: #1f77b4; \
+      fill: none; \
+    } \
+    .outlier circle { \
+      fill: white; \
+    } \
+    .outlier.extreme { \
+      stroke: red; \
+    } \
+    .box:not(:hover) text, \
+    .outlier:not(:hover) text { \
+      display:none; \
+    } \
+    .selected { \
+      fill: red; \
+    }";
+
   var receiptFormat = d3.format(",.0f");
 
   function chart() {
 
     var namespace = "receipts_by_section" + uid++;
 
-    var sectionDim     = cfrp.dimension(function(d) { return d.raw_section; }),
+    var sectionDim     = cfrp.dimension(function(d) { return d.section; }),
         sectionNames   = sectionDim.group().all().map(function(d) { return d.key; }),
 
         yearDim        = cfrp.dimension(function(d) { return d.date; }),
@@ -31,11 +65,6 @@ mdat.visualization.receipts_by_section = function() {
 
     var root = d3.select(this).append("g")
         .classed("receipts_by_section", true);
-
-    var background = root.append("rect")
-        .attr("class", "background")
-        .attr("width", width)
-        .attr("height", height);
 
     var data = section_summaries();
 
@@ -54,6 +83,11 @@ mdat.visualization.receipts_by_section = function() {
       .scale(x)
       .orient("top")
       .tickFormat(receiptFormat);
+
+    root.append('defs')
+      .append('style')
+      .attr('type','text/css')
+      .text(css);
 
     root.append("g")
         .call(xAxis)
@@ -198,6 +232,7 @@ mdat.visualization.receipts_by_section = function() {
 
     function dup_bucket(d) { return { key: d.key, value: d.value }; }
 
+    return root;
   }
 
   chart.datapoint = function(value) {

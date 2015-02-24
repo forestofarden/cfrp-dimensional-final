@@ -21,6 +21,11 @@ mdat.visualization.heatmap = function() {
       url = "assets/bordeaux1.svg",
       svg;
 
+  var css = " \
+    circle.mdat { \
+      fill-opacity: 0.2; \
+    }";
+
   var capacity_per_diem = {
     'parterre': 400,  // 773,
     'première loge': 100, // 500,
@@ -39,10 +44,10 @@ mdat.visualization.heatmap = function() {
     var root = d3.select(this)
         .classed("heatmap", true);
 
-    var background = root.append("rect")
-        .attr("class", "background")
-        .attr("width", width)
-        .attr("height", height);
+    root.append('defs')
+      .append('style')
+      .attr('type','text/css')
+      .text(css);
 
     d3.xml(url, "image/svg+xml", function(error, fragment) {
       fragment = fragment.getElementsByTagName("svg")[0];

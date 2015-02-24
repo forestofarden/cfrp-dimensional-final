@@ -13,7 +13,6 @@
     svg {
       position: fixed;
       top:0; bottom:0; left:0; right:0;
-      font: 10px sans-serif;
     }
     .sidebar {
       position: fixed;
@@ -31,6 +30,7 @@
     .viz {
       cursor: pointer;
     }
+    .viz:not(:hover) .download,
     .viz:not(:hover) .close {
       display:none;
     }
@@ -39,81 +39,7 @@
       fill: white;
     }
 
-    /* component-specific css: figure out an export solution for svg */
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-    }
-
-    .line {
-      fill: none;
-      stroke: orange;
-      stroke-width: 1.5px;
-    }
-
-    .brush .extent {
-      stroke: #fff;
-      fill-opacity: .125;
-      shape-rendering: crispEdges;
-    }
-
-    .registers text {
-      font-size: 12px;
-      fill: black;
-      stroke: none;
-    }
-
-    .selection {
-      stroke: black;
-      stroke-opacity: 0.2;
-      stroke-dasharray: 5,2;
-    }
-
-    .selection text {
-      opacity: 0.5;
-    }
-
-    .registers .date {
-      font-size: 21px;
-    }
-
-    // heatmap
-
-    circle.mdat {
-      fill-opacity: 0.2;
-    }
-
-    // boxplots
-
-    .box line {
-      fill: none;
-      stroke-width: 1.5px;
-    }
-
-    .box, .decoration,
-    .outlier {
-      stroke: #1f77b4;
-      fill: none;
-    }
-
-    .outlier circle {
-      fill: white;
-    }
-
-    .box:not(:hover) text,
-    .outlier:not(:hover) text {
-      display:none;
-    }
-
-    .outlier.extreme {
-      stroke: red;
-    }
-
-    .selected {
-      fill: red;
-    }
+    /* component-specific css is embedded in <style> for downloading svg snapshots */
 
   </style>
   <script src="lib/d3.min.js"></script>

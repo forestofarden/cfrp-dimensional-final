@@ -18,7 +18,17 @@ visualizations
 - brush in timeseries                                      DONE
 - link across visualizations
 - camera in registers                                      DONE
-- bring back boxplots
+- bring back boxplots                                      DONE
+- SVG downloads for images								                 DONE
+
+- SVG download for timeline: show focus only?
+  [ no goalposts / context ]
+- no SVG download for registers
+
+- allow panning in timeline
+    [ drag overrides; translation start & end ]
+- simplify update in timeline (when to reset domain?)
+- drag goalposts to adjust filter range
 
 dashboard
 

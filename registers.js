@@ -10,6 +10,11 @@ mdat.visualization.registers = function() {
       cfrp = undefined,
       uid = 0;
 
+  var css = " \
+    text { \
+      font: 10px sans-serif; \
+    }";
+
   var dateFormat = d3.time.format("%Y-%m-%d");
 
   function image_url(image_file) {
@@ -26,10 +31,10 @@ mdat.visualization.registers = function() {
     var root = d3.select(this)
         .classed("registers", true);
 
-    var background = root.append("rect")
-        .attr("class", "background")
-        .attr("width", width)
-        .attr("height", height);
+    root.append('defs')
+      .append('style')
+      .attr('type','text/css')
+      .text(css);
 
     var dateElm = root.append("text")
         .attr("class", "date")
@@ -110,6 +115,8 @@ mdat.visualization.registers = function() {
            .attr("font-style", "bold")
            .text(function(d) { return d.value; });
     }
+
+    return root;
   }
 
   chart.datapoint = function(value) {

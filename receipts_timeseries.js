@@ -11,6 +11,35 @@ mdat.visualization.receipts_timeseries = function() {
       cfrp = undefined,
       uid = 0;
 
+  var css = " \
+    text { \
+      font: 10px sans-serif; \
+    } \
+    .axis path, \
+    .axis line { \
+      fill: none; \
+      stroke: #000; \
+      shape-rendering: crispEdges; \
+    } \
+    .line { \
+      fill: none; \
+      stroke: orange; \
+      stroke-width: 1.5px; \
+    } \
+    .brush .extent { \
+      stroke: #fff; \
+      fill-opacity: .125; \
+      shape-rendering: crispEdges; \
+    } \
+    .selection { \
+      stroke: black; \
+      stroke-opacity: 0.2; \
+      stroke-dasharray: 5,2; \
+    } \
+    .selection text { \
+      opacity: 0.5; \
+    }";
+
   function chart() {
     var namespace = "receipts_timeseries_" + uid++;
 
@@ -23,9 +52,29 @@ mdat.visualization.receipts_timeseries = function() {
         y = d3.scale.linear().range([height, 0]),
         y2 = d3.scale.linear().range([height2, 0]);
 
+    y.domain([0, receiptsByDate.top(1)[0].value]);
+    y2.domain(y.domain());
+
     var brush = d3.svg.brush()
         .x(x2)
-        .on("brush", brushed);
+        .on("brushstart", function() {
+          d3.event.sourceEvent.preventDefault();  // Necessary for Firefox
+        })
+        .on("brush", brushed)
+        .on("brushend", function() {
+          zoom.scaleExtent([focus_scale(), Infinity]);
+        });
+
+    var zoom = d3.behavior.zoom()
+          .x(x)
+          .scaleExtent([1, Infinity])
+          .on('zoom', function() {
+            draw();
+            brush.extent(focus_domain());
+          });
+
+    // TODO.... not clear
+    d3.select(this).call(zoom);
 
     var drag = d3.behavior.drag()
         .on("dragstart", function() {
@@ -52,10 +101,10 @@ mdat.visualization.receipts_timeseries = function() {
     var root = d3.select(this)
         .classed("receipts_timeseries", true);
 
-    var background = root.append("rect")
-        .attr("class", "background")
-        .attr("width", width)
-        .attr("height", height + height2);
+    root.append('defs')
+      .append('style')
+      .attr('type','text/css')
+      .text(css);
 
     root.append("clipPath")
         .attr("id", namespace + "_clip")
@@ -89,20 +138,20 @@ mdat.visualization.receipts_timeseries = function() {
         .attr("class", "selection");
 
     selection.append("path")
-        .attr("d", "M" + focus_sel_range()[0] +",0V" + height);
+        .attr("d", "M" + focus_range()[0] +",0V" + height);
 
     selection.append("path")
-        .attr("d", "M" + focus_sel_range()[1] + ",0V" + height);
+        .attr("d", "M" + focus_range()[1] + ",0V" + height);
 
     var sel1 = selection.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", focus_sel_range()[0] + 6)
+        .attr("y", focus_range()[0] + 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end");
 
     var sel2 = selection.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", focus_sel_range()[1] + 6)
+        .attr("y", focus_range()[1] + 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end");
 
@@ -141,9 +190,23 @@ mdat.visualization.receipts_timeseries = function() {
       return new_domain;
     }
 
-    function focus_sel_range() {
+    function focus_range() {
       var offset = width * sel_ratio / 2.0;
       return [ width / 2.0 - offset, width / 2.0 + offset ];
+    }
+
+    function focus_scale() {
+      var data = receiptsByDate.all(),
+          curDomain = focus_domain(),
+          fullDomain = data_extent();
+      return (curDomain[1] - curDomain[0]) / (fullDomain[1] - fullDomain[0]);
+    }
+
+    function data_extent() {
+      // TODO.  possible with crossfilter rather than d3?
+      var data = receiptsByDate.all(),
+          extent = d3.extent(data, function(d) { return d.key; });
+      return extent;
     }
 
     // TODO.  better solution for omitting events from self
@@ -152,15 +215,21 @@ mdat.visualization.receipts_timeseries = function() {
     function update() {
       if (recursive) { return; }
 
-      var data = receiptsByDate.all();
+      var extent = data_extent();
 
-      // TODO... see brushed()
-      foo = data;
-
-      x2.domain(d3.extent(data, function(d) { return d.key; }));
-      y2.domain([0, d3.max(data, function(d) { return d.value; })]);
+      x2.domain(extent);
       x.domain(focus_domain());
-      y.domain(y2.domain());
+      zoom.x(x);
+
+      draw();
+    }
+
+    function draw() {
+      var data = receiptsByDate.all(),
+          dom = focus_domain();
+
+      sel1.text(format(dom[0]));
+      sel2.text(format(dom[1]));
 
       focus.select(".line")
         .datum(data)
@@ -177,24 +246,11 @@ mdat.visualization.receipts_timeseries = function() {
     function brushed() {
       d3.event.sourceEvent.stopPropagation();
 
-      var dom = focus_domain();
-
-      x.domain(dom);
-      sel1.text(format(dom[0]));
-      sel2.text(format(dom[1]));
-
-      // TODO.  data is over-ridden by mdat component list..
-      //        how to do this without pushing all data up to
-      //        mdat level?
-
-      focus.select(".line").datum(foo).attr("d", line);
-      focus.select(".x.axis").call(xAxis);
-
-      recursive = true;
-      cfrp.date.filter(dom);
+      cfrp.date.filter(focus_domain());
       cfrp.change();
-      recursive = false;
     }
+
+    return root;
   }
 
   chart.datapoint = function(value) {
