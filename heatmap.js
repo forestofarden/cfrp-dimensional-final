@@ -15,7 +15,7 @@ mdat.visualization.heatmap = function() {
 
   var width = 415,    // 756
       height = 320,   // 600
-      title = "Heatmap",
+      title = "Theater Heatmap",
       cfrp = undefined,
       uid = 0,
       url = "assets/bordeaux1.svg",
