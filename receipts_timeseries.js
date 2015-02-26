@@ -5,7 +5,7 @@ mdat.visualization.receipts_timeseries = function() {
   var width = 700, // width = 1024,
       height = 150, //height = 768,
       height2 = 30,
-      title = "Receipts timeline",
+      title = "Receipts Time Series",
       sel_ratio = 7.0/12.0,
       format = d3.time.format("%e %b %Y");
       cfrp = undefined,
@@ -43,9 +43,9 @@ mdat.visualization.receipts_timeseries = function() {
   function chart() {
     var namespace = "receipts_timeseries_" + uid++;
 
-    var receiptsByDate = cfrp.date
-      .group(d3.time.month)
-      .reduceSum(function(d) { return d.sold * d.price; });
+    var date = cfrp.dimension(function(d) { return d.date; }),
+        receiptsByDate = date.group(d3.time.month)
+                           .reduceSum(function(d) { return d.sold * d.price; });
 
     var x = d3.time.scale().range([0, width]),
         x2 = d3.time.scale().range([0, width]),
@@ -178,6 +178,7 @@ mdat.visualization.receipts_timeseries = function() {
     update();
 
     cfrp.on("change." + namespace, update);
+    cfrp.on("dispose." + namespace, dispose);
 
     function focus_domain() {
       // TODO.  formula cleanup
@@ -246,11 +247,19 @@ mdat.visualization.receipts_timeseries = function() {
     function brushed() {
       d3.event.sourceEvent.stopPropagation();
 
-      cfrp.date.filter(focus_domain());
+      date.filter(focus_domain());
       cfrp.change();
     }
 
-    return root;
+    function dispose() {
+      console.log("detaching dimension for time series");
+      cfrp.on("." + namespace, null);
+      date.groupAll();
+      date.dispose();
+      cfrp.change();
+    }
+
+    return namespace;
   }
 
   chart.datapoint = function(value) {

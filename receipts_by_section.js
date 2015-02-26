@@ -127,6 +127,7 @@ mdat.visualization.receipts_by_section = function() {
     update();
 
     cfrp.on("change." + namespace, update);
+    cfrp.on("dispose." + namespace, dispose);
 
     function update() {
       var data = section_summaries();
@@ -230,9 +231,19 @@ mdat.visualization.receipts_by_section = function() {
       return data;
     }
 
+    function dispose() {
+      console.log("detaching dimensions for boxplots");
+      cfrp.on("." + namespace, null);
+      sectionDim.groupAll();
+      sectionDim.dispose();
+      yearDim.groupAll();
+      yearDim.dispose();
+      cfrp.change();
+    }
+
     function dup_bucket(d) { return { key: d.key, value: d.value }; }
 
-    return root;
+    return namespace;
   }
 
   chart.datapoint = function(value) {

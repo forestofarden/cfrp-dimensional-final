@@ -91,11 +91,6 @@
         cfrp.playbill = playbill;
         cfrp.playbill_idx = playbill_idx;
 
-        // TODO. best way to share dimensions across visualizations?
-        cfrp.date = cfrp.dimension(function(d) { return d.date; });
-        cfrp.receipts = cfrp.dimension(function(d) { return d.price * d.sold; });
-        cfrp.section = cfrp.dimension(function(d) { return d.section; });
-
         // first shared state is filter across all of cfrp
         // second is currently selected date:
 

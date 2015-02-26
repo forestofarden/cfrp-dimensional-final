@@ -116,7 +116,7 @@ mdat.visualization.registers = function() {
            .text(function(d) { return d.value; });
     }
 
-    return root;
+    return namespace;
   }
 
   chart.datapoint = function(value) {

@@ -155,6 +155,7 @@ mdat.visualization.calendar = function() {
     update();
 
     cfrp.on("change." + namespace, update);
+    cfrp.on("dispose." + namespace, dispose);
 
     function select(d) {
       var dist = sel_extent.map(function(p) { return Math.abs(p - d); }),
@@ -240,13 +241,21 @@ mdat.visualization.calendar = function() {
 //      focus.attr("transform", "translate(0,-" + (proportion * scrollHeight) + ")");
     }
 
+    function dispose() {
+      console.log("detaching dimension for calendar");
+      cfrp.on("." + namespace, null);
+      date.groupAll();
+      date.dispose();
+      cfrp.change();
+    }
+
     function diff_suffix(s0, s1) {
       var i = 0;
       while (i < s0.length && i < s1.length && s0.charAt(i) === s1.charAt(i)) { i++; }
       return s1.slice(i);
     }
 
-    return root;
+    return namespace;
   }
 
   chart.datapoint = function(value) {

@@ -34,6 +34,8 @@ calendar
 
 timeline
 
+- interaction with calendar heatmap causes invalid path
+
 - SVG download for timeline: show focus only?
   [ no goalposts / context ]
 - no SVG download for registers
@@ -45,7 +47,8 @@ timeline
 
 dashboard
 
+- decommision dimensions when closing a visualization      DONE
 - prettier installed visualizations list
 - better automatic layout
 - resize handles for visualizations
-- move CSS to somewhere more modular
+- move CSS to somewhere more modular                       DONE

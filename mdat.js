@@ -6,7 +6,7 @@ mdat.mplex = function (){
   var width  = 1200,
       height = 800,
       datapoint,
-      datapoint_dispath = d3.dispatch("change"),
+      datapoint_dispatch = d3.dispatch("change", "dispose"),
       dashboard = [];
 
   function chart() {
@@ -73,8 +73,9 @@ mdat.mplex = function (){
            .attr("stroke", "black")
            .attr("stroke-width", "2")
            .attr("fill", "white")
-         .on("click", function(d) {         
+         .on("click", function(d) {
            dashboard = dashboard.filter(function(d0) { return d0.id !== d.id; });
+           datapoint_dispatch.dispose(d.namespace);
            change();
          });
 
@@ -88,15 +89,21 @@ mdat.mplex = function (){
            .attr("stroke-width", "1");
 
       enter.each(function(d, i) {
-        // render visualization
-        var elem = d.chart.datapoint(datapoint).call(this);
+        // attach datapoint & render visualization
+        d.namespace = d.chart.datapoint(datapoint).call(this);
+
+        console.log("attached a viz (" + d.namespace + ").");
 
         // attach download handler
         download_link.on("click", function() {
-            xml = '<svg xmlns="http://www.w3.org/2000/svg" width="' + d.chart.width() + '" height="'
+          console.log("render as svg");
+            /* later...
+            var elem = d3.select(d.namespace),
+                xml = '<svg xmlns="http://www.w3.org/2000/svg" width="' + d.chart.width() + '" height="'
                                                                     + d.chart.height() + '">'
                                                                     + elem.html() + '</svg>';
            download_link.attr("xlink:href", 'data:application/octet-stream;base64,' + btoa(xml));
+           */
         });
       })
          .attr("opacity", 0)
@@ -108,7 +115,7 @@ mdat.mplex = function (){
   chart.datapoint = function(value) {
     if (!arguments.length) return datapoint;
     datapoint = value;
-    d3.rebind(datapoint, datapoint_dispath, "on", "change");
+    d3.rebind(datapoint, datapoint_dispatch, "on", "change", "dispatch");
     return chart;
   }
 

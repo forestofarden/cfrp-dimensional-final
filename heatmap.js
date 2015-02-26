@@ -35,11 +35,11 @@ mdat.visualization.heatmap = function() {
   function chart() {
     var namespace = "heatmap_" + uid++;
 
-    var days = cfrp.dimension(function(d) { return d.date; });
+    var section = cfrp.dimension(function(d) { return d.section; }),
+        days = cfrp.dimension(function(d) { return d.date; });
 
-    var receiptsBySection = cfrp.section
-      .group()
-      .reduceSum(function(d) { return d.sold; });
+    var receiptsBySection = section.group()
+          .reduceSum(function(d) { return d.sold; });
 
     var root = d3.select(this)
         .classed("heatmap", true);
@@ -58,6 +58,7 @@ mdat.visualization.heatmap = function() {
 
       update();
       cfrp.on("change." + namespace, update);
+      cfrp.on("dispose." + namespace, dispose);
     });
 
     function update() {
@@ -92,6 +93,16 @@ mdat.visualization.heatmap = function() {
           color.domain([0, capacity_per_diem[d.key] * day_count]);
           return color(d.value);
         });
+    }
+
+    function dispose() {
+      console.log("detaching dimensions for heatmap");
+      cfrp.on("." + namespace, null);
+      section.groupAll();
+      section.dispose();
+      days.groupAll();
+      days.dispose();
+      cfrp.change();
     }
 
     function elem_section(elem) { 
