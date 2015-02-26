@@ -1,11 +1,11 @@
 mdat.visualization.calendar = function() {
 
-  var all_years = d3.range(1680, 1700); // 1794);
+  var all_seasons = d3.range(1680, 1700); // 1794);
 
   var cellSize = 8,
-      years_visible = 8,
+      seasons_visible = 8,
       width = 52 * cellSize + 15 + 40,
-      height = 8 * years_visible * cellSize,
+      height = 8 * seasons_visible * cellSize,
 //      height = "100%",// 8 * cellSize * (1794 - 1680),    // TODO.  calculate domain
       title = "Calendar Heatmap",
       cfrp = undefined,
@@ -19,7 +19,7 @@ mdat.visualization.calendar = function() {
     rect.day.selected { \
       fill: red; \
     } \
-    .year_rug { \
+    .season_rug { \
       stroke: #ccc; \
     } \
     .brush .extent { \
@@ -35,7 +35,7 @@ mdat.visualization.calendar = function() {
     } \
     .month { \
       fill: none; \
-      stroke: #000; \
+      stroke: black; \
       stroke-width: 1.5px; \
     }";
 
@@ -43,22 +43,30 @@ mdat.visualization.calendar = function() {
     var namespace = "calendar_" + uid++;
 
     var date = cfrp.dimension(function(d) { return d.date; }),
-        receiptsByDate = date.group().reduceSum(function(d) { return d.sold * d.price; }),
-        receiptsByYear = date.group(d3.time.year).reduceSum(function(d) { return d.sold * d.price; });
+        receiptsByDate = date.group()
+                             .reduceSum(function(d) { return d.sold * d.price; }),
+        receiptsBySeason = date.group(d3.time.year)
+                               .reduceSum(function(d) { return d.sold * d.price; });
 
-    var day = d3.time.format("%w"),
-        week = d3.time.format("%U"),
+    var day = d3.time.format("%w");
+        week = function(d) {
+          // TODO.  a cruel hack, but it works...  rework the scale to map
+          //        seasons correctly in screen coords, not dates
+          if (d3.time.format("%e %b")(d) === " 1 Apr") { return 0; }
+          d = d3.time.week.offset(d, -13);
+          return d3.time.format("%U")(d);
+        },
         percent = d3.format(".1%"),
         format = d3.time.format("%a %e %b %Y"),
         commasFormatter = d3.format(",.0f");
 
     var y = d3.scale.ordinal()
-        .domain(all_years)
+        .domain(all_seasons)
         .rangeBands([0, height]);
 
     var brush = d3.svg.brush()
         .y(y)
-        .extent([y(all_years[0]), y(all_years[years_visible])])
+        .extent([y(all_seasons[0]), y(all_seasons[seasons_visible])])
         .clamp(true)
         .on("brush", brushed);
 
@@ -87,10 +95,10 @@ mdat.visualization.calendar = function() {
         .attr("class", "context")
         .attr("transform", "translate(" + (width - 10) + ",30)");
 
-    var c_year = context.selectAll("year")
-        .data(all_years)
+    var c_season = context.selectAll("season")
+        .data(all_seasons)
       .enter().append("rect")
-        .attr("class", "year_rug")
+        .attr("class", "season_rug")
         .attr("x", 4)
         .attr("y", function(d) { return y(d); })
         .attr("width", cellSize)
@@ -108,20 +116,24 @@ mdat.visualization.calendar = function() {
         .attr("transform", "translate(0,30)")
         .attr("style", "clip-path: url(#" + namespace + "_clip);");
 
-    // TODO.  get years range from data
-    var years = focus.selectAll("year")
-        .data(all_years)
+    // TODO.  get seasons range from data
+    var seasons = focus.selectAll("season")
+        .data(all_seasons)
       .enter().append("g")
-        .attr("class", "year")
+        .attr("class", "season")
         .attr("transform", function(d,i) { return "translate(15," + (cellSize * 8 * i) + ")"; });
 
-    years.append("text")
-        .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
+    seasons.append("text")
+        .attr("transform", "translate(-12," + cellSize * 3.5 + ")rotate(-270)")
         .style("text-anchor", "middle")
-        .text(function(d) { return d; });
+        .text(function(d) {
+          var d0 = "" + d,
+              d1 = "" + (d+1);
+          return d0 + "-" + diff_suffix(d0, d1);
+        });
 
-    var rect = years.selectAll(".day")
-        .data(function(d) { return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+    var rect = seasons.selectAll(".day")
+        .data(function(d) { return d3.time.days(new Date(d, 3, 1), new Date(d + 1, 3, 1)); })
       .enter().append("rect")
         .attr("class", "day")
         .attr("width", cellSize)
@@ -134,8 +146,8 @@ mdat.visualization.calendar = function() {
     rect.append("title")
         .text(format);
 
-    years.selectAll(".month")
-        .data(function(d) { return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+    seasons.selectAll(".month")
+        .data(function(d) { return d3.time.months(new Date(d, 3, 1), new Date(d + 1, 3, 1)); })
       .enter().append("path")
         .attr("class", "month")
         .attr("d", monthPath);
@@ -177,10 +189,10 @@ mdat.visualization.calendar = function() {
       // TODO.  make local var
       focusData = d3.map(receiptsByDate.all(), 
                     function(d) { return d.key; });
-      contextData = d3.map(receiptsByYear.all(), function(d) { return d.key.getFullYear(); });
+      contextData = d3.map(receiptsBySeason.all(), function(d) { return d.key.getFullYear(); });
 
       var receipts_domain = receiptsByDate.top(receiptsByDate.size()).map(function(d) { return d.value; }).reverse(),
-          context_domain = receiptsByYear.top(receiptsByYear.size()).map(function(d) { return d.value; }).reverse();
+          context_domain = receiptsBySeason.top(receiptsBySeason.size()).map(function(d) { return d.value; }).reverse();
 
       // TODO.  calculate quantiles without projecting all values
       var focusColor = d3.scale.quantile()
@@ -191,11 +203,10 @@ mdat.visualization.calendar = function() {
         .domain(context_domain)
         .range(colorbrewer.YlGnBu[9]);
 
-      c_year.attr("fill", function(d) {
-
+      c_season.attr("fill", function(d) {
         var dsum = contextData.get(d);
         return (dsum && dsum.value > 0) ? contextColor(dsum.value) : "white";
-      });    
+      });
 
       middle = new Date();
       rect.attr("fill", function(d) {
@@ -224,9 +235,15 @@ mdat.visualization.calendar = function() {
     function brushed() {
       d3.event.sourceEvent.stopPropagation();
       var proportion = brush.extent()[0] / height,
-          scrollHeight = cellSize * 8 * all_years.length;
+          scrollHeight = cellSize * 8 * all_seasons.length;
       // TODO. scrolling disabled until we figure out a scalability solution for SVG
 //      focus.attr("transform", "translate(0,-" + (proportion * scrollHeight) + ")");
+    }
+
+    function diff_suffix(s0, s1) {
+      var i = 0;
+      while (i < s0.length && i < s1.length && s0.charAt(i) === s1.charAt(i)) { i++; }
+      return s1.slice(i);
     }
 
     return root;
