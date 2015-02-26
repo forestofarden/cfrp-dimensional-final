@@ -4573,11 +4573,11 @@ l-3 27 -6 -27z"/>
 </g>
 
 <g fill-opacity="0.9">
-<path class="mdat parterre" transform="translate(375,520)"></path>
-<path class="mdat première_loge" transform="translate(375,430)"></path>
-<path class="mdat autre" transform="translate(375,300)"></path>
-<path class="mdat autre" transform="translate(190,250)"></path>
-<path class="mdat autre" transform="translate(550,250)"></path>
+<circle class="mdat parterre" cx="375" cy="520" r="25"></circle>
+<circle class="mdat première_loge" cx="375" cy="430" r="25"></circle>
+<circle class="mdat autre" cx="375" cy="300" r="25"></circle>
+<circle class="mdat autre" cx="190" cy="250" r="25"></circle>
+<circle class="mdat autre" cx="550" cy="250" r="25"></circle>
 </g>
 
 </svg>

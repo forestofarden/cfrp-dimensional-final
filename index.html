@@ -17,7 +17,7 @@
     .sidebar {
       position: fixed;
       margin:0; top:0; right:0; bottom:0;
-      width: 200px;
+      width: 175px;
       font: 14px sans-serif;
       background: rgba(45, 45, 125, 0.04);
       padding-top: 20px;
@@ -35,7 +35,7 @@
       display:none;
     }
     .viz .background {
-      opacity: 0.75;
+      opacity: 0.9;
       fill: white;
     }
 
@@ -84,7 +84,7 @@
 
         // index relevant columns
 
-        cfrp = crossfilter(sales);
+        var cfrp = crossfilter(sales);
 
         // TODO. how to share ancillary data?
         cfrp.sales = sales;

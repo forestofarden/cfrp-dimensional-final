@@ -13,8 +13,8 @@
 
 mdat.visualization.heatmap = function() {
 
-  var width = 415,    // 756
-      height = 320,   // 600
+  var width = 680,    // 756
+      height = 544,   // 600
       title = "Theater Heatmap",
       cfrp = undefined,
       uid = 0,
@@ -35,8 +35,7 @@ mdat.visualization.heatmap = function() {
   function chart() {
     var namespace = "heatmap_" + uid++;
 
-    var section = cfrp.dimension(function(d) { return d.section; }),
-        days = cfrp.dimension(function(d) { return d.date; });
+    var section = cfrp.dimension(function(d) { return d.section; });
 
     var receiptsBySection = section.group()
           .reduceSum(function(d) { return d.sold; });
@@ -62,15 +61,11 @@ mdat.visualization.heatmap = function() {
     });
 
     function update() {
-      var data = receiptsBySection.all(),
-          data_ndx = d3.map(data, function(d) { return d.key; }),
-          day_count = days.group().all().filter(function(d) { return d.value > 0}).length;
+      var data = receiptsBySection.top(Infinity).map(function(d) { return { key : d.key, value : d.value }; }),
+          data_ndx = d3.map(data, function(d) { return d.key; });
 
       var color = d3.scale.linear()
-        .range(["#ef8a62","#67a9cf"]);
-
-      var angle = d3.scale.linear()
-        .range([0, 2 * Math.PI]);
+        .range(["#fee0d2","#de2d26"]);
 
       var marks = root.selectAll(".mdat")
         .datum(function() {
@@ -79,29 +74,17 @@ mdat.visualization.heatmap = function() {
           return data_ndx.get(k);
         });
 
-      var arc = d3.svg.arc()
-          .innerRadius(0)
-          .outerRadius(25)
-          .startAngle(0);
-
-      marks.attr("d", arc.endAngle(function(d) {
-//        angle.domain([0, capacity_per_diem[d.key] * day_count]);
-//        return angle(d.value);
-        return Math.PI * 2.0;
-      }))
-        .attr("fill", function(d) {
-          color.domain([0, capacity_per_diem[d.key] * day_count]);
-          return color(d.value);
-        });
+      marks.attr("fill", function(d) {
+        console.log("element update " + d.key);
+        return "red";// color(d.value);
+      });
     }
 
     function dispose() {
-      console.log("detaching dimensions for heatmap");
+      console.log("detaching dimensions for heatmap " + namespace);
       cfrp.on("." + namespace, null);
       section.groupAll();
       section.dispose();
-      days.groupAll();
-      days.dispose();
       cfrp.change();
     }
 
@@ -111,6 +94,8 @@ mdat.visualization.heatmap = function() {
       var k = classes[0].replace("_", " ");
       return k;
     }
+
+    return namespace;
   }
 
   chart.datapoint = function(value) {

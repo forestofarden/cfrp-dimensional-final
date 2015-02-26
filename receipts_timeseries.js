@@ -73,8 +73,8 @@ mdat.visualization.receipts_timeseries = function() {
             brush.extent(focus_domain());
           });
 
-    // TODO.... not clear
-    d3.select(this).call(zoom);
+    // TODO.... not clear.  zoom not coordinated with brush
+//    d3.select(this).call(zoom);
 
     var drag = d3.behavior.drag()
         .on("dragstart", function() {
@@ -197,8 +197,7 @@ mdat.visualization.receipts_timeseries = function() {
     }
 
     function focus_scale() {
-      var data = receiptsByDate.all(),
-          curDomain = focus_domain(),
+      var curDomain = focus_domain(),
           fullDomain = data_extent();
       return (curDomain[1] - curDomain[0]) / (fullDomain[1] - fullDomain[0]);
     }

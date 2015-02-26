@@ -3,8 +3,8 @@
 mdat.visualization.receipts_by_section = function() {
 
   var width = 600,
-      height = 150,
-      title = "Yearly Receipts by Section",
+      height = 100,
+      title = "Receipts Dist. by Section",
       cfrp = undefined,
       uid = 0;
 
@@ -49,12 +49,12 @@ mdat.visualization.receipts_by_section = function() {
     var namespace = "receipts_by_section" + uid++;
 
     var sectionDim     = cfrp.dimension(function(d) { return d.section; }),
-        sectionNames   = sectionDim.group().all().map(function(d) { return d.key; }),
+        sectionNames   = sectionDim.group().top(Infinity).map(function(d) { return d.key; }),
 
-        yearDim        = cfrp.dimension(function(d) { return d.date; }),
-        yearAgg        = yearDim.group(function(d) { return d.getFullYear(); }),
-        receipts       = yearAgg.reduceSum(function(d) { return d.sold * d.price; });
+        dateDim        = cfrp.dimension(function(d) { return d.date; }),
+        receipts       = dateDim.group().reduceSum(function(d) { return d.sold * d.price; });
 
+    var format = d3.time.format("%a %e %b %Y");
 
     // TODO.
     /*
@@ -180,15 +180,15 @@ mdat.visualization.receipts_by_section = function() {
 
       outlier.select("text")
         .attr("x", function(d) { return x(d.value); })
-        .text(function(d) { return d.key + ": L. " + receiptFormat(d.value); });
+        .text(function(d) { return format(d.key) + ": L. " + receiptFormat(d.value); });
     }
 
     function section_summaries() {
       var data = sectionNames.map(function(section) {
         sectionDim.filter(section);
 
-        var sectionReceiptsByYear = receipts.top(receipts.size()).map(dup_bucket).filter(function(d) { return d.value > 0.0; }).reverse(),
-            points = sectionReceiptsByYear.map(function(d) { return d.value; });
+        var sectionReceiptsByDate = receipts.top(receipts.size()).map(dup_bucket).filter(function(d) { return d.value > 0.0; }).reverse(),
+            points = sectionReceiptsByDate.map(function(d) { return d.value; });
 
         var median = d3.quantile(points, 0.5),
             irq    = d3.quantile(points, 0.75) - d3.quantile(points, 0.25),
@@ -212,7 +212,7 @@ mdat.visualization.receipts_by_section = function() {
         summary = summary.map(bracket);
 
         var outliers = [];
-        sectionReceiptsByYear.forEach(function(d) {
+        sectionReceiptsByDate.forEach(function(d) {
           if (summary[2] > d.value || summary[6] < d.value) { 
             outliers.push(d);
           }
@@ -236,8 +236,8 @@ mdat.visualization.receipts_by_section = function() {
       cfrp.on("." + namespace, null);
       sectionDim.groupAll();
       sectionDim.dispose();
-      yearDim.groupAll();
-      yearDim.dispose();
+      dateDim.groupAll();
+      dateDim.dispose();
       cfrp.change();
     }
 

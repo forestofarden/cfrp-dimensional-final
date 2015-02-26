@@ -17,7 +17,7 @@ mdat.visualization.calendar = function() {
       font: 10px sans-serif; \
     } \
     rect.day.selected { \
-      fill: red; \
+      fill: orange; \
     } \
     .season_rug { \
       stroke: #ccc; \
@@ -152,45 +152,79 @@ mdat.visualization.calendar = function() {
         .attr("class", "month")
         .attr("d", monthPath);
 
+    // Allow the arrow keys to change the displayed page.
+    window.focus();
+    d3.select(window).on("keydown", function() {
+      switch (d3.event.keyCode) {
+        case 37: move(-1); break;
+        case 39: move(1); break;
+      }
+    });
+
     update();
 
     cfrp.on("change." + namespace, update);
     cfrp.on("dispose." + namespace, dispose);
+
+    function move(i) {
+      var old = sel_extent;
+      var fn = function(d) { return d3.time.day.offset(d, i); };
+      sel_extent = sel_extent.map(fn);
+
+      draw_selected();
+      update_filter();
+    }
 
     function select(d) {
       var dist = sel_extent.map(function(p) { return Math.abs(p - d); }),
           ndx = dist.indexOf(d3.min(dist));
 
       if (dist.some(function(p) { return p === 0.0; })) { sel_extent = []; }
-      else if (ndx >= 0 && sel_extent.length > 1) { sel_extent[ndx] = d; }
+      else if (ndx >= 0 && sel_extent.length > 1)       { sel_extent[ndx] = d; }
       else { sel_extent.push(d); }
 
+      // TODO. don't ask me why sel_extent.sort() doesn't work...
+      //       if crossfilter receives a filterRange out of order, it goes crazy (permanently)
+      if (sel_extent.length > 1 && sel_extent[0] > sel_extent[1]) { sel_extent = sel_extent.reverse(); }
+
+      draw_selected();
+      update_filter();
+    }
+
+    function draw_selected() {
+      console.log(JSON.stringify(sel_extent));
       rect.classed("selected", function(p) {
         switch (sel_extent.length) {
           case 0: return false;
-          case 1: return p === sel_extent[0];
+          case 1: return (sel_extent[0] - p === 0);
           case 2: return (sel_extent[0] <= p) && (p <= sel_extent[1]);
         }
       });
+    }
 
+    // TODO... better solution to manage recursive events
+    var recursive = false;
+    function update_filter() {
       switch (sel_extent.length) {
         case 0: date.filterAll(); break;
         case 1: date.filterExact(sel_extent[0]); break;
         case 2: date.filterRange(sel_extent); break;
       }
-
+      recursive = true;
       cfrp.change();
+      recursive = false;
     }
 
     function update() {
+      if (recursive) { return; }
+
       var start = new Date(),
           middle,
           finish;
 
       // TODO.  make local var
-      focusData = d3.map(receiptsByDate.all(), 
-                    function(d) { return d.key; });
-      contextData = d3.map(receiptsBySeason.all(), function(d) { return d.key.getFullYear(); });
+      var focusData = d3.map(receiptsByDate.top(Infinity), function(d) { return d.key; }),
+          contextData = d3.map(receiptsBySeason.top(Infinity), function(d) { return d.key.getFullYear(); });
 
       var receipts_domain = receiptsByDate.top(receiptsByDate.size()).map(function(d) { return d.value; }).reverse(),
           context_domain = receiptsBySeason.top(receiptsBySeason.size()).map(function(d) { return d.value; }).reverse();
