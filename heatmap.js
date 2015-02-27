@@ -23,13 +23,17 @@ mdat.visualization.heatmap = function() {
 
   var css = " \
     circle.mdat { \
-      fill-opacity: 0.2; \
+      fill-opacity: 0.9; \
+    } \
+    circle.mdat.selected { \
+      stroke: blue; \
+      stroke-width: 2px; \
     }";
 
-  var capacity_per_diem = {
-    'parterre': 400,  // 773,
-    'première loge': 100, // 500,
-    'autre': 100 }; // 2697 };
+  var capacity_per_diem = {  // TODO.  estimates based on first 3 seasons
+    'parterre': 650,
+    'première loge': 150,
+    'autre': 550 };
 
 
   function chart() {
@@ -39,6 +43,8 @@ mdat.visualization.heatmap = function() {
 
     var receiptsBySection = section.group()
           .reduceSum(function(d) { return d.sold; });
+
+    var selected;
 
     var root = d3.select(this)
         .classed("heatmap", true);
@@ -60,7 +66,10 @@ mdat.visualization.heatmap = function() {
       cfrp.on("dispose." + namespace, dispose);
     });
 
+    var recursive = false;
     function update() {
+      if (recursive) { return; }
+
       var data = receiptsBySection.top(Infinity).map(function(d) { return { key : d.key, value : d.value }; }),
           data_ndx = d3.map(data, function(d) { return d.key; });
 
@@ -75,8 +84,26 @@ mdat.visualization.heatmap = function() {
         });
 
       marks.attr("fill", function(d) {
-        console.log("element update " + d.key);
-        return "red";// color(d.value);
+        return "red";
+      });
+
+      marks.on("click", function(p) {
+        if (selected === p.key) { selected = null; }
+        else { selected = p.key; }
+
+        section.filter(selected);
+
+        recursive = true;
+        cfrp.change();
+        recursive = false;
+
+        draw_selection(marks);
+      });
+    }
+
+    function draw_selection(marks) {
+      marks.classed("selected", function(p) {
+        return selected === p.key;
       });
     }
 
