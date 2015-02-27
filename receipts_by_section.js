@@ -52,7 +52,7 @@ mdat.visualization.receipts_by_section = function() {
         sectionNames   = sectionDim.group().top(Infinity).map(function(d) { return d.key; }),
 
         dateDim        = cfrp.dimension(function(d) { return d.date; }),
-        receipts       = dateDim.group().reduceSum(function(d) { return d.sold * d.price; });
+        receipts       = dateDim.group(d3.time.day).reduceSum(function(d) { return d.sold * d.price; });
 
     var format = d3.time.format("%a %e %b %Y");
 
@@ -68,11 +68,10 @@ mdat.visualization.receipts_by_section = function() {
 
     var data = section_summaries();
 
-    var all_points = data.map(function(d) { return d.summary; })
-          .reduce(function(a, b) { return a.concat(b); });
+    var global_max = d3.max(data.map(function(d) { return d.summary[8]; }));
 
     var x = d3.scale.linear()
-      .domain([0, d3.max(all_points)])
+      .domain([0, global_max])
       .range([100, width]);
 
     var y = d3.scale.ordinal()
@@ -184,47 +183,58 @@ mdat.visualization.receipts_by_section = function() {
     }
 
     function section_summaries() {
+
       var data = sectionNames.map(function(section) {
         sectionDim.filter(section);
 
-        var sectionReceiptsByDate = receipts.top(receipts.size()).map(dup_bucket).filter(function(d) { return d.value > 0.0; }).reverse(),
+        var sectionReceiptsByDate = receipts.top(Infinity)
+                                      .map(dup_bucket)
+                                      .filter(function(d) { return d.value > 0.01; }) // TODO.  crossfilter's aggregation method magnifies small floating point errors
+                                      .reverse(),
             points = sectionReceiptsByDate.map(function(d) { return d.value; });
 
-        var median = d3.quantile(points, 0.5),
-            irq    = d3.quantile(points, 0.75) - d3.quantile(points, 0.25),
-            extent = [ points[0], points[points.length-1] ];
+        var q0  = points[0],
+            q1  = d3.quantile(points, 0.25),
+            q2  = d3.quantile(points, 0.5),
+            q3  = d3.quantile(points, 0.75),
+            q4  = points[points.length-1];
+            irq = q3 -q1;
 
-        var bracket = function(v) {
-          if (v < extent[0]) { v = extent[0]; }
-          else if (v > extent[1]) { v = extent[1]; }
-          return v;
-        };
+        function bracket(v) { return v ? Math.min(q4, Math.max(q0, v)) : 0.0; };
 
-        var summary = [ extent[0],                            // minimum
-                        median - (irq / 2.0) - irq * 3.0,     // low outliers
-                        median - (irq / 2.0) - irq * 1.5,     // low whiskers
-                        median - (irq / 2.0),                 // first quartile
-                        median,                               // second quartile
-                        median + (irq / 2.0),                 // third quartile
-                        median + (irq / 2.0) + irq * 1.5,     // high whiskers
-                        median + (irq / 2.0) + irq * 3.0,     // high outliers
-                        extent[1] ];                          // maximum
+        var summary = [ q0,                 // minimum
+                        q1 - irq * 3.0,     // low outliers
+                        q1 - irq * 1.5,     // low whiskers
+                        q1,                 // first quartile
+                        q2,                 // second quartile
+                        q3,                 // third quartile
+                        q3 + irq * 1.5,     // high whiskers
+                        q3 + irq * 3.0,     // high outliers
+                        q4 ];               // maximum
         summary = summary.map(bracket);
 
         var outliers = [];
         sectionReceiptsByDate.forEach(function(d) {
-          if (summary[2] > d.value || summary[6] < d.value) { 
+          if (d.value < summary[2] || summary[6] < d.value) {
             outliers.push(d);
           }
         });
+
+/*
+        var sanity_sorted = points.reduce(function(v,d) { return (v >= 0.0) && (d >= v) ? d : -1 }, 0.0);
+        sanity_sorted = (sanity_sorted >= 0.0 ? "sorted" : "not sorted");
+        var in_irq = function(d) { return summary[3] <= d && d <= summary[5]; },
+            sanity_count = points.reduce(function(v,d) { return in_irq(d) ? v+1 : v; }, 0);
+        console.log(section + ": " + points.length + " results; " + sanity_count + " in irq; " + outliers.length + " outliers");
+        console.log(JSON.stringify(summary) + " " + sanity_sorted);
+*/
 
         sectionDim.groupAll();
 
         return {
             section: section,
             summary: summary,
-            receipts: points,
-            outliers: outliers.sort()
+            outliers: outliers
           };
       });
 

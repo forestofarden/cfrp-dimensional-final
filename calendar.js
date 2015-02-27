@@ -43,7 +43,7 @@ mdat.visualization.calendar = function() {
     var namespace = "calendar_" + uid++;
 
     var date = cfrp.dimension(function(d) { return d.date; }),
-        receiptsByDate = date.group()
+        receiptsByDate = date.group(d3.time.day)
                              .reduceSum(function(d) { return d.sold * d.price; }),
         receiptsBySeason = date.group(d3.time.year)
                                .reduceSum(function(d) { return d.sold * d.price; });
@@ -205,10 +205,16 @@ mdat.visualization.calendar = function() {
     // TODO... better solution to manage recursive events
     var recursive = false;
     function update_filter() {
+      function nudge(d) {
+        // TODO.  compensates for crossfilter's filterRange not including the outer bounds... find a better solution
+        return [ d3.time.minute.offset(d[0], -1),
+                 d3.time.minute.offset(d[1], 1) ];
+      }
+
       switch (sel_extent.length) {
         case 0: date.filterAll(); break;
         case 1: date.filterExact(sel_extent[0]); break;
-        case 2: date.filterRange(sel_extent); break;
+        case 2: date.filterRange(nudge(sel_extent)); break;
       }
       recursive = true;
       cfrp.change();
