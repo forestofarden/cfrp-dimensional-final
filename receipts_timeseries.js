@@ -7,9 +7,12 @@ mdat.visualization.receipts_timeseries = function() {
       height2 = 30,
       title = "Receipts Time Series",
       sel_ratio = 7.0/12.0,
-      format = d3.time.format("%e %b %Y");
-      cfrp = undefined,
+      format = d3.time.format("%e %b %Y"),
+      commasFormatter = d3.format(",.0f"),
       uid = 0;
+
+  var cfrp = undefined,
+      maxReceipts = undefined;
 
   var css = " \
     text { \
@@ -25,6 +28,11 @@ mdat.visualization.receipts_timeseries = function() {
       fill: none; \
       stroke: orange; \
       stroke-width: 1.5px; \
+    } \
+    .dot { \
+      fill: white; \
+      stroke: orange; \
+      stroke-width: 1px; \
     } \
     .brush .extent { \
       stroke: #fff; \
@@ -43,16 +51,12 @@ mdat.visualization.receipts_timeseries = function() {
   function chart() {
     var namespace = "receipts_timeseries_" + uid++;
 
-    var date = cfrp.dimension(function(d) { return d.date; }),
-        receiptsByDate = date.group(d3.time.month)
-                           .reduceSum(function(d) { return d.sold * d.price; });
-
     var x = d3.time.scale().range([0, width]),
         x2 = d3.time.scale().range([0, width]),
         y = d3.scale.linear().range([height, 0]),
         y2 = d3.scale.linear().range([height2, 0]);
 
-    y.domain([0, receiptsByDate.top(1)[0].value]);
+    y.domain([0, maxReceipts]);
     y2.domain(y.domain());
 
     var brush = d3.svg.brush()
@@ -82,19 +86,17 @@ mdat.visualization.receipts_timeseries = function() {
           d3.event.sourceEvent.stopPropagation();
         });
 
-    var commasFormatter = d3.format(",.0f");
-
     var xAxis = d3.svg.axis().scale(x).orient("bottom"),
         xAxis2 = d3.svg.axis().scale(x2).orient("bottom"),
         yAxis = d3.svg.axis().scale(y).orient("left").tickFormat(commasFormatter);
 
     var line = d3.svg.line()
-        .interpolate("basis")
+        .interpolate("cardinal")
         .x(function(d) { return x(d.key); })
         .y(function(d) { return y(d.value); });
 
     var line2 = d3.svg.line()
-        .interpolate("basis")
+        .interpolate("cardinal")
         .x(function(d) { return x2(d.key); })
         .y(function(d) { return y2(d.value); });
 
@@ -115,9 +117,12 @@ mdat.visualization.receipts_timeseries = function() {
     var focus = root.append("g")
         .attr("class", "focus");
 
-    focus.append("path")
-        .attr("class", "line")
+    var focusinfo = focus.append("g")
+        .attr("class", "info")
         .attr("clip-path", "url(#" + namespace + "_clip)");
+
+    focusinfo.append("path")
+        .attr("class", "line")
 
     focus.append("g")
         .call(xAxis)
@@ -175,10 +180,14 @@ mdat.visualization.receipts_timeseries = function() {
         .attr("y", -6)
         .attr("height", height2 + 7);
 
-    update();
+    var date = cfrp.dimension(function(d) { return d.date; }),
+        receiptsByDate = date.group(d3.time.month)
+                           .reduceSum(function(d) { return d.sold * d.price; });
 
     cfrp.on("change." + namespace, update);
     cfrp.on("dispose." + namespace, dispose);
+
+    update();
 
     function focus_domain() {
       // TODO.  formula cleanup
@@ -231,7 +240,21 @@ mdat.visualization.receipts_timeseries = function() {
       sel1.text(format(dom[0]));
       sel2.text(format(dom[1]));
 
-      focus.select(".line")
+      var dots = focusinfo.selectAll(".dot")
+        .data(data);
+
+      dots.exit().remove();
+
+      dots.enter().append("circle")
+         .attr("class", "dot")
+         .attr("r", 3)
+        .append("title")
+         .text(function(d) { return "L. " + commasFormatter(d.value); });
+
+      dots.attr("cx", line.x())
+          .attr("cy", line.y());
+
+      focusinfo.select(".line")
         .datum(data)
         .attr("d", line);
       context.select(".line")
@@ -264,6 +287,12 @@ mdat.visualization.receipts_timeseries = function() {
   chart.datapoint = function(value) {
     if (!arguments.length) return cfrp;
     cfrp = value;
+
+    var date = cfrp.dimension(function(d) { return d.date; }),
+        receiptsByDate = date.group(d3.time.month).reduceSum(function(d) { return d.sold * d.price; });
+    maxReceipts = receiptsByDate.top(1)[0].value;
+    date.dispose();
+
     return chart;
   }
 

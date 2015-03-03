@@ -29,7 +29,10 @@ mdat.mplex = function (){
       });
 
     var charts = d3.values(mdat.visualization)
-      .map(function(fn) { return fn.call(); })
+      .map(function(fn) {
+        var chart = fn.call();
+        return chart.datapoint(datapoint);
+      })
       .sort(function(a, b) {
         return +(a.title() > b.title()) || +(a.title() === b.title()) - 1;
       });
@@ -90,7 +93,7 @@ mdat.mplex = function (){
 
       enter.each(function(d, i) {
         // attach datapoint & render visualization
-        d.namespace = d.chart.datapoint(datapoint).call(this);
+        d.namespace = d.chart.call(this);
 
         console.log("attached a viz (" + d.namespace + ").");
 

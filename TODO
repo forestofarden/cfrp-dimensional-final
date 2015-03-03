@@ -7,6 +7,9 @@ chassis
 - join data files after loading                            DONE
 - optimise join for speed?                                 DONE
 
+- find better solution than crossfilter.  API not flexible enough : see setting domain from a crossfilter in mid-flight
+- establish a test suite, for rewriting the query engine
+
 visualizations
 
 - camera in registers                                      DONE
@@ -16,39 +19,45 @@ visualizations
 - svg templates for seating categories                     DONE
 - regions in heatmap                                       DONE
 - brush in timeseries                                      DONE
-- link across visualizations
+- link across visualizations                               DONE
 - camera in registers                                      DONE
 - bring back boxplots                                      DONE
-- SVG downloads for images								   DONE
-
-- make theatre heatmap clickable
+* (disable) - SVG downloads for images                                 DONE
+- make theatre heatmap clickable                           DONE
 
 calendar
 
-- calendar by seasons, not years
+(*) - activate context brush
+- calendar by seasons, not years                           DONE
 - brush on days in calendar
-- selected day to show in register
+* - selected day to show in register
 - month names
 - speed up initial render
-- focus + context for calendar
+- focus + context for calendar                             DONE
 
 timeline
 
-- interaction with calendar heatmap causes invalid path
-
+- add dots at aggregation points                           DONE
+* - interaction with calendar heatmap causes invalid path
 - SVG download for timeline: show focus only?
   [ no goalposts / context ]
 - no SVG download for registers
-
 - allow panning in timeline
     [ drag overrides; translation start & end ]
 - simplify update in timeline (when to reset domain?)
 - drag goalposts to adjust filter range
+* - fix zoom
+
+allow switching between receipts & sales across widgets
+
+* new widgets: author, title, genre, weekday(?)
 
 dashboard
 
+* - loading graphic
+- widgets should initialize with unfiltered state          DONE
 - decommision dimensions when closing a visualization      DONE
 - prettier installed visualizations list
 - better automatic layout
-- resize handles for visualizations
+(*) - resize handles for visualizations
 - move CSS to somewhere more modular                       DONE

@@ -5,8 +5,11 @@ mdat.visualization.receipts_by_section = function() {
   var width = 600,
       height = 100,
       title = "Receipts Dist. by Section",
-      cfrp = undefined,
       uid = 0;
+
+  var cfrp = undefined,
+      sectionNames = undefined,
+      maxReceipts = undefined;
 
   // should be in CDATA
   var css = "\
@@ -42,40 +45,22 @@ mdat.visualization.receipts_by_section = function() {
       fill: red; \
     }";
 
-  var receiptFormat = d3.format(",.0f");
+  var receiptFormat = d3.format(",.0f"),
+      format = d3.time.format("%a %e %b %Y");
 
   function chart() {
 
     var namespace = "receipts_by_section" + uid++;
 
-    var sectionDim     = cfrp.dimension(function(d) { return d.section; }),
-        sectionNames   = sectionDim.group().top(Infinity).map(function(d) { return d.key; }),
-
-        dateDim        = cfrp.dimension(function(d) { return d.date; }),
-        receipts       = dateDim.group(d3.time.day).reduceSum(function(d) { return d.sold * d.price; });
-
-    var format = d3.time.format("%a %e %b %Y");
-
-    // TODO.
-    /*
-    sectionNames = [ 'Places de Parterre', 'Premières Places', 'Troisièmes Places', 'Secondes Places', 'Loge basse',
-                     'Irregular Receipts', 'Petites Loges', 'Secondes Loges 3', 'Loge haute', 'Secondes Loges',
-                     'Parterre', 'Theatre', 'Premieres loges', 'Troisiemes Loges' ];
-    */
-
     var root = d3.select(this).append("g")
         .classed("receipts_by_section", true);
 
-    var data = section_summaries();
-
-    var global_max = d3.max(data.map(function(d) { return d.summary[8]; }));
-
     var x = d3.scale.linear()
-      .domain([0, global_max])
+      .domain([0, maxReceipts])
       .range([100, width]);
 
     var y = d3.scale.ordinal()
-      .domain(data.map(function(d) { return d.section; }))
+      .domain(sectionNames)
       .rangeRoundBands([0, height], .5);
 
     var xAxis = d3.svg.axis()
@@ -93,20 +78,20 @@ mdat.visualization.receipts_by_section = function() {
         .attr("class", "x axis");
 
     var boxplot = root.selectAll(".boxplot")
-          .data(data);
+          .data(sectionNames);
 
     boxplot.enter().append("g")
           .attr("class", "boxplot")
-          .attr("transform", function(d) { return "translate(0," + y(d.section) + ")"; })
+          .attr("transform", function(d) { return "translate(0," + y(d) + ")"; })
         .append("text")
           .attr("class", "label")
           .attr("x", 80)
           .attr("y", y.rangeBand() / 2.0)
           .attr("text-anchor", "end")
-          .text(function(d) { return d.section; });
+          .text(function(d) { return d; });
 
     var box = boxplot.selectAll(".box")
-       .data(function(d) { return d.summary.slice(2,7); });
+       .data(function(d) { return d3.range(2,7); });
 
     var box_g = box.enter()
         .append("g")
@@ -123,10 +108,16 @@ mdat.visualization.receipts_by_section = function() {
     var decoration = boxplot.append("path")
        .attr("class", "decoration");
 
-    update();
+    // crossfilter dimension availability delayed to update, since domain may already be filtered when the widget is created
+
+    var sectionDim     = cfrp.dimension(function(d) { return d.section; }),
+        dateDim        = cfrp.dimension(function(d) { return d.date; }),
+        receipts       = dateDim.group(d3.time.day).reduceSum(function(d) { return d.sold * d.price; });
 
     cfrp.on("change." + namespace, update);
     cfrp.on("dispose." + namespace, dispose);
+
+    update();
 
     function update() {
       var data = section_summaries();
@@ -259,8 +250,23 @@ mdat.visualization.receipts_by_section = function() {
   chart.datapoint = function(value) {
     if (!arguments.length) return cfrp;
     cfrp = value;
-    // TODO remove
-    mdat.cfrp = value;
+
+    // set domain for the datapoint, before it is refined
+    // ... does it really have to be this hard!?
+
+    var sectionDim = cfrp.dimension(function(d) { return d.section; }),
+        dateDim = cfrp.dimension(function(d) { return d.date; }),
+        receipts = dateDim.group(d3.time.day).reduceSum(function(d) { return d.sold * d.price; });
+
+    sectionNames = sectionDim.group().all().map(function(d) { return d.key; });
+    maxReceipts = d3.max(sectionNames.map(function(section) {
+      sectionDim.filterExact(section);
+      return receipts.top(1)[0].value;
+    }));
+
+    sectionDim.dispose();
+    dateDim.dispose();
+
     return chart;
   }
 

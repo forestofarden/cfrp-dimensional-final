@@ -8,9 +8,21 @@ mdat.visualization.calendar = function() {
       height = 8 * seasons_visible * cellSize,
 //      height = "100%",// 8 * cellSize * (1794 - 1680),    // TODO.  calculate domain
       title = "Calendar Heatmap",
-      cfrp = undefined,
       uid = 0,
       sel_extent = [];
+
+  var cfrp = undefined;
+
+  var day = d3.time.format("%w");
+      week = function(d) {
+        // TODO.  a cruel hack, but it works...  rework the scale to map
+        //        seasons correctly in screen coords, not dates
+        if (d3.time.format("%e %b")(d) === " 1 Apr") { return 0; }
+        d = d3.time.week.offset(d, -13);
+        return d3.time.format("%U")(d);
+      },
+      format = d3.time.format("%a %e %b %Y"),
+      commasFormatter = d3.format(",.0f");      
 
   var css = "\
     text { \
@@ -41,24 +53,6 @@ mdat.visualization.calendar = function() {
 
   function chart() {
     var namespace = "calendar_" + uid++;
-
-    var date = cfrp.dimension(function(d) { return d.date; }),
-        receiptsByDate = date.group(d3.time.day)
-                             .reduceSum(function(d) { return d.sold * d.price; }),
-        receiptsBySeason = date.group(d3.time.year)
-                               .reduceSum(function(d) { return d.sold * d.price; });
-
-    var day = d3.time.format("%w");
-        week = function(d) {
-          // TODO.  a cruel hack, but it works...  rework the scale to map
-          //        seasons correctly in screen coords, not dates
-          if (d3.time.format("%e %b")(d) === " 1 Apr") { return 0; }
-          d = d3.time.week.offset(d, -13);
-          return d3.time.format("%U")(d);
-        },
-        percent = d3.format(".1%"),
-        format = d3.time.format("%a %e %b %Y"),
-        commasFormatter = d3.format(",.0f");
 
     var y = d3.scale.ordinal()
         .domain(all_seasons)
@@ -160,6 +154,12 @@ mdat.visualization.calendar = function() {
         case 39: move(1); break;
       }
     });
+
+    var date = cfrp.dimension(function(d) { return d.date; }),
+        receiptsByDate = date.group(d3.time.day)
+                             .reduceSum(function(d) { return d.sold * d.price; }),
+        receiptsBySeason = date.group(d3.time.year)
+                               .reduceSum(function(d) { return d.sold * d.price; });
 
     update();
 
