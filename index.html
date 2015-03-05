@@ -50,7 +50,7 @@
   <script src="mdat.js"></script>
   <script src="receipts_by_section.js"></script>
   <script src="receipts_timeseries.js"></script>
-  <script src="registers.js"></script>
+  <script src="register.js"></script>
   <script src="heatmap.js"></script>
   <script src="calendar.js"></script>
 </head>
@@ -90,13 +90,6 @@
         cfrp.sales = sales;
         cfrp.playbill = playbill;
         cfrp.playbill_idx = playbill_idx;
-
-        // first shared state is filter across all of cfrp
-        // second is currently selected date:
-
-        // TODO.  example of an operation that's difficult in crossfilter: min of a dimension
-        //        currently just a hack depending on order of sales data
-        cfrp.sel_date = cfrp.sales[1].date;
 
         var mplex = mdat.mplex()
           .datapoint(cfrp);
