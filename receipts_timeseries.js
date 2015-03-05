@@ -18,33 +18,33 @@ mdat.visualization.receipts_timeseries = function() {
     text { \
       font: 10px sans-serif; \
     } \
-    .axis path, \
-    .axis line { \
+    .receipts_timeseries .axis path, \
+    .receipts_timeseries .axis line { \
       fill: none; \
       stroke: #000; \
       shape-rendering: crispEdges; \
     } \
-    .line { \
+    .receipts_timeseries .line { \
       fill: none; \
       stroke: orange; \
       stroke-width: 1.5px; \
     } \
-    .dot { \
+    .receipts_timeseries .dot { \
       fill: white; \
       stroke: orange; \
       stroke-width: 1px; \
     } \
-    .brush .extent { \
+    .receipts_timeseries .brush .extent { \
       stroke: #fff; \
       fill-opacity: .125; \
       shape-rendering: crispEdges; \
     } \
-    .selection { \
+    .receipts_timeseries .selection { \
       stroke: black; \
       stroke-opacity: 0.2; \
       stroke-dasharray: 5,2; \
     } \
-    .selection text { \
+    .receipts_timeseries .selection text { \
       opacity: 0.5; \
     }";
 

@@ -16,32 +16,32 @@ mdat.visualization.receipts_by_section = function() {
     text { \
       font: 10px sans-serif; \
     } \
-    .axis path, \
-    .axis line { \
-    fill: none; \
-    stroke: #000; \
-    shape-rendering: crispEdges; \
+    .receipts_by_section .axis path, \
+    .receipts_by_section .axis line { \
+      fill: none; \
+      stroke: #000; \
+      shape-rendering: crispEdges; \
     } \
-    .box line { \
+    .receipts_by_section .box line { \
       fill: none; \
       stroke-width: 1.5px; \
     } \
-    .box, .decoration, \
-    .outlier { \
+    .receipts_by_section .box, .decoration, \
+    .receipts_by_section .outlier { \
       stroke: #1f77b4; \
       fill: none; \
     } \
-    .outlier circle { \
+    .receipts_by_section .outlier circle { \
       fill: white; \
     } \
-    .outlier.extreme { \
+    .receipts_by_section .outlier.extreme { \
       stroke: red; \
     } \
-    .box:not(:hover) text, \
-    .outlier:not(:hover) text { \
+    .receipts_by_section .box:not(:hover) text, \
+    .receipts_by_section .outlier:not(:hover) text { \
       display:none; \
     } \
-    .selected { \
+    .receipts_by_section .selected { \
       fill: red; \
     }";
 

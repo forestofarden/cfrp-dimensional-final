@@ -28,24 +28,24 @@ mdat.visualization.calendar = function() {
     text { \
       font: 10px sans-serif; \
     } \
-    rect.day.selected { \
+    .calendar rect.day.selected { \
       fill: orange; \
     } \
-    .season_rug { \
+    .calendar .season_rug { \
       stroke: #ccc; \
     } \
-    .brush .extent { \
+    .calendar .brush .extent { \
       stroke: #fff; \
       fill-opacity: .125; \
       shape-rendering: crispEdges; \
     } \
-    .brush .resize { \
+    .calendar .brush .resize { \
       display: none; \
     } \
-    .day { \
+    .calendar .day { \
       stroke: #ccc; \
     } \
-    .month { \
+    .calendar .month { \
       fill: none; \
       stroke: black; \
       stroke-width: 1.5px; \
