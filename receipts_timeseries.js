@@ -2,11 +2,20 @@
 
 mdat.visualization.receipts_timeseries = function() {
 
+  var decade = function(date) {
+    date = d3.time.year(date);
+    date.setFullYear(Math.floor(date.getFullYear() / 10) * 10);
+    return date;
+  };
+
   var width = 700, // width = 1024,
       height = 150, //height = 768,
       height2 = 30,
       title = "Receipts Time Series",
       sel_ratio = 7.0/12.0,
+      intervals = [ decade, d3.time.year, d3.time.month, d3.time.week, d3.time.day ],
+      interval_names = [ "décennie", "année", "mois", "semaine", "jour" ],
+      context_interval = 2,
       format = d3.time.format("%e %b %Y"),
       commasFormatter = d3.format(",.0f"),
       uid = 0;
@@ -34,6 +43,10 @@ mdat.visualization.receipts_timeseries = function() {
       stroke: orange; \
       stroke-width: 1px; \
     } \
+    .receipts_timeseries .granularity { \
+      font: 25px sans-serif; \
+      fill: orange; \
+    } \
     .receipts_timeseries .brush .extent { \
       stroke: #fff; \
       fill-opacity: .125; \
@@ -51,13 +64,12 @@ mdat.visualization.receipts_timeseries = function() {
   function chart() {
     var namespace = "receipts_timeseries_" + uid++;
 
+    var focus_interval = context_interval;
+
     var x = d3.time.scale().range([0, width]),
         x2 = d3.time.scale().range([0, width]),
         y = d3.scale.linear().range([height, 0]),
         y2 = d3.scale.linear().range([height2, 0]);
-
-    y.domain([0, maxReceipts]);
-    y2.domain(y.domain());
 
     var brush = d3.svg.brush()
         .x(x2)
@@ -124,20 +136,41 @@ mdat.visualization.receipts_timeseries = function() {
     focusinfo.append("path")
         .attr("class", "line")
 
-    focus.append("g")
+    var focus_x_axis = focus.append("g")
         .call(xAxis)
          .attr("class", "x axis")
          .attr("transform", "translate(0," + height + ")");
 
-    focus.append("g")
+    focus_x_axis.append("text")
+        .attr("class", "granularity")
+        .attr("x", width)
+        .attr("dy", "-30")
+        .style("text-anchor", "middle")
+        .text("+")
+        .on("click", function() {
+          focus_interval = Math.min(focus_interval + 1, intervals.length - 1);
+          update();
+        });
+
+    focus_x_axis.append("text")
+        .attr("class", "granularity")
+        .attr("x", width)
+        .attr("dy", "-10")
+        .style("text-anchor", "middle")
+        .text("-")
+        .on("click", function() {
+          focus_interval = Math.max(focus_interval - 1, 0);
+          update();
+        });
+
+    var focusAxisLabel = focus.append("g")
         .call(yAxis)
         .attr("class", "y axis")
       .append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Recettes par mois (L.)");
+        .style("text-anchor", "end");
 
     var selection = focus.append("g")
         .attr("class", "selection");
@@ -181,8 +214,8 @@ mdat.visualization.receipts_timeseries = function() {
         .attr("height", height2 + 7);
 
     var date = cfrp.dimension(function(d) { return d.date; }),
-        receiptsByDate = date.group(d3.time.month)
-                           .reduceSum(function(d) { return d.sold * d.price; });
+        focusReceipts,
+        contextReceipts;
 
     cfrp.on("change." + namespace, update);
     cfrp.on("dispose." + namespace, dispose);
@@ -212,10 +245,10 @@ mdat.visualization.receipts_timeseries = function() {
     }
 
     function data_extent() {
-      // TODO.  possible with crossfilter rather than d3?
-      var data = receiptsByDate.all(),
-          extent = d3.extent(data, function(d) { return d.key; });
-      return extent;
+      var all_dates = date.group().all(),
+          low = all_dates[0].key,
+          high = all_dates[all_dates.length-1].key;
+      return [ low, high ];
     }
 
     // TODO.  better solution for omitting events from self
@@ -224,24 +257,34 @@ mdat.visualization.receipts_timeseries = function() {
     function update() {
       if (recursive) { return; }
 
-      var extent = data_extent();
+      var context_min_interval = Math.min(context_interval, focus_interval),
+          context_ext = data_extent().map(intervals[context_min_interval]);
 
-      x2.domain(extent);
+      x2.domain(context_ext);
+      y2.domain([0, maxReceipts[context_min_interval]]);
+
       x.domain(focus_domain());
+      y.domain([0, maxReceipts[focus_interval]]);
       zoom.x(x);
+
+      focusReceipts = date.group(intervals[focus_interval])
+                          .reduceSum(function(d) { return d.sold * d.price; });
+      contextReceipts = date.group(intervals[context_min_interval])
+                            .reduceSum(function(d) { return d.sold * d.price; });
 
       draw();
     }
 
     function draw() {
-      var data = receiptsByDate.all(),
+      var contextData = contextReceipts.all(),
+          focusData = focusReceipts.all(),
           dom = focus_domain();
 
       sel1.text(format(dom[0]));
       sel2.text(format(dom[1]));
 
       var dots = focusinfo.selectAll(".dot")
-        .data(data);
+        .data(focusData);
 
       dots.exit().remove();
 
@@ -255,15 +298,18 @@ mdat.visualization.receipts_timeseries = function() {
           .attr("cy", line.y());
 
       focusinfo.select(".line")
-        .datum(data)
+        .datum(focusData)
         .attr("d", line);
+
       context.select(".line")
-        .datum(data)
+        .datum(contextData)
         .attr("d", line2);
 
       focus.select(".x.axis").call(xAxis);
       focus.select(".y.axis").call(yAxis);
       context.select(".x.axis").call(xAxis2);
+
+      focusAxisLabel.text("Recettes par " + interval_names[focus_interval] + " (L.)");
     }
 
     function brushed() {
@@ -288,9 +334,13 @@ mdat.visualization.receipts_timeseries = function() {
     if (!arguments.length) return cfrp;
     cfrp = value;
 
-    var date = cfrp.dimension(function(d) { return d.date; }),
-        receiptsByDate = date.group(d3.time.month).reduceSum(function(d) { return d.sold * d.price; });
-    maxReceipts = receiptsByDate.top(1)[0].value;
+    var date = cfrp.dimension(function(d) { return d.date; });
+
+    maxReceipts = intervals.map(function(interval) {
+      var grp = date.group(interval).reduceSum(function(d) { return d.sold * d.price; });
+      return grp.top(1)[0].value;
+    });
+
     date.dispose();
 
     return chart;
