@@ -29,7 +29,7 @@ mdat.visualization.calendar = function() {
       font: 10px sans-serif; \
     } \
     .calendar rect.day.selected { \
-      fill: orange; \
+      fill: red; \
     } \
     .calendar .season_rug { \
       stroke: #ccc; \
@@ -150,8 +150,10 @@ mdat.visualization.calendar = function() {
     window.focus();
     d3.select(window).on("keydown", function() {
       switch (d3.event.keyCode) {
-        case 37: move(-1); break;
-        case 39: move(1); break;
+        case 37:
+        case 38: move(-1); break;
+        case 39:
+        case 40: move(1); break;
       }
     });
 
