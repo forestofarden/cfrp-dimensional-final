@@ -7,7 +7,7 @@ mdat.visualization.calendar = function() {
       width = 52 * cellSize + 15 + 40,
       height = 8 * seasons_visible * cellSize,
 //      height = "100%",// 8 * cellSize * (1794 - 1680),    // TODO.  calculate domain
-      title = "Calendar Heatmap",
+      title = "Calendar",
       uid = 0,
       sel_extent = [];
 

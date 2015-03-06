@@ -11,7 +11,7 @@ mdat.visualization.receipts_timeseries = function() {
   var width = 700, // width = 1024,
       height = 150, //height = 768,
       height2 = 30,
-      title = "Receipts Time Series",
+      title = "Time Series",
       sel_ratio = 7.0/12.0,
       intervals = [ decade, d3.time.year, d3.time.month, d3.time.week, d3.time.day ],
       interval_names = [ "décennie", "année", "mois", "semaine", "jour" ],

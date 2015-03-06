@@ -4,7 +4,7 @@ mdat.visualization.receipts_by_section = function() {
 
   var width = 600,
       height = 100,
-      title = "Receipts Dist. by Section",
+      title = "Seating Area",
       uid = 0;
 
   var cfrp = undefined,

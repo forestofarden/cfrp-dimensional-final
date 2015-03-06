@@ -30,7 +30,9 @@
     .viz {
       cursor: pointer;
     }
-    .viz:not(:hover) .download,
+    .viz .download {
+      display:none;        /* temporary, until SVG downloads worked through */
+    }
     .viz:not(:hover) .close {
       display:none;
     }
