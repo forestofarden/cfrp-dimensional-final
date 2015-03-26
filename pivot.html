@@ -36,7 +36,7 @@
     .dimension,
     .aggregate  {
       float: left;
-      width: 100px;
+      width: 130px;
       height: 20px;
     }
     .filter .value:hover {
@@ -237,8 +237,14 @@
         'sum(receipts)': function(v) {
           return sum(v, function(d) { return d.price * d.sold; });
         },
-        'mean(receipts/day)': function(v) {
-          return mean(v, function(d) { return d.price * d.sold; });
+        'avg(receipts/day)': function(v) {
+          return sum(v, function(d) { return d.price * d.sold; }) / cardinality(v, dimensions['Day']);
+        },
+        'sum(sold)': function(v) {
+          return sum(v, function(d) { return d.sold; });
+        },
+        'avg(sold/day)': function(v) {
+          return sum(v, function(d) { return d.sold; }) / cardinality(v, dimensions['Day']);
         }
       };
 
@@ -250,7 +256,10 @@
         Day:   d3.time.format("%a %d %b %Y"),
         Decade: d3.time.format("%Y"),
         'sum(receipts)': d3.format(",.2f"),
-        'mean(receipts/day)': d3.format(",.2f")
+        'avg(receipts/day)': d3.format(",.2f"),
+        'sum(sold)': d3.format(","),
+        'avg(sold/day)': d3.format(",.2f"),
+        'avg(price)': d3.format(",.2f")
       };
 
       //
@@ -534,30 +543,25 @@
           } else { return 1; }
         }
       }
-    }
 
+      //
+      // vector processing utilities
+      //
 
-    //
-    // vector processing utilities
-    //
-
-    function sum(vs, f) {
-      return vs.map(f).reduce(function(p, d) { return p + d; }, 0.0);
-    }
-
-    function mean(vs, f) {
-      return sum(vs, f) / cardinality(vs, dimensions['Day']);
-    }
-
-    function cardinality(v, f) { 
-      var o = Object.create(null);
-      for(var i=0; i<v.length; i++) {
-        var val = f ? f(v[i]) : v[i];
-        if(val && !o[val]) { o[val] = true; }
+      function sum(vs, f) {
+        return vs.map(f).reduce(function(p, d) { return p + d; }, 0.0);
       }
-      var i = 0;
-      for(var val in o) { i = i + 1; }
-      return i;
+
+      function cardinality(v, f) {
+        var o = Object.create(null);
+        for(var i=0; i<v.length; i++) {
+          var val = f ? f(v[i]) : v[i];
+          if(val && !o[val]) { o[val] = true; }
+        }
+        var i = 0;
+        for(var val in o) { i = i + 1; }
+        return i;
+      }
     }
 
     //
