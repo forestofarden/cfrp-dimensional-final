@@ -131,8 +131,8 @@
     //
 
     queue()
-      .defer(d3.tsv, "data/cfrp-sales.tsv")
-      .defer(d3.tsv, "data/cfrp-performances.tsv")
+      .defer(d3.tsv, "data/cfrp-sales.tsv.med")
+      .defer(d3.tsv, "data/cfrp-performances.tsv.med")
       .defer(d3.tsv, "data/cfrp-plays.tsv")
       .await(function(error, sales, performances, plays) {
         if (error) return console.error(error);
