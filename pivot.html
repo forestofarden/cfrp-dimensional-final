@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+  <meta charset="utf-8">
+  <title>CFRP Pivot Browser</title>
+  <style>
+    .instructions {
+      font-size: 10px;
+      text-align: right;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font: 14px sans-serif;
+    }
+    #toolbar {
+      margin: 5px;
+      width: 100%;
+      border-bottom: 1px gray dashed;
+      overflow: hidden;
+    }
+    #toolbar div {
+      display:inline-block;
+      float: left;
+      clear: left;
+      width: 100px;
+      height: 35px;
+    }
+    #toolbar ul {
+      margin: 0;
+      padding: 0;
+      display:inline;
+      list-style-type:none;
+    }
+    .dimension,
+    .aggregate  {
+      float: left;
+      width: 100px;
+      height: 20px;
+    }
+    .filter .value:hover {
+      cursor: pointer;
+      text-decoration: line-through;
+    }
+    .dimension:hover {
+      cursor: pointer;
+    }
+    .aggregate:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    #report {
+      position: relative;
+      float: left;
+      margin: 5px;
+    }
+    table, th, td { 
+      border-collapse: collapse; 
+    }
+    #report td {
+      border: 1px solid black;
+      padding: 3px;
+    }
+    #report tr td:last-child {
+      text-align: right;
+    }
+    #report .refinable:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .label {
+      cursor: pointer;
+    }
+    .dropvalid {
+      opacity: 0.15;
+      background: orange;
+    }
+    .loading {
+      opacity: 0.4;
+    }
+    .loading + #spinner {
+      position: absolute;
+      top: 45%; left: 45%;
+      width: 100px;height: 100px;
+      -webkit-animation: sweep 1s infinite linear;
+      border-radius:50px;
+      border-bottom:3px solid orange;
+    }
+    @-webkit-keyframes sweep { to { -webkit-transform: rotate(360deg); } }
+  </style>
+  <script src="lib/d3.min.js"></script>
+  <script src="lib/queue.min.js"></script>
+  <script src="join.js"></script>
+</head>
+<body>
+  <div id="toolbar">
+    <div id="categories">Categories:</div><ul id="dimensions"></ul>
+    <div id="measures">Measures:</div><ul id="aggregates"></ul>
+  </div>
+    <div class="instructions">Drag categories in table to group statistics. Drag back to toolbar to remove.</div>
+    <div class="instructions">Click measures to change aggregate. Click values in table to filter.</div>
+  <ul id ="filters"></ul>
+  <table id="report" class="loading">
+    <thead>
+      <tr>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <div id="spinner"></div>
+  <script>
+
+    //
+    // Profiling
+    //
+
+    var prev_checkpoint = undefined;
+    function checkpoint(msg) {
+      var t = Date.now();
+      if (msg)
+        console.log(msg + (prev_checkpoint ? (" (" + (t - prev_checkpoint) + "ms)") : ""));
+      prev_checkpoint = t;
+    }
+
+    checkpoint("Starting");
+
+    //
+    // Load and process dataset
+    //
+
+    queue()
+      .defer(d3.tsv, "data/cfrp-sales.tsv")
+      .defer(d3.tsv, "data/cfrp-performances.tsv")
+      .defer(d3.tsv, "data/cfrp-plays.tsv")
+      .await(function(error, sales, performances, plays) {
+        if (error) return console.error(error);
+
+        checkpoint("Loaded files");
+
+        // TODO.  decide whether to denormalize the data entirely...
+        //        this embeds the join between sales and playbill in
+        //        a hash dereference
+
+        var playbill = join_hash(performances, plays, ["author", "title"]),
+            playbill_idx = {};
+
+        playbill = playbill.map(type_playbill);
+
+        playbill.forEach(function(d) {
+          if (!playbill_idx[d.date]) { playbill_idx[d.date] = []; }
+          playbill_idx[d.date].push(d);
+        });
+
+        sales = sales.map(type_sales);
+
+        sales.forEach(function(d) {
+          if (!playbill_idx[d.date]) { playbill_idx[d.date] = []; }
+        });
+
+        checkpoint("Postprocessed data");
+
+        pivot_table(playbill_idx, sales);
+      });
+
+    //
+    // Pivot table UI 
+    //
+
+    function pivot_table(playbill_idx, sales) {
+
+      //
+      // Access to playbill data from sales data
+      //
+
+      function pb_attr(d, v) {
+        var pb = playbill_idx[d.date][0];
+        return pb ? (pb[v] || "...") : "...";
+      }
+
+      //
+      // Dimensions
+      //
+
+      var weekdayFormat = d3.time.format("%A"),
+          monthFormat = d3.time.format("%B");
+
+      var decade = function(date) {
+        date = d3.time.year(date);
+        date.setFullYear(Math.floor(date.getFullYear() / 10) * 10);
+        return date;
+      };
+      var season = function(date) {
+        var year = date.getFullYear(),
+            rounded = new Date(year, 4, 1);
+        if (date - rounded >= 0) { return year + "-" + (year+1); }
+        else { return (year-1) + "-" + year; }
+      };
+
+      var dimensions = {
+        Decade: function(d) { return decade(d.date); },
+        Season:  function(d) { return season(d.date); },
+        Month: function(d) { return monthFormat(d.date); },
+        Weekday: function(d) { return weekdayFormat(d.date); },
+        Day:   function(d) { return d.date; },
+
+        Section: function(d) { return d.section; },
+
+        Author: function(d) { return pb_attr(d, 'author'); },
+        Title:  function(d) { return pb_attr(d, 'title'); },
+        Genre:  function(d) { return pb_attr(d, 'genre'); },
+        Acts:   function(d) { return pb_attr(d, 'acts'); },
+        'Prose Verse': function(d) { return pb_attr(d, 'prose_vers'); },
+//          Prologue: function(d) { return pb_attr(d, 'prologue'); },
+//          MDM: function(d) { return pb_attr(d, 'musique_danse_machine'); },
+//          'Play Date': function(d) { return pb_attr(d, 'date_de_creation'); },
+        Signatory: function(d) { return pb_attr(d, 'signatory'); },
+//          'Free Access': function(d) { return pb_attr(d, 'free_access'); },
+//          'First Run': function(d) { return pb_attr(d, 'first_run'); },
+//          Reprise: function(d) { return pb_attr(d, 'reprise'); },
+//          'New Actor': function(d) { return pb_attr(d, 'newactor'); },
+//          Debut: function(d) { return pb_attr(d, 'debut'); },
+//          ExAttendance: function(d) { return pb_attr(d, 'ex_attendance'); },
+//          ExRepresentation: function(d) { return pb_attr(d, 'ex_representation'); },
+//          ExPlace: function(d) { return pb_attr(d, 'ex_place'); }
+      };
+
+      //
+      // Aggregates
+      //
+
+      var aggregates = {
+        'count(date)': function(v) {
+          return cardinality(v, dimensions['Day']);
+        },
+        'sum(receipts)': function(v) {
+          return sum(v, function(d) { return d.price * d.sold; });
+        },
+        'mean(receipts/day)': function(v) {
+          return mean(v, function(d) { return d.price * d.sold; });
+        }
+      };
+
+      //
+      // Formatting dimension & aggregate values
+      //
+
+      var formats = {
+        Day:   d3.time.format("%a %d %b %Y"),
+        Decade: d3.time.format("%Y"),
+        'sum(receipts)': d3.format(",.2f"),
+        'mean(receipts/day)': d3.format(",.2f")
+      };
+
+      //
+      // Routing
+      //
+      // N.B. this scheme will change!
+
+      function url(query) {
+        var url_base = window.location.origin + window.location.pathname,
+            params = [];
+
+        d3.entries(query.filter).forEach(function(o) { params.push('filter.' + o.key + '=' + o.value); });
+        query.rows.forEach(function(g) { params.push('row=' + g); });
+        params.push('agg=' + query.agg);
+
+        var result = url_base + '?' + encodeURI(params.join('&'));
+        return result;
+      }
+
+      function parse_url(url) {
+        var i = url.indexOf('?'),
+            params = decodeURI(url.substring(i+1)).split('&'),
+            query = { rows: [], agg: 'count(date)', filter: {} };
+
+        if (i == -1) { return null; }
+
+        params.forEach(function(p) {
+          var v;
+          if (v = p.match(/^row=(.+)$/))          { if (dimensions[v[1]]) { query.rows.push(v[1]); } }
+          if (v = p.match(/^agg=(.+)$/))          { if (aggregates[v[1]]) { query.agg = v[1]; } }
+          if (v = p.match(/^filter\.(.+)=(.+)$/)) { if (dimensions[v[1]]) { query.filter[v[1]] = v[2]; } }
+        })
+
+        return query;
+      }
+
+      function record(query) {
+        var result = url(query);
+
+        // round-trip as sanity check
+        if (url(parse_url(result)) !== result) { console.log("URL encoding problem: " + result + " for " + JSON.stringify(query)); }
+
+        history.pushState(null, "", result);
+        update();
+      }
+
+      //
+      // state
+      //
+
+      var default_query = {
+          filter: {},
+          rows: [ 'Author', 'Title' ],
+          agg: 'count(date)'
+        };
+
+      var query = parse_url(window.location.href) || default_query;
+
+      var dnd_payload = null,  // not nice, but html5 dataTransfer doesn't work
+          dnd_source = null;
+
+      //
+      // kick off processing
+      //
+
+      // for sanity: move to the parsed query URI immediately
+      history.replaceState(null, "", url(query));
+
+      update();
+
+      //
+      // update display when query changes
+      //
+
+      function update() {
+        // update spinner immediately, then allow DOM to display and start processing
+        d3.select("#report").classed("loading", true);
+        setTimeout(update0, 0);
+      }
+
+      function update0() {
+        // run report and convert to html table format
+        var tree = { values : report(query, sales) },
+            table = tableize(tree, query.rows);
+
+        checkpoint();
+
+        // toolbar: available categories to group on
+        d3.select("#dimensions").selectAll(".dimension")
+          .data(d3.entries(dimensions))
+         .enter().append("li")
+          .attr("class", "dimension")
+          .html(function(d) { return d.key; })
+          .attr("draggable", true)
+          .on("dragstart", function(d) { d3.event.dataTransfer.setData("text", d); dnd_source = "toolbox"; dnd_payload = d.key; })
+          .on("dragenter", function() { d3.event.preventDefault(); })
+          .on("dragover", function() { d3.event.preventDefault(); })
+
+        // toolbar: available aggregates
+        d3.select("#aggregates").selectAll(".aggregate")
+          .data(d3.entries(aggregates))
+         .enter().append("li")
+          .attr("class", "aggregate")
+          .html(function(d) { return d.key; })
+          .on("click", function(d) {
+            query.agg = d.key;
+            record(query);
+          });
+
+        // toolbar: drag categories in and out from table
+        d3.select("#toolbar")
+          .on("dragover", function() { if (dnd_payload && dnd_source !== "toolbox") { d3.event.preventDefault(); dropvalid(this); } })
+          .on("dragleave", function(d) { d3.event.preventDefault(); dropvalid(null); })
+          .on("drop", function() { d3.event.preventDefault(); dropvalid(null); regroup(dnd_payload, null); });
+
+        // toolbar: the current filter value, with deselection
+        var filter_elem = d3.select("#filters").selectAll(".filter")
+          .data(d3.entries(query.filter));
+
+        filter_elem.exit().remove();
+        var filter_elem_enter = filter_elem.enter().append("li")
+          .attr("class", "filter")
+          .on("click", function(d) { 
+            delete query.filter[d.key];
+            record(query);
+          });
+        filter_elem_enter.append("span").html(function(d) { return d.key + "&nbsp;=&nbsp;"; });
+        filter_elem_enter.append("span").attr("class", "value").html(function(d) { return d.value; });
+
+        // pivot table proper
+        var th = d3.select("#report thead").selectAll("th")
+          .data(query.rows.concat([query.agg]));
+
+        // drag feedback
+        function dropvalid(elm) {
+          d3.selectAll(".dropvalid").classed("dropvalid", false);
+          if (elm)
+            d3.select(elm).classed("dropvalid", true);
+        }
+
+        // draggable table headers
+        th.exit().remove();
+        var th0 = th.enter().append("th");
+        th0.append("span").attr("class", "label");
+
+        th.attr("draggable", function(d) { return !!dimensions[d]; })
+          .on("dragenter", function() { d3.event.preventDefault(); })
+          .on("dragstart", function(d) { d3.event.dataTransfer.setData("text", d); dnd_source = "table"; dnd_payload = d; })
+          .on("dragover", function(d) { if (dnd_payload !== d) { d3.event.preventDefault(); dropvalid(this); } })
+          .on("dragleave", function(d) { dropvalid(null); })
+          .on("drop", function(d) { d3.event.preventDefault(); dropvalid(null); regroup(dnd_payload, d); });
+
+        th.select(".label").html(function(d) { return d; });
+
+        // table body: categories and aggregate values
+
+        var tbody = d3.select("#report tbody");
+
+        var tr = tbody.selectAll("tr")
+          .data(table);
+        tr.exit().remove();
+        tr.enter().append("tr");
+
+        var td = tr.selectAll("td")
+          .data(function(d) { return d; })
+        td.exit().remove();
+        td.enter().append("td");
+        td.attr("rowspan", function(v) { return v.span || 1; });
+        td.html(function(v) { return v.value; })
+          .classed("refinable", function(d) { return d.category && d.value; })
+          .on("click", function(d) {
+            query.filter[d.category] = d.value;
+            record(query);
+          });
+
+        // remove spinner
+        d3.select("#report").classed("loading", false);
+
+        checkpoint("Updated html");
+      }
+
+      //
+      // table rows rearranged: change query object accordingly
+      // 
+
+      function regroup(source, target) {
+        console.log("regroup: " + source + " on " + target);
+        var i = query.rows.indexOf(source),
+            j = query.rows.indexOf(target);
+        if (i < j) {
+          if (j > -1) { query.rows.splice(j+1, 0, source); }
+          if (i > -1) { query.rows.splice(i, 1); }
+        } else if (i > j) {
+          if (i > -1) { query.rows.splice(i, 1); }
+          if (j > -1) { query.rows.splice(j, 0, source); }
+        } else if (i == -1) {
+          query.rows.push(source);
+        } else {
+          return;
+        }
+        record(query);
+      }
+
+      //
+      // calculate pivot table values: filter, grouping, aggregates
+      //
+
+      function report(query, data) {
+        var nest = d3.nest();
+
+        checkpoint();
+
+        // filtering
+        var filter_keys = d3.keys(query.filter);
+        if (filter_keys.length > 0) {
+          data = data.filter(function(d) {
+            return filter_keys.every(function(k) {
+              return dimensions[k](d) === query.filter[k];
+            })
+          });
+        }
+
+        // grouping
+        query.rows.forEach(function(g) {
+          nest = nest.key(function(v) { return fmt(g)(dimensions[g](v)); })
+                     .sortKeys(d3.ascending);
+        });
+
+        // aggregation
+        if (query.agg) {
+          nest = nest.rollup(function(v) { return fmt(query.agg)(aggregates[query.agg](v)); });
+        }
+
+        data = nest.entries(data);
+
+        checkpoint("Report run")
+
+        return data;
+
+        function fmt(g) {
+          return formats[g] || function(v) { return v; };
+        }
+      }
+
+      //
+      // convert tree of results to html-style list of leaves with spans
+      //
+      // (technically, a preorder traversal annotating each node with the size of the branch)
+      //
+
+      function tableize(tree, categories) {
+        var result = [];
+
+        checkpoint();
+
+        recurse([], tree, -1);
+
+        checkpoint("Converted to html");
+
+        return result;
+
+        function recurse(h, d, i) {
+          if (Array.isArray(d.values)) {
+            var head = d.values[0],
+                tail = d.values.slice(1,d.length);
+            if (d.key) {  
+              h = h.concat( [ { category: categories[i], value: d.key, span: leaves(d) } ]);
+            }
+            recurse(h, head, i+1);
+            tail.forEach(function(d) { recurse([], d, i+1); });
+          } else {
+            h = h.concat( [ { category: categories[i], value: d.key }, { value: d.values } ]);
+            result.push(h);
+          }
+        }
+
+        function leaves(d) {
+          if (Array.isArray(d.values)) {
+            var counts = d.values.map(leaves);
+            return counts.reduce(function(e, f) { return e + f; }, 0);
+          } else { return 1; }
+        }
+      }
+    }
+
+
+    //
+    // vector processing utilities
+    //
+
+    function sum(vs, f) {
+      return vs.map(f).reduce(function(p, d) { return p + d; }, 0.0);
+    }
+
+    function mean(vs, f) {
+      return sum(vs, f) / cardinality(vs, dimensions['Day']);
+    }
+
+    function cardinality(v, f) { 
+      var o = Object.create(null);
+      for(var i=0; i<v.length; i++) {
+        var val = f ? f(v[i]) : v[i];
+        if(val && !o[val]) { o[val] = true; }
+      }
+      var i = 0;
+      for(var val in o) { i = i + 1; }
+      return i;
+    }
+
+    //
+    // convert from parsed CSV strings to native data format
+    //
+
+    var dateFormat = d3.time.format("%Y-%m-%d");
+
+    function type_playbill(d) {
+      d.date = dateFormat.parse(d.date);
+      d.prologue = (d.prologue === 't');
+      d.musique_danse_machine = (d.musique_danse_machine === 't');
+      d.ordering = +d.ordering;
+      d.register = +d.register;
+      d.receipts = +d.receipts;
+      d.representation = +d.representation;
+      d.ouverture = (d.ouverture === 't');
+      d.cloture = (d.cloture === 't');
+      d.free_access = (d.free_access === 't');
+      d.firstrun = (d.firstrun === 't');
+      d.firstrun_perfnum = +d.firstrun_perfnum;
+      d.reprise = (d.reprise === 't');
+      d.reprise_perfnum = +d.reprise_perfnum;
+      d.debut = (d.debut === 't');
+      d.acts = +d.acts;
+      return d;
+    };
+
+    function type_sales(d) {
+      d.date = dateFormat.parse(d.date);
+      d.sold = +d.sold;
+      d.price = +d.price;
+      return d;
+    }
+
+  </script>
+</body>
+</html>
+
+<!--
+TODO.
+- d&d to rearrange columns                  DONE
+- URLs, history                             DONE
+- compress data / use session storage
+- columns
+- list of examples
+- prettier
+- filter                                    DONE
+- sorting
+- subgroupings
+- totals
+
+KNOWN ERRORS.
+- NULL value in first columns               DONE
+- dates do not sort correctly
+-->
