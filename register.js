@@ -30,7 +30,8 @@ mdat.visualization.register = function() {
   function image_url(image_file) {
     var re = /M119_02_R(\d+)_(\d+)([rv])?.jpg/;
     if (image_file) {
-      image_file = image_file.replace(re, "http://hyperstudio.mit.edu/cfrp/flip_books/R$1/M1119_02_R$1/M1119_02_R$1_$2.jpg");
+      /* TODO. not clear when URLs have extra one (e.g. M1119_02...) */
+      image_file = image_file.replace(re, "http://hyperstudio.mit.edu/cfrp/flip_books/R$1/M119_02_R$1/M119_02_R$1_$2.jpg");
     }
     return image_file;
   }

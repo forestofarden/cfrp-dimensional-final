@@ -1,6 +1,6 @@
 mdat.visualization.calendar = function() {
 
-  var all_seasons = d3.range(1680, 1700); // 1794);
+  var all_seasons = d3.range(1750, 1789);
 
   var cellSize = 8,
       seasons_visible = 8,
@@ -50,6 +50,14 @@ mdat.visualization.calendar = function() {
       stroke: black; \
       stroke-width: 1.5px; \
     }";
+
+  var aggregates = {
+      'count(date)':       reduceDistinct(function(d) { return d.date; }),
+      'sum(receipts)':     reduceSum(function(d) { return d.price * d.sold; }),
+      'avg(receipts/day)': reduceSum(function(d) { return d.price * d.sold; }),
+      'sum(sold)':         reduceSum(function(d) { return d.sold; }),
+      'avg(sold/day)':     reduceSum(function(d) { return d.sold; })
+    };
 
   function chart() {
     var namespace = "calendar_" + uid++;
@@ -158,10 +166,8 @@ mdat.visualization.calendar = function() {
     });
 
     var date = cfrp.dimension(function(d) { return d.date; }),
-        receiptsByDate = date.group(d3.time.day)
-                             .reduceSum(function(d) { return d.sold * d.price; }),
-        receiptsBySeason = date.group(d3.time.year)
-                               .reduceSum(function(d) { return d.sold * d.price; });
+        aggregateByDate = date.group(d3.time.day),
+        aggregateBySeason = date.group(d3.time.year);
 
     update();
 
@@ -230,12 +236,19 @@ mdat.visualization.calendar = function() {
           middle,
           finish;
 
-      // TODO.  make local var
-      var focusData = d3.map(receiptsByDate.top(Infinity), function(d) { return d.key; }),
-          contextData = d3.map(receiptsBySeason.top(Infinity), function(d) { return d.key.getFullYear(); });
+      var agg = aggregates[cfrp.preferred_aggregate] || aggregates["sum(receipts)"];
 
-      var receipts_domain = receiptsByDate.top(receiptsByDate.size()).map(function(d) { return d.value; }).reverse(),
-          context_domain = receiptsBySeason.top(receiptsBySeason.size()).map(function(d) { return d.value; }).reverse();
+      aggregateByDate.reduce(agg.add, agg.remove, agg.init);
+      aggregateBySeason.reduce(agg.add, agg.remove, agg.init);
+
+      var focusData = aggregateByDate.top(Infinity),
+          contextData = aggregateBySeason.top(Infinity);
+
+      var receipts_domain = focusData.map(function(d) { return d.value.sum; }).reverse(),
+          context_domain = contextData.map(function(d) { return d.value.sum; }).reverse();
+
+      focusData = d3.map(focusData, function(d) { return d.key; });
+      contextData = d3.map(contextData, function(d) { return d.key.getFullYear(); });
 
       // TODO.  calculate quantiles without projecting all values
       var focusColor = d3.scale.quantile()
@@ -248,17 +261,17 @@ mdat.visualization.calendar = function() {
 
       c_season.attr("fill", function(d) {
         var dsum = contextData.get(d);
-        return (dsum && dsum.value > 0) ? contextColor(dsum.value) : "white";
+        return (dsum && dsum.value.final() > 0) ? contextColor(dsum.value.final()) : "white";
       });
 
       middle = new Date();
       rect.attr("fill", function(d) {
         var dsum = focusData.get(d);
-        return (dsum && dsum.value > 0) ? focusColor(dsum.value) : "white";
+        return (dsum && dsum.value.final() > 0) ? focusColor(dsum.value.final()) : "white";
       }).select("title")
           .text(function(d) {
             var dsum = focusData.get(d);
-            return format(d) + (dsum ? ": L. " + commasFormatter(dsum.value) : ""); });
+            return format(d) + (dsum ? ": L. " + commasFormatter(dsum.value.final()) : ""); });
 
       finish = new Date();
       console.log("calendar: quantize in " + (middle - start) + "ms, render in " + (finish - middle) + "ms");
@@ -298,6 +311,51 @@ mdat.visualization.calendar = function() {
     }
 
     return namespace;
+  }
+
+  function reduceDistinct(fn) {
+    return {
+      add: function (p, d) {
+        var val = fn(d);
+        if (val in p.counts)
+          p.counts[val]++;
+        else
+          p.counts[val] = 1;
+        return p;
+      },
+      remove: function (p, d) {
+        var val = fn(d);
+        p.counts[val]--;
+        if (p.counts[val] === 0)
+          delete p.counts[val];
+        return p;
+      },
+      init: function () {
+        var p = {};
+        p.counts = {};
+        p.final = function() { return Object.keys(p.counts).length; };
+        return p;
+      }
+    };
+  }
+
+  function reduceSum(fn) {
+    return {
+      add: function(p, v) {
+        p.sum += fn(v);
+        return p;
+      },
+      remove: function(p, v) {
+        p.sum -= fn(v);
+        return p;
+      },
+      init: function() {
+        var p = {};
+        p.sum = 0;
+        p.final = function () { return Math.max(0, d3.round(p.sum, 0)); };
+        return p;
+      }
+    };
   }
 
   chart.datapoint = function(value) {
