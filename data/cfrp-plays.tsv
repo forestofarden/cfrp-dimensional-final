@@ -1,6 +1,7 @@
 author	title	genre	acts	prose_vers	prologue	musique_danse_machine	date_de_creation
-""	""	""		""	f	f	
 ""	""	""					
+""	""	""		""	f	f	
+""	Cavalcade (La)	divertissement	1	""	f	t	1737-11-22
 ""	Crispin brulé	""					
 ""	Gaston et Bayard	""					
 ""	La Comtesse d'Escarbagnas	""					
@@ -13,7 +14,7 @@ Abbé Claude-Henri de Fusée de Voisenon 	Zélémide 	""
 Abbé François Le Métel de Boisrobert	Les Rivaux amis	tragi comédie					
 Abeille (Gaspard, abbé)	Aristobule	tragédie	5	vers	f	f	1685-11-30
 Abeille (Gaspard, abbé)	Coriolan	tragédie	5	vers	f	f	
-Aigueberre (Jean Dumas d')	Avare amoureux (L')	comédie	1	prose	f	f	
+Aigueberre (Jean Dumas d')	Avare amoureux (L')	comédie	1	prose	f	f	1729-07-06
 Aigueberre (Jean Dumas d')	Prince de Noisy (Le)	comédie héroïque	3	prose	t	t	1730-11-04
 Aigueberre (Jean Dumas d')	Trois spectacles (Les) ou Polixène, tragédie, L'Avare amoureux, comédie et Pan et Doris, pastorale héroïque	tragédie-comédie-pastorale héroïque	3	prose / vers	t	t	1729-07-06
 Allainval (Léonor-Jean-Christine Soulas d')	Fausse comtesse (La)	comédie	1	prose	f	t	1726-07-27
@@ -26,11 +27,9 @@ André-Murville (Pierre-Nicolas)	Melcour et Verseuil	comédie	1	vers	f	f	1785-08
 André-Murville (Pierre-Nicolas)	Rendez-vous du mari ou le Mari à la mode (Le)	comédie	1	vers	f	f	1781-12-01
 André-Murville (Pierre-Nicolas)	Souper magique ou les Deux siècles (Le)	comédie épisodique	1	vers	f	t	1790-02-11
 Anonyme	Badaud (Le)	comédie	1	prose	f	f	1687-05-10
-Anonyme	Bassette (La)	comédie	5	vers	f	f	
 Anonyme	Bourget (Le)	comédie	1	prose	f	t	1697-05-23
-Anonyme	Brutal de sang froid / sens froid  (Le)	comédie	1	prose	f	f	
-Anonyme	Caliste	tragédie	5	vers	f	f	1750-04-27
 Anonyme	Chasse ridicule (La)	comédie	1	prose	f	f	1691-07-25
+Anonyme	Danse de Gigogne	divertissement		""	f	t	1684-11-19
 Anonyme	Dédit (Le)	comédie	5	vers	f	f	1694-02-18
 Anonyme	Effet de la prévention (L')	comédie	1	prose	f	t	1731-02-10
 Anonyme	Enfant gâté (L')	comédie	1	prose	f	f	1697-08-23
@@ -38,7 +37,7 @@ Anonyme	Entêtement ridicule (L')	comédie	1	vers	f	f	1699-10-15
 Anonyme	Entêté (L')	comédie	1	prose	f	f	1694-06-03
 Anonyme	Fille médecin (La)	comédie	1	""	f	f	1697-03-09
 Anonyme	Frontin gouverneur du château de Vertigililinguen	comédie	1	""	f	f	1703-10-11
-Anonyme	Gentilhomme meunier (Le)	comédie	1		f	f	
+Anonyme	Gentilhomme meunier (Le)	comédie	1	""	f	f	
 Anonyme	Gros lot de Marseille (Le)	comédie	1	prose	f	f	1700-09-23
 Anonyme	Gênois (Le)	comédie	1	""	f	f	1695-06-06
 Anonyme	Heureux échange (L')	comédie	5	vers	f	f	1740-10-22
@@ -49,7 +48,7 @@ Anonyme	Jeune homme (Le)	comédie	1	prose	f	f	1694-10-14
 Anonyme	Le Laquais fille	0	0	""	f	t	1681-04-30
 Anonyme	Marquis de l'industrie (Le)	comédie	5	vers	f	f	1698-01-25
 Anonyme	Marquise imaginaire (La)	comédie	1	""	f	f	1699-09-23
-Anonyme	Maréchal médecin (Le) ou Les Houssards ou Le Médecin de Mantes	comédie	1	prose	f	f	1696-05-12
+Anonyme	Maréchal médecin (Le) ou les Houssards ou le Médecin de Mantes	comédie	1	prose	f	f	1696-05-12
 Anonyme	Médecin de village (Le)	comédie	1	prose	f	t	1704-09-24
 Anonyme	Opérateur (L')	comédie	1	""	f	t	1685-10-24
 Anonyme	Petit maître de campagne ou le Vicomte de Génicourt (Le)	comédie	1	prose	f	f	1701-07-26
@@ -64,20 +63,20 @@ Anonyme	Triomphe de l'hiver (Le)	comédie	1	prose	f	f	1694-11-29
 Anonyme	Vieillards rajeunis (Les)	comédie	1	vers libre	f	t	1743-11-09
 Anonyme	Zénobie	tragédie	5	vers	f	f	1693-11-18
 Anonyme	Épreuve dangereuse (L')	comédie	5	vers	f	f	1688-08-24
-Anonyme (attribuée à un certain Préchac)	Usuriers (Les)	comédie	1	vers	f	f	1680-10-16
-Anonyme du XVIIIe s.	Cadet de Gascogne (Le)	comédie	1	""	f	f	1715-10-11
-Anonyme du XVIIe s.	Cadet de Gascogne (Le)	comédie	5	""	f	f	1690-08-21
+Anonyme 	Cadet de Gascogne (Le)	comédie	5	""	f	f	1690-08-21
+Anonyme 	Cadet de Gascogne (Le)	comédie	1	""	f	f	1715-10-11
+Anonyme 	Usuriers (Les)	comédie	1	vers	f	f	1680-10-16
 Anseaume (Louis) ; Marcouville (Pierre-Augustin Lefèvre de Marcouville dit)	Le Médecin de l'amour	musique		opéra comique	f	f	
 Arnaud (François-Thomas-Marie de Baculard d')	Amants malheureux ou le Comte de Comminges (Les)	drame	3	vers	f	f	1790-05-14
 Arnault (Antoine Vincent)	Lucrèce	tragédie	5	vers	f	f	1792-05-04
 Arnault (Antoine Vincent)	Marius à Minturnes	tragédie	3	vers	f	f	1791-05-19
 Artaud (Jean-Baptiste)	Centenaire de Molière (Le)	comédie	1	vers et prose	f	t	1773-02-18
-Aubry (Jean-Baptiste Aubry des Carrières, dit )	Démétrius	tragédie	5	vers	f	f	1689-06-10
 Aubry (Jean-Baptiste Aubry des Carrières, dit)	Agathocle	tragédie	5	vers	f	f	1690-05-10
+Aubry (Jean-Baptiste Aubry des Carrières, dit)	Démétrius	tragédie	5	vers	f	f	1689-06-10
 Aude (Joseph)	Journaliste des ombres ou Momus aux Champs-Élysées (Le)	pièce héroïque nationale	1	vers	f	f	1790-07-14
-Audierne (Jacques)	Mari égaré (Le)	comédie	1	prose	t	f	
-Audierne (Jacques)	Méprise (La)	comédie	1	prose	t	f	
-Audierne (Jacques)	Suivante désintéressée (La)	comédie	1	prose	t	f	
+Audierne (Jacques)	Mari égaré (Le)	comédie	1	prose	t	f	1739-11-14
+Audierne (Jacques)	Méprise (La)	comédie	1	prose	t	f	1739-11-14
+Audierne (Jacques)	Suivante désintéressée (La)	comédie	1	prose	t	f	1739-11-14
 Aunillon (Pierre-Charles-Fabiot)	Amants déguisés (Les)	comédie	3	prose	f	f	1728-02-07
 Autreau (Jacques)	Chevalier Bayard (Le)	comédie héroïque	5	vers	f	f	1731-11-23
 Autreau (Jacques)	Magie de l'Amour (La)	comédie-pastorale	1	vers libres	f	t	1735-05-09
@@ -89,13 +88,13 @@ Barbier (Marie-Anne)	Cornélie mère des Gracques	tragédie	5	vers	f	f	1703-01-0
 Barbier (Marie-Anne)	Faucon (Le)	comédie	1	vers	f	f	1719-09-01
 Barbier (Marie-Anne)	Mort de César (La) ou Jules César	tragédie	5	vers	f	f	1709-11-26
 Barbier (Marie-Anne)	Tomyris	tragédie	5	vers	f	f	1706-11-23
-Baron	Andrienne (L')	comédie	5	vers	f	f	1703-11-16
-Baron	Coquette et la fausse prude (La)	comédie	5	prose	f	f	
 Baron (Michel Boyron dit)	Adelphes ou L'École des pères (Les)	comédie	5	vers	f	f	1705-01-03
+Baron (Michel Boyron dit)	Andrienne (L')	comédie	5	vers	f	f	1703-11-16
+Baron (Michel Boyron dit)	Coquette et la fausse prude (La)	comédie	5	prose	f	f	1686-12-28
 Baron (Michel Boyron dit)	Débauché (Le)	comédie	1	vers	f	f	1689-12-06
 Baron (Michel Boyron dit)	Enlèvements (Les)	comédie	1	prose	f	f	1685-07-06
 Baron (Michel Boyron dit)	Fontanges maltraitées ou les Vapeurs (Les)	comédie	1	prose	f	f	1689-05-11
-Baron (Michel Boyron dit)	Homme à bonnes fortunes (L') L'homme à bonne fortune (titre alt).	comédie	5	prose	f	f	1686-01-31
+Baron (Michel Boyron dit)	Homme à bonnes fortunes (L') / L'Homme à bonne fortune (titre alt).	comédie	5	prose	f	f	1686-01-31
 Baron (Michel Boyron dit)	Jaloux (Le)	comédie	5	vers	f	f	1687-12-17
 Baron (Michel Boyron dit)	Rendez-vous des Tuileries ou le Coquet trompé (Le)	comédie	3	prose	t	t	1685-03-03
 Baron (Michel Boyron dit)	Répétition (La)	comédie	1	""	f	f	1689-07-10
@@ -112,13 +111,13 @@ Beaumarchais (Pierre-Augustin Caron de)	Deux amis ou le Négociant de Lyon (Les)
 Beaumarchais (Pierre-Augustin Caron de)	Eugénie	drame	5	prose	f	f	1767-01-29
 Beaumarchais (Pierre-Augustin Caron de)	Mariage de Figaro ou la Folle journée (Le)	comédie	5	prose	f	f	1784-04-27
 Beauregard	Docteur extravagant (Le)	comédie	5	vers	f	f	1684-01-14
-Belin	Mort d'Othon (La)	tragédie	5	vers	f	f	1699-01-05
+Belin (François)	Mort d'Othon (La)	tragédie	5	vers	f	f	1699-01-05
 Belin (François)	Mustapha et Zéangir	Tragédie	5	Vers	f	f	1705-01-20
 Belin (François)	Mustapha et Zéangir	tragédie	5	vers	f	f	1705-01-20
 Belin (François)	Vononez, roi des Parthes	tragédie	5	vers	f	f	1701-01-07
 Bellecour	Fausses apparences (Les)	comédie	1	prose	f	f	1761-08-17
-Belloy (Pierre Laurent de)	Gabrielle de Vergy	tragédie	5	vers	f	f	
-Belloy (Pierre Laurent de)	Gaston et Baïard ou Gaston et Bayard	tragédie	5	vers	f	f	1771-04-24
+Belloy (Pierre Laurent de)	Gabrielle de Vergy	tragédie	5	vers	f	f	1777-07-12
+Belloy (Pierre Laurent de)	Gaston et Bayard	tragédie	5	vers	f	f	1771-04-24
 Belloy (Pierre Laurent de)	Pierre le cruel	tragédie	5	vers	f	f	1772-05-20
 Belloy (Pierre Laurent de)	Siège de Calais (Le)	tragédie	5	vers	f	f	1765-02-13
 Belloy (Pierre Laurent de)	Titus	tragédie	5	vers	f	f	1759-02-28
@@ -131,24 +130,24 @@ Billardon de Sauvigny (Edme-Louis)	Mort de Socrate (La)	tragédie	3	vers	f	f	176
 Billardon de Sauvigny (Edme-Louis)	Persifleur (Le)	comédie	3	vers	f	f	1771-02-08
 Billardon de Sauvigny (Edme-Louis)	Washington ou la Liberté du Nouveau monde	tragédie	4	vers	f	f	1791-07-13
 Bièvre (François-Georges Maréchal, marquis de)	Réputations (Les)	comédie	5	vers	f	f	1788-01-23
-Bièvre (François-Georges Maréchal, marquis de)	Séducteur (Le)	comédie	5	vers	f	f	
+Bièvre (François-Georges Maréchal, marquis de)	Séducteur (Le)	comédie	5	vers	f	f	1783-11-08
 Blin de Sainmore (Adrien-Michel-Hyacinthe)	Orphanis	tragédie	5	vers	f	f	1773-09-25
 Boindin (Nicolas)	Bal d'Auteuil (Le)	comédie	3	prose	t	t	1702-08-22
 Boindin (Nicolas)	Port de mer (Le)	comédie	1	prose	f	t	1704-05-27
 Boindin (Nicolas) ; La Motte (Antoine Houdar de)	Trois Gascons (Les)	comédie	1	prose	f	t	1701-06-04
 Boisrobert (François Le Métel de)	Jalouse d'elle-même (La)	comédie	5	vers	f	f	
-Boisrobert (François Le Métel de)	Vraie Didon ou La Didon chaste (La)	tragédie	5	vers	f	f	
-Boissy (Louis de)	Admète et Alceste	tragédie	5	vers	f	f	1727-01-25
+Boisrobert (François Le Métel de)	Vraie Didon ou la Didon chaste (La)	tragédie	5	vers	f	f	
+Boissy (Louis de)	Admète et Alceste / La Mort d'Alceste (titre alt.)	tragédie	5	vers	f	f	1727-01-25
 Boissy (Louis de)	Amant de sa femme ou la Rivale d'elle-même (L')	comédie	1	prose	f	f	1721-09-19
 Boissy (Louis de)	Babillard (Le)	comédie	1	vers	f	f	1725-06-16
 Boissy (Louis de)	Badinage (Le)	comédie	1	vers	f	f	1733-11-23
 Boissy (Louis de)	Dehors trompeurs ou l'Homme du jour (Les)	comédie	5	vers	f	f	1740-02-18
 Boissy (Louis de)	Deux nièces (Les)	comédie	5	vers	f	f	1737-01-24
-Boissy (Louis de)	Duc de Surrey (Le) ou Le Comte de Neuilly	pièce héroïque	5	vers	f	t	
+Boissy (Louis de)	Duc de Surrey (Le) ou Le Comte de Neuilly	pièce héroïque	5	vers	f	t	1746-05-18
 Boissy (Louis de)	Embarras du choix (L')	comédie	5	vers	f	f	1741-12-11
 Boissy (Louis de)	Folie du jour (La)	comédie	1	vers libres	f	t	1745-07-05
 Boissy (Louis de)	Français à Londres (Le)	comédie	1	prose	f	f	1727-07-03
-Boissy (Louis de)	Fête d'Auteuil (La) ou Fausse méprise (La)	comédie	3	vers libres	f	f	1742-08-23
+Boissy (Louis de)	Fête d'Auteuil (La) ou la Fausse méprise	comédie	3	vers libres	f	f	1742-08-23
 Boissy (Louis de)	Impatient (L')	comédie	5	vers	t	f	1724-01-26
 Boissy (Louis de)	Impertinent malgré lui (L')	comédie	5	vers	f	f	1729-05-14
 Boissy (Louis de)	Médecin par occasion (Le)	comédie	5	vers	f	f	1745-03-12
@@ -161,22 +160,22 @@ Boistel d'Welles (Jean-Baptiste-Robert ou Robert)	Irène ou l'Innocence reconnue
 Boizard de Ponteau (Claude-Florimond)	Heure du berger (L')	comédie	1	prose	f	t	1737-11-12
 Bonnet de Chemillin (Abbé)	Etranger (L')	comédie	1	vers	f	f	1745-08-09
 Boursault (Edme)	Marie Stuart, reine d'Écosse 	tragédie	5	vers	f	f	1683-12-17
-Boursault (Edme)	Mercure galant ou la Comédie sans titre (Le), Pièce sans titre (titre alt.)	comédie	4	vers	f	t	1683-03-05
-Boursault (Edme)	Mots à la mode (Les)	comédie	1	vers	f	f	1694-08-19
+Boursault (Edme)	Mercure galant (Le) ou la Comédie sans titre / La Pièce sans titre (titre alt.)	comédie	4	vers	f	t	1683-03-05
+Boursault (Edme)	Mots à la mode (Les) /  Bons mots (Les) (titre alt.)	comédie	1	vers	f	f	1694-08-19
 Boursault (Edme)	Médecin volant (Le)	comédie	1	vers	f	f	
 Boursault (Edme)	Nicandres ou les Menteurs qui ne mentent point (Les)	comédie	3	vers	f	f	
 Boursault (Edme)	Phaéton	comédie	5	vers	f	f	1691-12-28
 Boursault (Edme)	Ésope (titre alt.) / Fables d'Ésope ou Ésope à la ville (Les)	comédie	5	vers et vers libres	t	f	1690-01-18
 Boursault (Edme)	Ésope à la cour	comédie héroïque	5	vers	t	f	1701-12-16
 Boutet de Monvel (Jacques-Marie)	Amant Bourru (L')	comédie	3	vers libres	f	f	1777-08-13
-Boutet de Monvel (Jacques-Marie)	Chevalier sans peur et sans reproche ou les Amours de Bayard (Le)	comédie héroïque	4	prose	f	f	1786-08-24
+Boutet de Monvel (Jacques-Marie)	Chevalier sans peur et sans reproche ou les Amours de Bayard (Le)	comédie héroïque	4	prose	f	t	1786-08-24
 Boutet de Monvel (Jacques-Marie)	Clémentine et Desormes	drame	5	prose	f	f	1780-12-14
 Boutet de Monvel (Jacques-Marie)	Victimes cloîtrées (Les)	drame	4	prose	f	f	1791-03-28
-Boyer (Claude, abbé)	Artaxerce	tragédie	5	vers	f	f	
+Boyer (Claude, abbé)	Artaxerce	tragédie	5	vers	f	f	1682-11-22
 Boyer (Claude, abbé)	Judith	tragédie	5	vers	f	f	1695-03-04
 Boyer (Claude, abbé) ; Le Clerc (Michel)	Oreste	tragédie	5	vers	f	f	1681-10-10
-Boyer (Claude, abbé) pseud : Pader d'Assézan	Agamemnon ou  La Mort d'Agamemnon	tragédie	5	vers	f	f	
-Boyer (Claude, abbé) pseud : Pader d'Assézan	Antigone	tragédie	5	vers	f	f	
+Boyer (Claude, abbé) pseud : Pader d'Assézan	Agamemnon ou  La Mort d'Agamemnon	tragédie	5	vers	f	f	1680-04-30
+Boyer (Claude, abbé) pseud : Pader d'Assézan	Antigone	tragédie	5	vers	f	f	1686-03-14
 Bret (Antoine)	Concert (Le)	comédie	1	prose	f	t	1747-11-16
 Bret (Antoine)	Deux sœurs (Les)	comédie	2	prose	f	f	1767-11-20
 Bret (Antoine)	Double extravagance (La)	comédie	3	vers	f	f	1750-07-27
@@ -190,8 +189,8 @@ Bret (Antoine) ; Godard d'Aucour (Claude) ; Villaret (Claude)	Quartier d'hiver (
 Brie (de)	Héraclides (Les)	tragédie	5	vers	f	f	1695-02-05
 Brie (de)	Lourdaud (Le)	comédie	1	prose	f	f	1697-05-08
 Brousse-Desfaucherets (Jean-Louis)	Avare cru bienfaisant (L')	comédie	5	vers	f	f	1784-12-15
-Brousse-Desfaucherets (Jean-Louis)	Mariage secret (Le)	comédie	3	vers	f	f	
-Brousse-Desfaucherets (Jean-Louis)	Portrait ou le Danger de tout dire (Le)	comédie	1	vers	f	f	
+Brousse-Desfaucherets (Jean-Louis)	Mariage secret (Le)	comédie	3	vers	f	f	1786-03-10
+Brousse-Desfaucherets (Jean-Louis)	Portrait ou le Danger de tout dire (Le)	comédie	1	vers	f	f	1786-05-13
 Brueys (David-Augustin de)	Avocat Patelin (L')	comédie	3	prose	f	f	1706-06-04
 Brueys (David-Augustin de)	Gabinie	tragédie	5	vers	f	f	1699-03-14
 Brueys (David-Augustin de)	Muet (Le)	comédie	5	prose	f	f	1691-06-22
@@ -207,14 +206,14 @@ Brécourt (Guillaume Marcoureau, sieur de Brécourt, dit)	Ombre de Molière (L')
 Brécourt (Guillaume Marcoureau, sieur de Brécourt, dit)	Timon	comédie	1	vers	f	f	1684-08-13
 Cahusac (Louis de)	Algérien ou les Muses comédiennes (L')	comédie-ballet	3	vers libres	t	t	1744-09-15
 Cahusac (Louis de)	Comte de Warwick (Le)	tragédie	5	vers	f	f	1742-11-28
-Cahusac (Louis de)	Pharamond	tragédie	5	vers	f	f	
+Cahusac (Louis de)	Pharamond	tragédie	5	vers	f	f	1736-08-14
 Cahusac (Louis de)	Zénéïde	comédie	1	vers	f	t	1743-05-13
+Cailhava de L'Estandoux (Jean-François)	Les Journalistes anglais	comédie	3	prose	f	f	1782-07-20
 Cailhava de L'Estandoux (Jean-François)	Mariage interrompu (Le) ou La Fille supposée	comédie	3	vers	f	f	1769-04-10
-Cailhava de L'Estandoux (Jean-François)	Présomption à la mode (La)	comédie	5	vers	f	f	
+Cailhava de L'Estandoux (Jean-François)	Présomption à la mode (La)	comédie	5	vers	f	f	1763-08-01
 Cailhava de L'Estandoux (Jean-François)	Tuteur dupé (Le) ou La Maison à deux portes	comédie	5	prose	f	f	1765-09-30
-Cailhava de L'Estandoux (Jean-François)	Égoïsme (L')	comédie	5	vers	f	f	
+Cailhava de L'Estandoux (Jean-François)	Égoïsme (L')	comédie	5	vers	f	f	1777-06-19
 Cailhava de L'Estandoux (Jean-François)	Étrennes de l’amour (Les)	comédie-ballet	1	prose	f	t	1769-01-01
-Cailhava de l'Estendoux (Jean-François)	Les Journalistes anglais	comédie	3	prose	f	f	1782-07-20
 Campistron (Jean Galbert de)	Adrien	tragédie	5	vers	f	f	1690-01-11
 Campistron (Jean Galbert de)	Alcibiade	tragédie	5	vers	f	f	1685-12-28
 Campistron (Jean Galbert de)	Amante amant (L')	comédie	5	prose	f	f	1684-08-02
@@ -223,7 +222,7 @@ Campistron (Jean Galbert de)	Arminius	tragédie	5	vers	f	f	1684-02-19
 Campistron (Jean Galbert de)	Aétius	tragédie	5	vers	f	f	1693-01-28
 Campistron (Jean Galbert de)	Jaloux désabusé (Le)	comédie	5	vers	f	f	1709-12-13
 Campistron (Jean Galbert de)	Phocion	tragédie	5	vers	f	f	1688-12-16
-Campistron (Jean Galbert de)	Phraate	tragédie	5	vers	f	f	
+Campistron (Jean Galbert de)	Phraate	tragédie	5	vers	f	f	1686-12-26
 Campistron (Jean Galbert de)	Tiridate	tragédie	5	vers	f	f	1691-02-12
 Campistron (Jean Galbert de)	Virginie	tragédie	5	vers	f	f	1683-02-12
 Carbon de Flins Des Oliviers (Claude-Marie-Louis-Emmanuel)	Mari directeur ou le Déménagement du couvent (Le)	comédie	1	vers	f	f	1791-02-25
@@ -236,19 +235,20 @@ Chabanon (Michel Paul Guy de)	Éponine	tragédie	5	vers	f	f	1762-12-06
 Chaligny des Plaines (François de)	Coriolan	tragédie	5	vers	f	f	1722-02-28
 Chamfort (Sébastien-Roch-Nicolas de)	Jeune indienne (La)	comédie	1	vers	f	f	1764-04-30
 Chamfort (Sébastien-Roch-Nicolas de)	Marchand de Smyrne (Le)	comédie	1	prose	f	f	1770-01-26
-Chamfort (Sébastien-Roch-Nicolas de)	Mustapha et Zéangir	tragédie	5	vers	f	f	
+Chamfort (Sébastien-Roch-Nicolas de)	Mustapha et Zéangir	tragédie	5	vers	f	f	1777-12-15
+Champmeslé (Charles Chevillet dit)	Bassette (La)	comédie	5	vers	f	f	1680-05-31
 Champmeslé (Charles Chevillet dit)	Divorce (Le)	comédie	5	vers	f	t	1683-09-06
 Champmeslé (Charles Chevillet dit)	Fragments de Molière (Les)	comédie	2	prose	f	f	
 Champmeslé (Charles Chevillet dit)	Grisettes ou Crispin chevalier (Les)	comédie	1	vers	f	f	
-Champmeslé (Charles Chevillet dit)	Joueurs (Les)	comédie	5	vers	f	f	
-Champmeslé (Charles Chevillet dit)	Parisien (Le)	comédie	5	vers	f	f	
-Champmeslé (Charles Chevillet dit)	Rue Saint-Denis (La)	comédie	1	prose	f	f	
+Champmeslé (Charles Chevillet dit)	Joueurs (Les)	comédie	5	vers	f	f	1683-02-05
+Champmeslé (Charles Chevillet dit)	Parisien (Le)	comédie	5	vers	f	f	1682-02-07
+Champmeslé (Charles Chevillet dit)	Rue Saint-Denis (La)	comédie	1	prose	f	f	1682-06-17
 Champmeslé (Charles Chevillet dit)	Veuve (La)	comédie	1	prose	f	f	1699-07-30
-Chateaubrun (Jean-Baptiste Vivien de)	Mahomet second	tragédie	5	vers	f	f	1714-11-13
 Châteaubrun (Jean-Baptiste Vivien de)	Astyanax	tragédie	5	vers	f	f	1756-01-05
+Châteaubrun (Jean-Baptiste Vivien de)	Mahomet second	tragédie	5	vers	f	f	1714-11-13
 Châteaubrun (Jean-Baptiste Vivien de)	Philoctète	tragédie	5	vers	f	f	1755-03-01
 Châteaubrun (Jean-Baptiste Vivien de)	Troyennes (Les)	tragédie	5	vers	f	f	1754-03-11
-Chénier (Marie-Joseph de)	Azémire	tragédie	5	vers	f	f	
+Chénier (Marie-Joseph de)	Azémire	tragédie	5	vers	f	f	1786-11-06
 Chénier (Marie-Joseph de)	Charles IX ou l'École des rois	tragédie	5	vers	f	f	1789-11-04
 Chénier (Marie-Joseph de)	Edgar ou le Page supposé	comédie	2	vers	f	f	1785-11-14
 Claret de Fleurieu (Aglaé Deslacs, comtesse)	Pauline	comédie	2	vers	f	f	1791-07-02
@@ -258,13 +258,13 @@ Colardeau (Charles-Pierre)	Caliste	tragédie	5	vers	f	f	1760-11-12
 Collet de Messine (Jean-Baptiste)	Abdolonime ou le Roi berger	comédie héroïque	3	vers	f	f	1776-03-06
 Collet de Messine (Jean-Baptiste)	Île déserte (L')	comédie	1	vers	f	f	
 Collin d'Harleville (Jean-François)	Châteaux en Espagne (Les)	comédie	5	vers	f	f	1789-02-20
-Collin d'Harleville (Jean-François)	Inconstant (L')	comédie	5	vers	f	f	
+Collin d'Harleville (Jean-François)	Inconstant (L')	comédie	5	vers	f	f	1786-06-13
 Collin d'Harleville (Jean-François)	Monsieur de Crac dans son petit castel ou les Gascons	comédie	1	vers	f	t	1791-03-04
 Collin d'Harleville (Jean-François)	Optimiste ou l'Homme content de tout (L')	comédie	5	vers	f	f	1788-02-22
 Collin d'Harleville (Jean-François)	Vieux célibataire (Le)	comédie	5	vers	f	f	1792-02-24
 Collot d'Herbois	Il y a une bonne justice ou le Paysan magistrat	drame	5	prose	f	f	1789-12-07
 Collé (Charles)	Dupuis et Desronais - Dupuis et des Renais - Dupuis et des Ronais	comédie	3	vers libres	f	f	1763-01-17
-Collé (Charles)	Partie de chasse de Henri IV (La)	comédie	3	prose	f	f	
+Collé (Charles)	Partie de chasse de Henri IV (La)	comédie	3	prose	f	f	1774-11-16
 Collé (Charles)	Veuve (La)	comédie	1	prose	f	f	1770-12-29
 Colomb de Seillans	Gageure de Village (La)	comédie	1	prose	f	t	1756-05-26
 Cordier de Saint-Firmin (Edmond)	Zarucma	tragédie	5	vers	f	f	1762-03-17
@@ -274,7 +274,7 @@ Corneille (Pierre)	Attila, roi des Huns	tragédie	5	vers	f	f
 Corneille (Pierre)	Cid (Le)	tragi-comédie / tragédie	5	vers	f	f	
 Corneille (Pierre)	Cinna ou la Clémence d'Auguste	tragédie	5	vers	f	f	
 Corneille (Pierre)	Don Sanche d'Aragon	comédie héroïque	5	vers	f	f	
-Corneille (Pierre)	Horace ou Les Horaces	tragédie	5	vers	f	f	
+Corneille (Pierre)	Horace / Les Horaces (titre alt.)	tragédie	5	vers	f	f	
 Corneille (Pierre)	Héraclius, empereur d'Orient	tragédie	5	vers	f	f	
 Corneille (Pierre)	Menteur (Le)	comédie	5	vers	f	f	
 Corneille (Pierre)	Mort de Pompée (La)	tragédie	5	vers	f	f	
@@ -290,23 +290,24 @@ Corneille (Pierre)	Toison d'or (La)	tragédie	5	vers	t	t
 Corneille (Pierre)	Œdipe	tragédie	5	vers	f	f	
 Corneille (Thomas)	Ariane	tragédie	5	vers	f	f	
 Corneille (Thomas)	Baron d'Albikrac (Le)	comédie	5	vers	f	f	
-Corneille (Thomas)	Baron des Fondrières (Le)	comédie	5	vers	f	f	
+Corneille (Thomas)	Baron des Fondrières (Le)	comédie	5	vers	f	f	1686-01-14
 Corneille (Thomas)	Bradamante	tragédie	5	vers	f	f	1695-11-18
 Corneille (Thomas)	Camma, reine de Galatie	tragédie	5	vers	f	f	
 Corneille (Thomas)	Comte d'Essex (Le)	tragédie	5	vers	f	f	
 Corneille (Thomas)	Comtesse d'Orgueil (La)	comédie	5	vers	f	f	
-Corneille (Thomas)	Comtesse d'Orgueil (La) ou Le Marquis de Lorgnac	comédie	5	vers	f	f	
+Corneille (Thomas)	Comtesse d'Orgueil (La) / Le Marquis de Lorgnac (titre alt.)	comédie	5	vers	f	f	1653-01-28
 Corneille (Thomas)	Don Bertrand de Cigarral	comédie	5	vers	f	t	
 Corneille (Thomas)	Don César d'Avalos	comédie	5	vers	f	f	1674-12-21
 Corneille (Thomas)	Geôlier de soi-même ou Jodelet prince (Le)	comédie	5	vers	f	f	
 Corneille (Thomas)	Inconnu (L')	comédie	5	vers	t	t	
 Corneille (Thomas)	L'inconnu	comédie	5	vers	t	f	
 Corneille (Thomas)	Stilicon	tragédie	5	vers	f	f	
-Corneille (Thomas) ; Donneau de Visé (Jean)	Pierre Philosophale (La)	comédie	5	""	f	t	1681-02-23
+Corneille (Thomas) ; Donneau de Vizé (Jean)	Circé	tragédie	5	vers libres	t	t	1675-03-17
 Corneille (Thomas) ; Donneau de Vizé (Jean)	Dames vengées ou la Dupe de soi-même (Les)	comédie	5	prose	f	f	1695-02-22
 Corneille (Thomas) ; Donneau de Vizé (Jean)	Devineresse ou les Faux enchantements  (La)	comédie	5	prose	f	t	
+Corneille (Thomas) ; Donneau de Vizé (Jean)	Inconnu (L')	comédie	5	vers	t	t	1675-11-17
+Corneille (Thomas) ; Donneau de Vizé (Jean)	Pierre Philosophale (La)	comédie	5	""	f	t	1681-02-23
 Corneille (Thomas) ; Donneau de Vizé (Jean)	Usurier (L')	comédie	5	vers	f	f	1685-02-13
-Corneille (Thomas), Donneau de Visé (Jean)	Inconnu (L')	comédie	5	vers	t	t	1675-11-17
 Crébillon (Prosper Jolyot de)	Atrée et Thyeste	tragédie	5	vers	f	f	1707-03-14
 Crébillon (Prosper Jolyot de)	Catilina	tragédie	5	vers	f	f	1748-12-20
 Crébillon (Prosper Jolyot de)	Pyrrhus	tragédie	5	vers	f	f	1726-04-29
@@ -316,7 +317,7 @@ Crébillon (Prosper Jolyot de)	Triumvirat ou la Mort de Cicéron (Le)	tragédie	
 Crébillon (Prosper Jolyot de)	Xerxès ou Xercès	tragédie	5	vers	f	f	1714-02-07
 Crébillon (Prosper Jolyot de)	Électre	tragédie	5	vers	f	f	1708-12-14
 Crébillon père (Prosper Jolyot de Crébillon dit)	Idoménée	tragédie	5	vers	f	f	1705-12-29
-Cubières-Palmézeaux (Michel de)	Jeune épouse (La)	comédie	3	vers	f	f	
+Cubières-Palmézeaux (Michel de)	Jeune épouse (La)	comédie	3	vers	f	f	1788-07-04
 Cubières-Palmézeaux (Michel de)	Mort de Molière (La)	pièce historique	3	vers	f	f	1789-11-19
 Cérou (Pierre)	Père désabusé (Le)	comédie	1	prose	f	f	1758-07-10
 Dampierre de la Salle	Bienfait rendu ou le Négociant (Le)	comédie	5	vers	f	f	1763-04-18
@@ -328,7 +329,9 @@ Dancourt (Florent Carton dit)	Agioteurs (Les)	comédie	3	prose	f	f	1710-09-26
 Dancourt (Florent Carton dit)	Angélique et Médor	comédie	1	prose	f	t	1685-08-01
 Dancourt (Florent Carton dit)	Baguette (La)	comédie	1	prose	f	t	1693-04-04
 Dancourt (Florent Carton dit)	Belle-mère (La)	comédie	5	vers	f	f	1725-04-21
+Dancourt (Florent Carton dit)	Bon soldat (Le)	comédie	1	vers	f	t	1691-10-10
 Dancourt (Florent Carton dit)	Bourgeoises à la mode (Les)	comédie	5	prose	f	f	1692-11-15
+Dancourt (Florent Carton dit)	Brutal de sang froid / sens froid  (Le)	comédie	1	prose	f	f	1686-05-03
 Dancourt (Florent Carton dit)	Carnaval de Venise (Le)	comédie héroïque	5	""	f	f	1690-12-29
 Dancourt (Florent Carton dit)	Charivari (Le)	comédie	1	prose	f	t	1697-09-19
 Dancourt (Florent Carton dit)	Chevalier à la mode (Le)	comédie	5	prose	f	f	
@@ -338,9 +341,9 @@ Dancourt (Florent Carton dit)	Comédie des comédiens ou l'Amour charlatan (La)	
 Dancourt (Florent Carton dit)	Curieux de Compiègne (Les) ou Les Camps de Compiègne	comédie	1	prose	f	t	1698-10-24
 Dancourt (Florent Carton dit)	Céphale et Procris	comédie	3	vers	t	t	1711-10-27
 Dancourt (Florent Carton dit)	Dame à la mode ou la Suite de la coquette (La)	comédie	5	vers	f	f	1689-01-03
-Dancourt (Florent Carton dit)	Diable boiteux (Le)	comédie	1	prose	t	t	1707-10-01
+Dancourt (Florent Carton dit)	Diable boiteux (Le) ou Premier chapitre du Diable boiteux (Le)	comédie	1	prose	t	t	1707-10-01
 Dancourt (Florent Carton dit)	Dieux comédiens ou la Métempsycose des amours (Les)	comédie	3	vers	t	t	1717-12-17
-Dancourt (Florent Carton dit)	Désolation des joueuses (La) ou Joueuses (Les)	comédie	1	prose	f	f	
+Dancourt (Florent Carton dit)	Désolation des joueuses (La) ou Joueuses (Les)	comédie	1	prose	f	f	1687-08-23
 Dancourt (Florent Carton dit)	Eaux de Bourbon (Les)	comédie	1	prose	f	t	1696-10-04
 Dancourt (Florent Carton dit)	Enfants de Paris (Les) ou Famille à la mode (La) ou Finette	comédie	5	vers	f	f	1699-12-18
 Dancourt (Florent Carton dit)	Femme d'intrigues (La)	comédie	5	prose	f	f	1692-01-30
@@ -360,7 +363,7 @@ Dancourt (Florent Carton dit)	Madame Artus	comédie	5	vers	f	f	1708-05-08
 Dancourt (Florent Carton dit)	Maison de campagne (La)	comédie	1	prose	f	f	1688-08-27
 Dancourt (Florent Carton dit)	Mari retrouvé (Le)	comédie	1	prose	f	t	1698-10-29
 Dancourt (Florent Carton dit)	Merlin déserteur	comédie	1	prose	f	f	1690-08-02
-Dancourt (Florent Carton dit)	Merlin la Chaconne	comédie	3		f	t	
+Dancourt (Florent Carton dit)	Merlin la Chaconne	comédie	3	""	f	t	1686-05-03
 Dancourt (Florent Carton dit)	Mort d'Alcide (La)	tragédie	5	vers	f	f	1704-10-17
 Dancourt (Florent Carton dit)	Moulin de Javelle (Le)	comédie	1	prose	f	t	1696-07-07
 Dancourt (Florent Carton dit)	Notaire obligeant (Le)	comédie	3	prose	f	f	1685-06-08
@@ -368,7 +371,7 @@ Dancourt (Florent Carton dit)	Opéra de village (L')	comédie	1	prose	f	t	1692-0
 Dancourt (Florent Carton dit)	Opérateur Barry (L')	comédie	1	prose	t	t	1702-10-11
 Dancourt (Florent Carton dit)	Parisienne (La)	comédie	1	prose	f	f	1691-06-13
 Dancourt (Florent Carton dit)	Prix de l'arquebuse (Le)	comédie	1	prose	f	t	1717-10-01
-Dancourt (Florent Carton dit)	Renaud et Armide	comédie	1	prose	f	t	
+Dancourt (Florent Carton dit)	Renaud et Armide	comédie	1	prose	f	t	1686-07-31
 Dancourt (Florent Carton dit)	Retour des officiers (Le)	comédie	1	prose	f	t	1697-10-19
 Dancourt (Florent Carton dit)	Sancho Pança gouverneur	comédie	5	vers	f	t	1712-11-15
 Dancourt (Florent Carton dit)	"Second chapitre du ""Diable boiteux"" (Le)"	comédie	2	prose	t	t	1707-10-20
@@ -377,7 +380,7 @@ Dancourt (Florent Carton dit)	Trois cousines (Les)	comédie	3	prose	t	t	1700-10-
 Dancourt (Florent Carton dit)	Trois cousines (Les)	comédie	3	prose	t	t	1700-10-18
 Dancourt (Florent Carton dit)	Tuteur amoureux (Le) ou Le Tuteur	comédie	1	prose	f	f	
 Dancourt (Florent Carton dit)	Tuteur amoureux (Le) ou Le Tuteur	comédie	1	prose	f	f	1695-07-13
-Dancourt (Florent Carton dit)	Vacances (Les)	comédie	1	prose	f	t	1696-10-31
+Dancourt (Florent Carton dit)	Vacances (Les) / Les Vacances des procureurs (titre alt.)	comédie	1	prose	f	t	1696-10-31
 Dancourt (Florent Carton dit)	Vendanges (Les)	comédie	1	prose	f	t	1694-09-30
 Dancourt (Florent Carton dit)	Vendanges de Suresnes (Les)	comédie	1	prose	f	t	1695-10-15
 Dancourt (Florent Carton dit)	Vert galant (Le)	comédie	1	prose	f	t	1714-10-24
@@ -394,36 +397,36 @@ Desaudras	Minuit ou le Moment propice	comédie	1	prose	f	f	1791-12-31
 Deschamps (François-Michel-Chrétien)	Antiochus et Cléopâtre	tragédie	5	vers	f	f	1717-10-29
 Deschamps (François-Michel-Chrétien)	Artaxerce	tragédie	5	vers	f	f	1735-12-19
 Deschamps (François-Michel-Chrétien)	Caton d'Utique	tragédie	5	vers	f	f	1715-01-25
-Deschamps (François-Michel-Chrétien)	Médus	tragédie	5	vers	f	f	
+Deschamps (François-Michel-Chrétien)	Médus	tragédie	5	vers	f	f	1739-01-12
 Desfontaines (François-Georges)	Bergère des Alpes (La)	comédie	1	vers libre	f	f	1765-12-15
-Desfontaines (François-Georges)	Fête de village (La)	intermède	1	musique	f	t	
+Desfontaines (François-Georges)	Fête de village (La)	intermède	1	musique	f	t	1700-07-13
 Desfontaines (François-Georges)	Réduction de Paris (La)	pièce héroïque	3	prose	f	f	1780-11-25
 Desfontaines (François-Georges)	Tombeau de Desilles (Le)	pièce	1	prose	f	f	1790-12-03
 Desforges	Rival secrétaire (Le)	comédie	1	vers	t	f	1737-11-12
 Desforges (Pierre-Jean-Baptiste Choudard)	Marins ou le Médiateur maladroit (Les)	comédie	5	vers	f	f	1783-07-30
 Desmahis (Joseph-François-Edouard de Corsembleu)	Impertinent (L') ou Le Billet perdu	comédie	1	vers libres	f	f	1750-08-31
 Desmarets de Saint-Sorlin (Jean)	Visionnaires (Les)	comédie	5	vers	f	f	
-Desmarres	Dragonne ou Merlin dragon (La)	comédie	1	prose	f	t	
-Destouches	Ambitieux et l'indiscrète (L')	tragi-comédie	5	vers	t	f	1737-06-14
-Destouches	Amour usé (L')	comédie	5	prose	f	f	1741-09-20
-Destouches	Curieux impertinent (Le)	comédie	5	vers	f	f	1710-11-17
-Destouches	Dissipateur ou l'Honnête friponne (Le)	comédie	5	vers	f	f	1753-03-23
-Destouches	Fausse Agnès ou le Poète campagnard (La)	comédie	3	prose	f	f	1759-03-10
-Destouches	Force du naturel (La)	comédie	5	vers	f	f	1750-02-11
-Destouches	Glorieux (Le)	comédie	5	vers	f	f	1732-01-18
-Destouches	Homme singulier (L')	comédie	5	vers	f	f	1764-10-29
-Destouches	Ingrat (L')	comédie	5	vers	f	f	1712-01-28
-Destouches	Irrésolu (L')	comédie	5	vers	f	f	1713-01-05
-Destouches	Médisant (Le)	comédie	5	vers	f	f	1715-02-20
-Destouches	Obstacle imprévu ou l'Obstacle sans obstacle (L')	comédie	5	prose	f	f	1717-10-18
-Destouches	Tambour nocturne ou le Mari devin (Le)	comédie	5	prose	f	f	1762-10-16
-Destouches	Triple mariage (Le)	comédie	1	prose	f	t	1716-07-07
-Destouches	Triple mariage (Le)	comédie	1	prose	f	t	1716-07-07
+Desmarres	Dragonne ou Merlin dragon (La) ou les Dragons (ittre alt) 	comédie	1	prose	f	t	1686-04-26
+Destouches (Philippe Néricault dit)	 Belle orgueilleuse ou l'Enfant gâté (La)	comédie	1	prose	f	f	1741-08-17
+Destouches (Philippe Néricault dit)	Ambitieux et l'indiscrète (L')	tragi-comédie	5	vers	t	f	1737-06-14
+Destouches (Philippe Néricault dit)	Amour usé (L')	comédie	5	prose	f	f	1741-09-20
+Destouches (Philippe Néricault dit)	Curieux impertinent (Le)	comédie	5	vers	f	f	1710-11-17
+Destouches (Philippe Néricault dit)	Dissipateur ou l'Honnête friponne (Le)	comédie	5	vers	f	f	1753-03-23
 Destouches (Philippe Néricault dit)	Envieux ou la Critique du Philosophe marié (L')	comédie	1	prose	f	f	1727-05-03
+Destouches (Philippe Néricault dit)	Fausse Agnès ou le Poète campagnard (La)	comédie	3	prose	f	f	1759-03-10
 Destouches (Philippe Néricault dit)	Fausse veuve ou le Jaloux sans jalousie (La)	comédie	1	prose	f	f	1715-07-20
-Destouches (Philippe Néricault dit)	Philosophe marié ou le Mari honteux de l'être (Le)	comédie	5	vers	f	f	
+Destouches (Philippe Néricault dit)	Force du naturel (La)	comédie	5	vers	f	f	1750-02-11
+Destouches (Philippe Néricault dit)	Glorieux (Le)	comédie	5	vers	f	f	1732-01-18
+Destouches (Philippe Néricault dit)	Homme singulier (L')	comédie	5	vers	f	f	1764-10-29
+Destouches (Philippe Néricault dit)	Ingrat (L')	comédie	5	vers	f	f	1712-01-28
+Destouches (Philippe Néricault dit)	Irrésolu (L')	comédie	5	vers	f	f	1713-01-05
+Destouches (Philippe Néricault dit)	Médisant (Le)	comédie	5	vers	f	f	1715-02-20
+Destouches (Philippe Néricault dit)	Obstacle imprévu ou l'Obstacle sans obstacle (L')	comédie	5	prose	f	f	1717-10-18
+Destouches (Philippe Néricault dit)	Philosophe marié ou le Mari honteux de l'être (Le)	comédie	5	vers	f	f	1727-02-15
 Destouches (Philippe Néricault dit)	Philosophes amoureux (Les)	comédie	5	vers	f	f	1729-11-26
-Destouches, Philippe Néricault	 Belle orgueilleuse (La) ou Enfant gâté (L')	comédie	1	prose	f	f	1741-08-17
+Destouches (Philippe Néricault dit)	Tambour nocturne ou le Mari devin (Le)	comédie	5	prose	f	f	1762-10-16
+Destouches (Philippe Néricault dit)	Triple mariage (Le)	comédie	1	prose	f	t	1716-07-07
+Destouches (Philippe Néricault dit)	Triple mariage (Le)	comédie	1	prose	f	t	1716-07-07
 Devaux (François-Antoine)	Engagements indiscrets (Les)	comédie	1	prose	f	f	1752-10-26
 Dezède (Nicolas)	Paulin et Clairette ou les Deux espiègles	comédie-opéra	2	prose	f	t	1792-01-05
 Dezède (Nicolas)	Trois noces (Les)	comédie champêtre	1	prose	f	t	1790-02-23
@@ -440,7 +443,7 @@ Dorat (Claude-Joseph)	Chevalier français à Londres (Le)	comédie	3	vers	f	f	17
 Dorat (Claude-Joseph)	Chevalier français à Turin (Le)	comédie	3	vers	f	f	1778-11-21
 Dorat (Claude-Joseph)	Célibataire (Le)	comédie	5	vers libres	f	f	1775-09-20
 Dorat (Claude-Joseph)	Feinte par amour (La)	comédie	3	vers	f	f	1773-07-31
-Dorat (Claude-Joseph)	Malheureux imaginaire (Le)	comédie	5	vers	f	f	
+Dorat (Claude-Joseph)	Malheureux imaginaire (Le)	comédie	5	vers	f	f	1776-12-07
 Dorat (Claude-Joseph)	Pierre le Grand	tragédie	5	vers	f	f	1779-12-01
 Dorat (Claude-Joseph)	Roséïde ou l'Intrigant	comédie	5	vers	f	f	1779-10-02
 Dorat (Claude-Joseph)	Régulus	tragédie	3	vers	f	f	1773-07-31
@@ -453,7 +456,7 @@ Du Fresny (Charles)	Amant masqué (L')	comédie	1	prose	f	t	1709-08-08
 Du Fresny (Charles)	Attendez-moi sous l’orme	comédie	1	prose	f	t	1694-05-19
 Du Fresny (Charles)	Bailli marquis (Le)	comédie	1	prose	f	t	1703-02-24
 Du Fresny (Charles)	Chevalier joueur (Le)	comédie	5	prose	f	f	1697-02-27
-Du Fresny (Charles)	Coquette de village ou le lot supposé (La)	comédie	3	vers	f	f	1715-05-27
+Du Fresny (Charles)	Coquette de village ou le Lot supposé (La)	comédie	3	vers	f	f	1715-05-27
 Du Fresny (Charles)	Double veuvage (Le)	comédie	3	prose	t	t	1702-03-08
 Du Fresny (Charles)	Dédit (Le)	comédie	1	vers	f	f	1719-05-12
 Du Fresny (Charles)	Esprit de contradiction (L')	comédie	1	prose	f	f	1700-08-27
@@ -472,7 +475,7 @@ Du Fresny (Charles)	Sancho Pança	comédie	3	prose	f	t	1694-01-27
 Du Roullet (François-Louis Gand Le Bland, bailli)	Effets du caractère (Les)	comédie	5	vers	f	f	1752-02-03
 Du Ryer (Pierre)	Scévole	tragédie	5	vers	f	f	
 Du Ryer (Pierre)	Scévole	tragédie	5	vers	f	f	
-Dubois de Rochefort (Guillaume)	Deux frères (Les)	comédie	5	vers	f	f	
+Dubois de Rochefort (Guillaume)	Deux frères (Les)	comédie	5	vers	f	f	1785-04-12
 Dubois-Fontanelle (Joseph-Gaspard)	Loredan	drame	4	vers	f	f	1776-02-17
 Dubois-Fontanelle (Joseph-Gaspard)	Éricie ou la Vestale	tragédie	3	vers	f	f	1789-08-19
 Dubuisson (Pierre-Ulric)	Albert et Émilie	tragédie	5	vers	f	f	1785-04-30
@@ -484,9 +487,9 @@ Duché de Vancy (Joseph-François)	Jonathas	tragédie	3	vers	f	f	1714-02-26
 Ducis (Jean-François)	Amélise	tragédie	5	vers	f	f	1768-01-09
 Ducis (Jean-François)	Hamlet	tragédie	5	vers	f	f	1769-09-30
 Ducis (Jean-François)	Macbeth	tragédie	5	vers	f	f	1784-01-12
-Ducis (Jean-François)	Roi Lear (Le)	tragédie	5	vers	f	f	
+Ducis (Jean-François)	Roi Lear (Le)	tragédie	5	vers	f	f	1783-01-20
 Ducis (Jean-François)	Roméo et Juliette	tragédie	5	vers	f	f	1772-07-27
-Ducis (Jean-François)	Œdipe chez Admète	tragédie	5	vers	f	f	
+Ducis (Jean-François)	Œdipe chez Admète	tragédie	5	vers	f	f	1778-12-04
 Dudoyer de Gastels (Gérard)	Adélaïde ou l'Antipathie pour l'amour	comédie	2	vers décasyllabes	f	f	1780-07-10
 Dudoyer de Gastels (Gérard)	Laurette	comédie	2	vers	f	f	1768-09-14
 Dudoyer de Gastels (Gérard)	Vindicatif (Le)	drame	5	vers libres	f	f	1774-07-02
@@ -502,22 +505,22 @@ Fagan (Barthélemy-Christophe)	Amitié rivale (L')	comédie	5	vers	f	f	1735-11-1
 Fagan (Barthélemy-Christophe)	Caractères de Thalie (Les)	comédie	3	prose / vers	t	t	1737-07-18
 Fagan (Barthélemy-Christophe)	Grondeuse (La)	comédie	1	prose	f	t	1734-02-11
 Fagan (Barthélemy-Christophe)	Heureux retour (L')	comédie	1	vers	f	t	1744-11-06
-Fagan (Barthélemy-Christophe)	Inquiet (L')	comédie	1	vers	f	f	
+Fagan (Barthélemy-Christophe)	Inquiet (L')	comédie	1	vers	f	f	1737-07-18
 Fagan (Barthélemy-Christophe)	Joconde	comédie	1	prose	f	t	1740-11-05
 Fagan (Barthélemy-Christophe)	Lucas et Perrette	comédie	1	prose	f	t	1734-11-17
 Fagan (Barthélemy-Christophe)	Marié sans le savoir (Le)	comédie	1	prose	f	f	1740-01-08
-Fagan (Barthélemy-Christophe)	Originaux (Les) - Troisième partie des Caractères de Thalie	comédie	1	prose	f	t	
+Fagan (Barthélemy-Christophe)	Originaux (Les) - Troisième partie des Caractères de Thalie	comédie	1	prose	f	t	1737-07-18
 Fagan (Barthélemy-Christophe)	Pupille (La)	comédie	1	prose	f	t	1734-07-05
 Fagan (Barthélemy-Christophe)	Pupille (La)	comédie	1	prose	f	t	1734-07-05
 Fagan (Barthélemy-Christophe)	Rendez-vous ou l'Amour supposé (Le)	comédie	1	vers	f	f	1733-05-27
-Fagan (Barthélemy-Christophe)	Étourderie (L')	comédie	1	prose	f	f	
+Fagan (Barthélemy-Christophe)	Étourderie (L')	comédie	1	prose	f	f	1737-07-18
 Falconnet (Françoise-Cécile)	Amour à Tempé (L')	pastorale	2	prose	f	t	1773-07-03
 Falconnet (Françoise-Cécile) ; Rozet (Madame)	Heureuse rencontre (L')	comédie	1	prose	f	f	1771-03-07
 Fallet (Nicolas)	Alphée et Zarine	tragédie	5	vers	f	f	1788-06-19
 Fallet (Nicolas)	Tibère et Sérénus	tragédie	5	vers	f	f	1782-08-23
 Favart (Charles-Simon)	Anglais à Bordeaux (L')	comédie	1	vers libres	f	f	1763-03-14
-Fenouillot de Falbaire (Charles-Georges)	Honnête criminel ou l'Amour filial (L')	drame	5	vers	f	f	1790-01-04
 Fenouillot de Falbaire de Quingey (Charles-Georges)	Fabricant de Londres (Le)	drame	5	prose	f	f	1771-01-12
+Fenouillot de Falbaire de Quingey (Charles-Georges)	Honnête criminel ou l'Amour filial (L')	drame	5	vers	f	f	1790-01-04
 Fenouillot de Falbaire de Quingey (Charles-Georges)	École des moeurs ou les Suites du libertinage (L')	drame	5	vers	f	f	1776-05-13
 Ferrier de la Martinière (Louis)	Montézume dernier roi du Mexique	tragédie	5	vers	f	f	1702-02-14
 Florent Carton dit Dancourt	Le Siège de Calais	comédie					
@@ -533,11 +536,11 @@ Fuzelier (Louis)	Amusements de l'automne ou les Temples d'Éphèse et de Gnide (
 Fuzelier (Louis)	Momus fabuliste ou les Noces de Vulcain ou Momus fabuliste ou le Mariage de Vénus et de Vulcain	comédie	1	prose et vers libres	f	t	1719-09-26
 Fuzelier (Louis)	Procès des Sens (Le)	comédie	1	vers	f	f	1732-06-16
 Gaultier	Basile et Quitterie	tragi-comédie	3	vers	t	t	1723-01-13
+Genest (Charles-Claude)	Joseph	tragédie	5	vers	f	f	1710-12-19
 Genest (Charles-Claude)	Polymneste ou Polymnestre	tragédie	5	vers	f	f	1696-12-12
 Genest (Charles-Claude)	Pénélope	tragédie	5	vers	f	f	
 Genest (Charles-Claude)	Pénélope	tragédie	5	vers	f	f	1684-01-22
-Genest (Charles-Claude)	Zélonide, princesse de Sparte	tragédie	5	vers	f	f	
-Genest (Charles-Claude, abbé)	Joseph	tragédie	5	vers	f	f	1710-12-19
+Genest (Charles-Claude)	Zélonide, princesse de Sparte	tragédie	5	vers	f	f	1682-02-04
 Genlis (Stéphanie-Félicité du Crest, comtesse de)	Jean-Jacques Rousseau dans l'île de Saint-Pierre	drame	5	prose	t	f	1791-12-15
 Gilbert (Gabriel)	Amours de Diane et d'Endymion (Les) ou Endymion	tragédie	5	vers	t	t	1681-07-22
 Gillet de La Tessonerie	Campagnard (Le)	comédie	5	vers	f	f	
@@ -558,7 +561,7 @@ Gudin de La Brenellerie (Paul-Philippe)	Caïus Marcius Coriolan ou le Danger d'o
 Guimond de La Touche (Claude)	Iphigénie en Tauride	tragédie	5	vers	f	f	1757-06-04
 Guyot de Merville (Michel)	Achille dans l'île de Scyros	comédie héroïque	3	vers	f	f	1737-10-10
 Guyot de Merville (Michel)	Consentement forcé (Le)	comédie	1	prose	f	t	1738-08-13
-Guyot de Merville (Michel)	Médecin de l'esprit (Le)	comédie	1	prose	f	f	
+Guyot de Merville (Michel)	Médecin de l'esprit (Le)	comédie	1	prose	f	f	1739-10-14
 Guyot de Merville (Michel)	Époux réunis ou la Veuve fille et femme (Les)	comédie	5	vers	f	f	1738-10-31
 Guérin d'Estriché (Nicolas-Armand-Martial)	Myrtil et Mélicerte	pastorale héroïque	3	vers	t	t	1699-01-28
 Guérin d'Estriché (Nicolas-Armand-Martial)	Psyché de village (La)	comédie	4	prose	t	t	1705-05-29
@@ -570,8 +573,8 @@ Hauteroche (Noël Lebreton, sieur de)	Crispin musicien	comédie	5	vers	f	t
 Hauteroche (Noël Lebreton, sieur de)	Crispin médecin	comédie	3	vers	f	f	
 Hauteroche (Noël Lebreton, sieur de)	Deuil (Le)	comédie	1	vers	f	t	
 Hauteroche (Noël Lebreton, sieur de)	Esprit follet ou la Dame invisible (L')	comédie	5	vers	f	f	1684-02-22
-Hauteroche (Noël Lebreton, sieur de)	Feint polonais, ou la Veuve impertinente (Le)	comédie	3	prose	f	f	
-Hauteroche (Noël Lebreton, sieur de)	Nouvellistes (Les)	comédie	1	prose	f	f	
+Hauteroche (Noël Lebreton, sieur de)	Feint polonais, ou la Veuve impertinente (Le)	comédie	3	prose	f	f	1686-07-05
+Hauteroche (Noël Lebreton, sieur de)	Nouvellistes (Les)	comédie	1	prose	f	f	1686-10-16
 Hauteroche (Noël Lebreton, sieur de)	Souper mal apprêté (Le)	comédie	1	vers	f	f	
 Hénault (Charles-Jean-François)	Cornélie vestale	tragédie	5	vers	f	f	1713-01-27
 Imbert (Barthélemy)	Fausse apparence ou le Jaloux malgré lui (La)	comédie	3	vers	f	f	1789-04-24
@@ -580,20 +583,19 @@ Imbert (Barthélemy)	Inauguration du Théâtre français (L')	pièce	1	vers	f	f	
 Imbert (Barthélemy)	Jaloux sans amour (Le)	comédie	5	vers libres	f	f	1781-01-08
 Imbert (Barthélemy)	Marie de Brabant, reine de France	tragédie	5	vers	f	f	1789-09-09
 Imbert (Barthélemy)	Rivaux (Les)	comédie	5	vers	f	f	1787-12-18
-Inconnu	La Cavalcade	divertissement			f	t	
 Jean Racine	Turcaret	tragédie					
 Jean-Baptiste Collet de Messine	L'Ile déserte	comédie		""	f	f	1758-08-23
 Jean-Baptiste Poquelin dit Molière	Dom Juan ou Le Festin de Pierre	comédie					
 Jean-François Cailhava d’Estendoux	""	""					
-Jolly (François Antoine)	École des amants (L')	comédie	3	vers	f	f	1718-10-18
 Jolly (François-Antoine)	Vengeance de l'amour (La)	comédie	5	vers	f	f	1721-12-04
+Jolly (François-Antoine)	École des amants (L')	comédie	3	vers	f	f	1718-10-18
 L'Affichard (Thomas)	Acteurs déplacés ou l'Amant comédien (Les)	comédie	1	prose	t	t	1735-10-14
-L'Affichard (Thomas)	Rencontre imprévue, ou la Surprise des amants (La)	comédie	3	prose	f	f	1735-10-14
+L'Affichard (Thomas)	Rencontre imprévue (La)  ou la Surprise des amants (La)	comédie	3	prose	f	f	1735-10-14
 L'Affichard (Thomas); Allainval (Léonor-Jean-Christine Soulas d')	Réjouissances publiques ou le Gratis (Les)	comédie	1	prose	f	t	1729-09-18
 La Chapelle (Jean de)	Ajax	tragédie	5	vers	f	f	1684-12-27
 La Chapelle (Jean de)	Carrosses d'Orléans (Les)	comédie	1	prose	f	t	1680-08-09
 La Chapelle (Jean de)	Cléopâtre	tragédie	5	vers	f	f	1681-12-12
-La Chapelle (Jean de)	Téléphonte	tragédie	5	vers	f	f	
+La Chapelle (Jean de)	Téléphonte	tragédie	5	vers	f	f	1682-12-26
 La Chapelle (Jean de)	Zaïde	tragédie	5	vers	f	f	1681-01-26
 La Chaussée (Pierre-Claude Nivelle de La Chaussée, dit Pierre-Claude)	Critique de la Fausse antipathie (La)	comédie	1	prose/vers	f	f	1734-03-11
 La Chaussée (Pierre-Claude)	Amour pour amour	comédie	3	vers	t	t	1742-02-16
@@ -610,14 +612,14 @@ La Chaussée (Pierre-Claude)	École des mères (L')	comédie	5	vers	f	f	1744-04-
 La Chazette (de)	Don Ramire et Zaïde	tragédie	5	vers	f	f	1728-01-24
 La Font (Joseph de)	Amour vengé (L')	comédie	1	vers	f	f	1712-10-14
 La Font (Joseph de)	Danaé ou Jupiter Crispin	comédie	1	vers	t	f	1707-07-04
-La Font (Joseph de)	Naufrage ou la Pompe funèbre de Crispin (Le) ou Crispin brûlé	comédie	1	vers	f	t	1710-06-14
+La Font (Joseph de)	Naufrage ou la Pompe funèbre de Crispin (Le) / Crispin brûlé (titre alt.)	comédie	1	vers	f	t	1710-06-14
 La Font (Joseph de)	Trois frères rivaux (Les)	comédie	1	vers	f	f	1713-08-04
 La Font (Joseph de)	Trois frères rivaux (Les)	comédie	1	vers	f	f	1713-08-04
-La Fontaine (Jean de)	Florentin (Le)	comédie	1	vers	f	f	
+La Fontaine (Jean de)	Florentin (Le)	comédie	1	vers	f	f	1685-07-23
 La Fontaine (Jean de)	Ragotin ou le Roman comique	comédie	5	vers	f	f	1684-04-21
 La Fontaine (Jean de)	Rendez-vous (Le)	comédie	1	vers	f	f	1683-05-06
 La Fontaine (Jean de)	Veau perdu (Le) ou Amours de campagne (Les)	comédie	1	prose	f	f	1689-08-22
-La Fontaine (Jean de) ; Champmeslé (Charles Chevillet dit)	Je vous prends sans verd	comédie	1	vers	f	t	1693-05-01
+La Fontaine (Jean de) ; Champmeslé (Charles Chevillet dit)	Je vous prends sans verd /  Le Contrat (titre alt.)	comédie	1	vers	f	t	1693-05-01
 La Fontaine (Jean de) ; Champmeslé (Charles Chevillet, sieur de Champmeslé, dit)	Coupe enchantée (La)	comédie	1	prose	f	f	1688-07-16
 La Fosse (Antoine de)	Corésus et Callirhoé	tragédie	5	vers	f	f	1703-12-07
 La Fosse (Antoine de)	Manlius Capitolinus	tragédie	5	vers	f	f	1698-01-18
@@ -637,7 +639,7 @@ La Grange-Chancel (François-Joseph de)	Oreste et Pylade	tragédie	5	vers	f	f	16
 La Grange-Chancel (François-Joseph de)	Sophonisbe	tragédie	5	vers	f	f	1716-11-10
 La Grange-Chancel (François-Joseph de)	Érigone	tragédie	5	vers	f	f	1731-12-17
 La Harpe (Jean François de)	Barmécides (Les)	tragédie	5	vers	f	f	1778-07-11
-La Harpe (Jean François de)	Brames (Les)	tragédie	5	vers	f	f	
+La Harpe (Jean François de)	Brames (Les)	tragédie	5	vers	f	f	1783-12-15
 La Harpe (Jean François de)	Comte de Warwick (Le)	tragédie	5	vers	f	f	1763-11-07
 La Harpe (Jean François de)	Coriolan	tragédie	5	vers	f	f	1784-03-02
 La Harpe (Jean François de)	Jeanne de Naples	tragédie	5	vers	f	f	1781-12-12
@@ -648,33 +650,33 @@ La Harpe (Jean François de)	Philoctète	tragédie	3	vers	f	f	1783-06-16
 La Harpe (Jean François de)	Timoléon	tragédie	5	vers	f	f	1764-08-01
 La Harpe (Jean François de)	Virginie	tragédie	5	vers	f	f	1786-07-11
 La Montagne (Pierre, baron de)	Physicienne (La)	comédie	1	vers	f	f	1786-03-16
+La Morlière (Jacques Rochette de)	Amant déguisé (L')	comédie	2	prose	f	f	1758-06-26
 La Morlière (Jacques Rochette de)	Créole (La)	comédie	1	prose	f	t	1754-08-12
-La Morlière (jacques Rochette de)	Amant déguisé (L')	comédie	2	prose	f	f	1758-06-26
 La Motte (Antoine Houdar de)	Inès de Castro	tragédie	5	vers	f	f	1723-04-06
 La Motte (Antoine Houdar de)	Italie galante ou les contes (L')	ambigu-comique	3	prose	t	t	1731-05-11
 La Motte (Antoine Houdar de)	Machabées (Les)	tragédie	5	vers	f	f	1721-03-06
-La Motte (Antoine Houdar de)	Magnifique (Le)	comédie	2	prose	f	t	
+La Motte (Antoine Houdar de)	Magnifique (Le)	comédie	2	prose	f	t	1731-05-11
 La Motte (Antoine Houdar de)	Matrone d'Éphèse (La)	comédie	1	prose	f	f	1702-09-23
 La Motte (Antoine Houdar de)	Romulus	tragédie	5	vers	f	f	1722-01-08
 La Motte (Antoine Houdar de)	Talisman (Le)	comédie	1	prose	f	t	1727-03-27
 La Motte (Antoine Houdar de)	Œdipe	tragédie	5	vers	f	f	1726-03-18
-La Noue (Jean-Baptiste Sauvé de La Noue, dit)	Mahomet second	tragédie	5	vers	f	f	
 La Noue (Jean-Baptiste Simon Sauvé de La Noue, dit)	Coquette corrigée (La)	comédie	5	vers	f	f	1756-02-23
+La Noue (Jean-Baptiste Simon Sauvé de La Noue, dit)	Mahomet second	tragédie	5	vers	f	f	1739-02-23
 La Place (Pierre-Antoine de)	Adèle de Ponthieu ou Adèle, comtesse de Ponthieu	tragédie	5	vers	f	f	1757-04-28
 La Place (Pierre-Antoine de)	Jeanne d'Angleterre	tragédie	5	vers	f	f	1748-05-08
 La Place (Pierre-Antoine de)	Venise sauvée	tragédie	5	vers	f	f	1746-12-05
-La Place (Pierre-Antoine de)	Veuvage trompeur (Le)	comédie	3	vers	f	f	
+La Place (Pierre-Antoine de)	Veuvage trompeur (Le)	comédie	3	vers	f	f	1777-05-07
 La Place (Pierre-Antoine de)	Épouse à la mode (L')	comédie	3	vers	f	f	1760-10-25
 La Salle (Adrien-Nicolas)	Oncle et les Tantes, ou Chacun sa folie (L')	comédie	3	vers	f	f	1785-11-25
+La Tuillerie (Jean-François Juvenon de La Tuillerie, dit)	Crispin bel esprit	comédie	1	vers	f	f	1681-07-11
+La Tuillerie (Jean-François Juvenon de La Tuillerie, dit)	Crispin précepteur	comédie	1	vers	f	f	1688-06-24
 La Tuillerie (Jean-François Juvenon de La Tuillerie, dit)	Hercule	tragédie	5	vers	f	f	1681-11-07
 La Tuillerie (Jean-François Juvenon de La Tuillerie, dit)	Merlin peintre	comédie	1	prose	f	f	1687-07-20
 La Tuillerie (Jean-François Juvenon de La Tuillerie, dit)	Nitocris	tragédie	5	vers	f	f	1683-03-10
 La Tuillerie (Jean-François Juvenon de La Tuillerie, dit)	Soliman	tragédie	5	vers	f	f	1680-10-11
 La Tuillerie (Jean-François Juvenon)	Crispin précepteur	comédie	1	vers	f	f	
-La Tuillerie (Jean-François Juvenon, sieur de La Tuillerie, dit)	Crispin bel esprit	comédie	1	vers	f	f	1681-07-11
-La Tuillerie (Jean-François Juvenon, sieur de La Tuillerie, dit)	Crispin précepteur	comédie	1	vers	f	f	1688-06-24
 La Valette	Amante en tutelle (L')	comédie	3	vers	t	f	1735-08-17
-Laignelot (Joseph François)	Agis	tragédie	5	vers	f	f	
+Laignelot (Joseph François)	Agis	tragédie	5	vers	f	f	1782-05-06
 Laignelot (Joseph François)	Rienzi	tragédie	5	vers	f	f	1791-03-02
 Landois (Paul)	Sylvie	tragédie	1	prose	t	f	1741-08-17
 Landon (Joseph)	Tribunal de l'amour (Le)	comédie	1	vers libres	f	t	1750-10-12
@@ -688,7 +690,7 @@ Laujon	Les Soubrettes	comédie en 5 actes
 Laujon	Les Soubrettes	comédie en 5 actes					
 Laujon (Pierre)	Couvent ou les Fruits du caractère et de l'éducation (Le)	comédie	1	prose	f	f	1790-04-16
 Laujon (Pierre)	Inconséquent ou les Soubrettes (L')	comédie	5	prose	f	f	1777-09-24
-Laujon (Pierre)	Soubrettes (Les)	comédie	5	prose	f	f	1777-09-24
+Laujon (Pierre)	Inconséquent ou les Soubrettes (L')	comédie	5	prose	f	f	1777-09-24
 Launay, De	Paresseux (Le)	comédie	3	vers	t	f	1733-04-28
 Laus de Boissy (Louis de)	Maire ou le Pouvoir de la loi (Le)	comédie patriotique	1	prose	f	f	1793-02-22
 Laya (Jean-Louis)	Ami des lois (L')	comédie	5	vers	f	f	1793-01-02
@@ -699,8 +701,8 @@ Le Blanc de Guillet (Antoine)	Druides (Les)	tragédie	5	vers	f	f	1772-03-07
 Le Blanc de Guillet (Antoine)	Manco Capac, premier Inca du Pérou	tragédie	5	vers	f	f	1763-06-13
 Le Clerc de La Bruère (Charles-Antoine)	Mécontents (Les)	comédie	1	vers	t	t	1734-12-01
 Le Franc de Pompignan (Jean-Jacques)	Didon	tragédie	5	vers	f	f	1734-06-21
-Le Mascrier (Jean-Baptiste)	Caprice et la Ressource (Le)	prologue	1	vers	f	f	1732-10-01
-Le Mierre (Antoine-Marin)	Artaxerce	tragédie	5	vers	f	f	
+Le Mascrier (Jean-Baptiste)	Caprice et la Ressource (Le) /  le Prologue (titre alt.)	prologue	1	vers	f	f	1732-10-01
+Le Mierre (Antoine-Marin)	Artaxerce	tragédie	5	vers	f	f	1766-08-20
 Le Mierre (Antoine-Marin)	Barnevelt	tragédie	5	vers	f	f	1790-06-30
 Le Mierre (Antoine-Marin)	Céramis	tragédie	5	vers	f	f	1785-12-29
 Le Mierre (Antoine-Marin)	Guillaume Tell	tragédie	5	vers	f	f	1766-12-17
@@ -712,11 +714,11 @@ Le Noble (Eustache	Fourbe (Le)	comédie	5	prose	f	f	1693-02-14
 Le neveu de l'abbé Abeille (Nicolas Abeille dit)	Fille valet (La)	comédie	3	vers	f	f	1712-09-05
 Lebeau de Schosne (Augustin-Théodore-Vincent)	L'Assemblée	comédie	1	vers	f	f	1773-02-17
 Leblanc (Jean-Bernard, abbé)	Aben-Saïd, empereur des Mogols	tragédie	5	vers	f	f	1735-06-06
-Lebrun (Denise)	Thélamire	tragédie	5	vers	f	f	
+Lebrun (Denise)	Thélamire	tragédie	5	vers	f	f	1739-07-06
 Lefèvre (Pierre-François-Alexandre)	Cosroès	tragédie	5	vers	f	f	1767-08-26
 Lefèvre (Pierre-François-Alexandre)	Florinde	tragédie	5	vers	f	f	1770-11-10
 Lefèvre (Pierre-François-Alexandre)	Hercule au mont Œta	tragédie	5	vers	f	f	1787-05-24
-Lefèvre (Pierre-François-Alexandre)	Zuma	tragédie	5	vers	f	f	
+Lefèvre (Pierre-François-Alexandre)	Zuma	tragédie	5	vers	f	f	1777-01-22
 Legouvé (Gabriel-Marie)	Mort d'Abel (La)	tragédie	3	vers	f	f	1792-03-06
 Legrand (Marc-Antoine)	Amants ridicules (Les) ou Les Triomphes du temps passé	comédie	1	vers	f	f	1711-06-01
 Legrand (Marc-Antoine)	Amour diable (L')	comédie	1	vers	f	t	1708-06-30
@@ -727,17 +729,17 @@ Legrand (Marc-Antoine)	Chasse du cerf (La)	comédie-ballet	3	prose	t	t	1726-10-1
 Legrand (Marc-Antoine)	Famille extravagante (La)	comédie	1	vers	f	t	1709-06-07
 Legrand (Marc-Antoine)	Femme fille et veuve (La)	comédie	1	vers	f	f	1707-05-26
 Legrand (Marc-Antoine)	Foire de Saint-Laurent (La)	comédie	1	vers	f	t	1709-09-20
-Legrand (Marc-Antoine)	Française italienne (La)	comédie	1	prose	f	t	
+Legrand (Marc-Antoine)	Française italienne (La)	comédie	1	prose	f	t	1725-11-05
 Legrand (Marc-Antoine)	Galant coureur ou l'Ouvrage d'un moment (Le)	comédie	1	prose	f	t	1722-08-11
 Legrand (Marc-Antoine)	Impromptu de la folie (L')	ambigu-comique	2	prose	t	t	1725-11-05
-Legrand (Marc-Antoine)	Le Temps passé ou le Triomphe du temps passé (Le)	comédie	1	prose	f	t	
+Legrand (Marc-Antoine)	Le Temps passé ou le Triomphe du temps passé (Le)	comédie	1	prose	f	t	1724-10-18
 Legrand (Marc-Antoine)	Métamorphose amoureuse (La)	comédie	1	prose	f	f	1712-08-06
-Legrand (Marc-Antoine)	Nouveauté (La)	comédie	1	prose	f	t	
-Legrand (Marc-Antoine)	Paniers ou la Vieille précieuse (Les) ou La Vieille Précieuse	comédie	1	prose	f	t	1723-02-25
+Legrand (Marc-Antoine)	Nouveauté (La)	comédie	1	prose	f	t	1727-01-13
+Legrand (Marc-Antoine)	Paniers ou la Vieille précieuse (Les) / Les Poupées (titre alt.)	comédie	1	prose	f	t	1723-02-25
 Legrand (Marc-Antoine)	Philanthrope ou l'Ami de tout le monde (Le)	comédie	1	prose	f	t	1724-02-19
 Legrand (Marc-Antoine)	Plutus	comédie	3	vers	f	t	1720-02-01
 Legrand (Marc-Antoine)	Roi de Cocagne (Le)	comédie	3	vers libres	t	t	1718-12-31
-Legrand (Marc-Antoine)	Temps présent ou le Triomphe du temps présent (Le)	comédie	1	prose	f	t	
+Legrand (Marc-Antoine)	Temps présent ou le Triomphe du temps présent (Le)	comédie	1	prose	f	t	1724-10-18
 Legrand (Marc-Antoine)	Triomphe du temps (Le)	divertissement comique	3	prose	t	t	1724-10-18
 Legrand (Marc-Antoine)	Usurier gentilhomme (L')	comédie	1	prose	f	t	1713-09-11
 Legrand (Marc-Antoine)	Épreuve réciproque (L')	comédie	1	prose	f	f	1711-10-06
@@ -775,7 +777,7 @@ Marc-Antoine Legrand / Le Grand	Les Poupées	comédie
 Marchadier (Abbé)	Plaisir (Le)	comédie	1	vers libres	f	t	1747-08-03
 Marignié (Jean-Étienne-François)	Zoraï ou les Insulaires de Nouvelle-Zélande	tragédie	5	vers	f	f	1782-10-05
 Marin (François-Louis-Claude)	Julie ou le Triomphe de l'amitié	comédie	3	prose	f	f	1762-03-03
-Marivaux (Pierre de)	Annibal ou la mort d'Annibal	tragédie	5	vers	f	t	1720-12-16
+Marivaux (Pierre de)	Annibal /  La Mort d'Annibal (titre alt.)	tragédie	5	vers	f	t	1720-12-16
 Marivaux (Pierre de)	Dispute (La)	comédie	1	prose	f	f	1744-10-19
 Marivaux (Pierre de)	Dénouement imprévu (Le)	comédie	1	prose	f	t	1724-03-06
 Marivaux (Pierre de)	Legs (Le)	comédie	1	prose	f	f	1736-06-11
@@ -822,7 +824,7 @@ Molière (Jean-Baptiste Poquelin dit)	Malade imaginaire (Le)	comédie-ballet	3	v
 Molière (Jean-Baptiste Poquelin dit)	Mariage forcé (Le)	comédie	1	prose	f	t	
 Molière (Jean-Baptiste Poquelin dit)	Misanthrope (Le)	comédie	5	vers	f	f	
 Molière (Jean-Baptiste Poquelin dit)	Monsieur de Pourceaugnac	comédie-ballet	3	prose	f	t	
-Molière (Jean-Baptiste Poquelin dit)	Médecin malgré lui (Le) ou Médecin forcé (Le) (titre alt.)	comédie	3	prose	f	t	
+Molière (Jean-Baptiste Poquelin dit)	Médecin malgré lui (Le) / Le Médecin forcé (titre alt.)	comédie	3	prose	f	t	
 Molière (Jean-Baptiste Poquelin dit)	Princesse d'Élide (La)	comédie-ballet	5	prose	t	t	
 Molière (Jean-Baptiste Poquelin dit)	Précieuses ridicules (Les)	comédie	1	prose	f	t	
 Molière (Jean-Baptiste Poquelin dit)	Psyché	tragédie	5	vers	t	t	
@@ -834,32 +836,32 @@ Molière (Jean-Baptiste Poquelin dit)	École des maris (L')	comédie	3	prose	f	f
 Molière (Jean-Baptiste Poquelin dit)	Étourdi ou les Contretemps (L')	comédie	5	vers	f	f	
 Molière (Jean-Baptiste Poquelin dit) 	Dom Juan ou Le Festin de Pierre	comédie	5	prose	f	f	
 Molière (Jean-Baptiste Poquelin dit) 	Les Fâcheux	comédie-ballet	3	vers	t	f	
-Molière (Jean-Baptiste Poquelin dit) / arrangée et versifiée par Corneille (Thomas)	Festin de Pierre (Le)	comédie	5	vers	f	f	1677-02-12
+Molière (Jean-Baptiste Poquelin dit) - arrangée et versifiée par Corneille (Thomas)	Festin de Pierre (Le)	comédie	5	vers	f	f	1677-02-12
 Molé (François-René)	Quiproquo (Le)	comédie	1	prose	f	f	1781-09-26
 Moncrif (François-Augustin Paradis de)	Oracle de Delphes (L')	comédie	3	vers	f	f	1722-12-17
 Montanclos (Marie-Émilie de)	Déjeuner interrompu (Le)	comédie	2	prose	f	f	1783-03-17
 Montauban (Jacques Pousset de)	Charmes de Félicie, tirés de la Diane de Montemayor (Les)	pastorale	5	vers	f	t	
 Montesson (Charlotte-Jeanne Béraud de La Haie de Riou, comtesse de)	Comtesse de Chazelle (La)	comédie	5	vers	f	f	1785-05-06
-Montfleury	École des jaloux ou le Cocu volontaire (L') ou La Fausse Turquie ou l'École des jaloux ou Turquie (La)	comédie	3	vers	f	f	
-Montfleury (Antoine Jacob dit)	Bon soldat (Le)	comédie	1	vers	f	t	1691-10-10
+Montfleury (Antoine Jacob dit)	Comédien poète (Le) / Soeur ridicule (titre alt.). 	comédie	5	vers	f	t	
 Montfleury (Antoine Jacob dit)	Dom Pasquin d'Avalos	intermède	1	vers	f	f	
-Montfleury (Antoine Jacob dit)	Femme juge et partie (La), Femme juge (La) (titre alt.)	comédie	5	vers	f	f	
+Montfleury (Antoine Jacob dit)	Femme juge et partie (La) / Femme juge (La) (titre alt.)	comédie	5	vers	f	f	
 Montfleury (Antoine Jacob dit)	Fille capitaine (La)	comédie	5	vers	f	f	
 Montfleury (Antoine Jacob dit)	Mari sans femme (Le)	comédie	5	vers	f	t	
 Montfleury (Antoine Jacob dit)	Mariage de rien (Le)	comédie	1	vers	f	t	
 Montfleury (Antoine Jacob dit)	Semblable à soi-même (Le)	comédie	1	vers	f	f	
-Montfleury (Antoine Jacob, dit)	Comédien poète (Le)	comédie	5	vers	f	t	
+Montfleury (Antoine Jacob dit)	École des jaloux ou le Cocu volontaire (L') / La Fausse Turquie (titre alt.) / La Turquie (titre alt.) / Le Grand Turc (titre alt.)	comédie	3	vers	f	f	
 Montfort	Mère ridicule (La)	comédie	1	""	f	f	1684-05-08
 Morand (Pierre de)	Childéric	tragédie	5	vers	f	f	1736-12-19
 Morand (Pierre de)	Mégare	tragédie	5	vers	f	f	1748-10-19
 Morand (Pierre de)	Téglis	tragédie	5	vers	f	f	1735-09-19
+Morandet	Quiproquo (Le)	comédie	3	vers	f	f	1743-10-01
 Nadal (Augustin)	Mariamne	tragédie	5	vers	f	f	1725-02-15
 Nadal (Augustin)	Saül	tragédie	5	vers	f	f	1705-02-27
 Nadal (Augustin, abbé)	Antiochus ou Les Macchabées	tragédie	5	vers	f	f	1721-12-06
 Nadal (Augustin, abbé)	Hérode	tragédie	5	vers	f	f	1709-02-15
 Oisemont (d')	Laurette	comédie	3	vers libres	f	f	1779-08-02
-Pacarony (chevalier de)	Bajazet premier	tragédie	5	vers	f	f	
-Palaprat (Jean de)	Concert ridicule (Le) ou Concert (Le)	comédie	1	prose	f	t	1689-09-14
+Pacarony (chevalier de)	Bajazet premier	tragédie	5	vers	f	f	1739-08-06
+Palaprat (Jean de)	Concert ridicule (Le) / Le Concert (titre alt.)	comédie	1	prose	f	t	1689-09-14
 Palaprat (Jean de)	Grondeur (Le)	comédie	3	prose et vers libres	t	f	1691-02-03
 Palaprat (Jean de, sieur de Bigot)	Ballet extravagant (Le)	comédie	1	prose	f	t	1690-06-21
 Palaprat (Jean de, sieur de Bigot)	Hercule et Omphale	comédie	5	vers	f	f	1694-05-07
@@ -883,22 +885,23 @@ Pellegrin (Simon-Joseph)	Pastor-fido (Le)	pastorale héroïque	3	vers	t	f	1726-0
 Pellegrin (Simon-Joseph)	Polydore	tragédie	5	vers	f	f	1705-11-06
 Pellegrin (Simon-Joseph)	Père intéressé ou les Vrais amis (Le)	comédie	5	vers	f	f	1720-11-26
 Pellegrin (Simon-Joseph)	Pélopée	tragédie	5	vers	f	f	1733-07-18
-Pellegrin (Simon-Joseph)	Tibère	tragédie	5	vers	f	f	
+Pellegrin (Simon-Joseph)	Tibère	tragédie	5	vers	f	f	1726-12-13
 Pellegrin (Simon-Joseph)	École de l'hymen (L')	comédie	3	prose/vers	t	t	1737-09-28
-Pesselier (Charles-Étienne)	Ésope au Parnasse	comédie	1	vers	f	t	
+Pesselier (Charles-Étienne)	Ésope au Parnasse	comédie	1	vers	f	t	1739-10-14
 Peyraud de Beaussol	Arsacides (Les)	tragédie	6	vers	f	f	1775-07-26
 Picard (Louis-Benoît)	Conteur ou les Deux postes (Le)	comédie	3	prose	f	f	1793-02-04
 Pierre Nicolas Brunet Debaines	Les Noms changés ou l'Indifférent corrigé	comédie					
 Pieyre (Alexandre)	Amis à l'épreuve (Les)	comédie	1	vers croisés	f	f	1787-07-19
 Pieyre (Alexandre)	École des pères (L')	comédie	5	vers	f	f	1787-06-01
 Pilhes (Joseph)	Bienfait anonyme (Le)	comédie	3	prose	f	f	1783-10-06
+Piron (Alexis)	Amant mystérieux (L')	comédie	3	vers	f	f	1734-08-30
 Piron (Alexis)	Callisthène	tragédie	5	vers	f	f	1730-02-18
 Piron (Alexis)	Courses de Tempé (Les)	pastorale	1	vers	f	t	1734-09-01
 Piron (Alexis)	Fernand-Cortès	tragédie	5	vers	f	f	1744-01-08
 Piron (Alexis)	Gustave Wasa	tragédie	5	vers	f	f	1733-02-03
 Piron (Alexis)	Métromanie ou le Poète (La)	comédie	5	vers	f	f	1738-01-10
 Piron (Alexis)	École des pères ou les Fils ingrats (L')	comédie	5	vers	f	f	1728-10-21
-Poinsinet (Antoine-Alexandre-Henri)	Cercle ou la Soirée à la mode (Le)	comédie épisodique	1	prose	f	f	
+Poinsinet (Antoine-Alexandre-Henri)	Cercle ou la Soirée à la mode (Le)	comédie épisodique	1	prose	f	f	1764-09-07
 Poinsinet (Antoine-Alexandre-Henri)	Impatient (L')	comédie	1	vers	f	f	1757-07-09
 Poinsinet de Sivry (Louis)	Ajax	tragédie	5	vers	f	f	1762-08-30
 Poinsinet de Sivry (Louis)	Briséis ou la colère d'Achille	tragédie	5	vers	f	f	1759-06-25
@@ -915,23 +918,23 @@ Poisson (Raymond)	Après-souper des auberges (L') / Les Auberges (titre alt.)	co
 Poisson (Raymond)	Baron de la Crasse (Le)	comédie	1	vers	f	t	
 Poisson (Raymond)	Fou de qualité (Le) ou Le Fou raisonnable	comédie	1	vers	f	t	
 Poisson (Raymond)	Fous divertissants (Les)	comédie	3	vers	f	t	1680-11-14
-Poisson (Raymond)	Pipeurs ou les Femmes coquettes (Les) ou Fructus Belli 	comédie	5	vers	f	f	
+Poisson (Raymond)	Pipeurs ou les Femmes coquettes (Les) / Les Coquettes (titre alt.) / Fructus Belli (titre alt.)	comédie	5	vers	f	f	
 Pont-de-Veyle (Antoine de Fériol, comte de)	Complaisant (Le)	comédie	5	prose	f	t	1732-12-29
 Pont-de-Veyle (Antoine de Fériol, comte de)	Fat puni (Le)	comédie	1	prose	f	t	1738-04-14
-Pont-de-Veyle (Antoine de Fériol, comte de)	Somnambule (Le)	comédie	1	prose	f	f	
+Pont-de-Veyle (Antoine de Fériol, comte de)	Somnambule (Le)	comédie	1	prose	f	f	1739-01-14
 Portelance (Michel)	Antipater	tragédie	5	vers	f	f	1751-11-25
 Pousset de Montauban (Jacques)	Panurge ou Les Aventures et le mariage de Panurge	comédie	5		f	t	
 Pradon (Nicolas)	Germanicus	tragédie	5	vers	f	f	1694-12-28
 Pradon (Nicolas)	Pyrame et Thisbé	comédie	5	vers	f	f	
 Pradon (Nicolas)	Régulus	tragédie	5	vers	f	f	1688-01-04
 Pradon (Nicolas)	Scipion l'Africain	tragédie	5	vers	f	f	1697-02-22
-Pradon (Nicolas)	Tamerlan ou la mort de Bajazet	tragédie	5	vers	f	f	1706-08-04
-Pradon (Nicolas)	Tarquin	tragédie	5	vers	f	f	
+Pradon (Nicolas)	Tamerlan ou la Mort de Bajazet	tragédie	5	vers	f	f	1706-08-04
+Pradon (Nicolas)	Tarquin	tragédie	5	vers	f	f	1682-01-09
 Procope-Couteaux (Michel)	Assemblée des comédiens (L')	prologue	1	""	t	f	1724-09-22
 Péchantrés (Nicolas de)	Géta	tragédie	5	vers	f	f	1687-01-29
 Péchantrés (Nicolas de)	Jugurtha, roi de Numidie	tragédie	5	vers	f	f	1692-12-17
 Péchantrés (Nicolas de)	Mort de Néron (La)	tragédie	5	vers	f	f	1703-02-21
-Quinault (Philippe)	Agrippa, roi d'Albe ou le Faux Tiberinus ou Tiberinus (titre alt.)	tragi-comédie	5	vers	f	f	
+Quinault (Philippe)	Agrippa, roi d'Albe  /  le Faux Tiberinus (titre alt.)  / Tiberinus (titre alt.)	tragi-comédie	5	vers	f	f	
 Quinault (Philippe)	Amalasonte	tragédie	5	vers	f	f	
 Quinault (Philippe)	Amant indiscret ou le Maître étourdi (L')	comédie	5	vers	f	f	
 Quinault (Philippe)	Astrate, roi de Tyr	tragédie	5	vers	f	f	
@@ -951,7 +954,7 @@ Racine (Jean)	Plaideurs (Les)	comédie	5	vers	f	f
 Racine (Jean)	Thébaïde ou les Frères ennemis (La)	tragédie	5	vers	f	f	
 Racine (Jean), Moreau (Jean-Baptiste)	Athalie	tragédie	5	vers	f	t	1691-01-05
 Raisin (Jacques)	Faux Gascon (Le)	comédie	1	prose	f	f	1688-05-28
-Raisin (Jacques)	Niais de Sologne (Le)	comédie	1	prose	f	f	
+Raisin (Jacques)	Niais de Sologne (Le)	comédie	1	prose	f	f	1686-06-03
 Raisin (Jacques)	Petit homme de la foire (Le)	comédie	1	prose	f	f	1687-05-20
 Raisin (Jean-Baptiste)	Merlin Gascon	comédie	1	prose	f	f	1690-10-07
 Raucourt (Françoise-Marie-Antoinette-Josèphe Saucerotte dite Mademoiselle)	Henriette	drame	3	prose	f	f	1782-03-01
@@ -975,18 +978,18 @@ Renout (Jean-Julien-Constantin)	Zélide ou l'Art d'aimer et l'art de plaire	com�
 Richer (Henri)	Sabinus et Éponine	tragédie	5	vers	f	f	1734-12-29
 Richerolle d'Avallon	Astyanax	tragédie	5	vers	f	f	1789-02-07
 Riouffé (Honoré)	Corneille aux Champs-Élysées	comédie	1	vers libres	f	f	1784-10-04
+Riupeirous (Théodore de)	Agrippa ou la mort d'Auguste	tragédie	5	vers	f	f	1696-03-19
+Riupeirous (Théodore de)	Annibal	tragédie	5	vers	f	f	1688-11-05
 Riupeirous (Théodore de)	Hypermnestre	tragédie	5	vers	f	f	1704-02-13
 Riupeirous (Théodore de)	Valérien	tragédie	5	vers	f	f	1690-11-22
-Riupeirous (Théodore)	Agrippa ou la mort d'Auguste	tragédie	5	vers	f	f	1696-03-19
-Riupeirous (Théodore)	Annibal	tragédie	5	vers	f	f	1688-11-05
-Robbe, Jacques	Femme têtue ou le médecin hollandais (La)	comédie	1	vers	f	f	1685-10-09
-Robbe, Jacques	Rapinière ou l'intéressé (La)	comédie	5	vers	f	f	
+Robbe, Jacques	Femme têtue (La) ou le médecin hollandais	comédie	1	vers	f	f	1685-10-09
+Robbe, Jacques	Rapinière ou l'intéressé (La)	comédie	5	vers	f	f	1682-12-04
 Robert	Fausses présomptions (Les)	comédie	5	vers	f	f	1789-08-12
 Rochon de Chabannes (Marc-Antoine-Jacques)	Amants généreux (Les)	comédie	5	prose	f	f	1774-10-13
 Rochon de Chabannes (Marc-Antoine-Jacques)	Amour français (L')	comédie	1	vers	f	f	1779-04-17
 Rochon de Chabannes (Marc-Antoine-Jacques)	Heureusement	comédie	1	vers	f	f	1762-11-29
 Rochon de Chabannes (Marc-Antoine-Jacques)	Hylas et Sylvie	pastorale	1	prose	f	f	1768-12-10
-Rochon de Chabannes (Marc-Antoine-Jacques)	Jaloux (Le)	comédie	5	vers libres	f	f	
+Rochon de Chabannes (Marc-Antoine-Jacques)	Jaloux (Le)	comédie	5	vers libres	f	f	1784-03-11
 Rochon de Chabannes (Marc-Antoine-Jacques)	Manie des arts ou la Matinée à la mode (La)	comédie	1	prose	f	f	1763-06-01
 Rochon de Chabannes (Marc-Antoine-Jacques)	Valets maîtres de la maison ou le Tour de carnaval (Les)	comédie	1	prose	f	f	1768-02-11
 Ronsin (Charles-Philippe)	Louis XII, Père du peuple	tragédie	3	vers	f	f	1790-02-12
@@ -999,10 +1002,11 @@ Rousseau (Jean-Baptiste)	Capricieux ou les Apparences trompeuses (Le)	comédie	5
 Rousseau (Jean-Baptiste)	Flatteur (Le)	comédie	5	prose	f	f	1696-11-24
 Rousseau (Jean-Jacques)	Narcisse ou l'Amant de lui-même	comédie	1	prose	f	f	1752-12-18
 Rousseau (Jean-Jacques)	Pygmalion	scène lyrique	1	prose	f	t	1775-10-30
+Rousseau (Pierre de Toulouse)	Méprises (Les)	comédie	1	vers libres	f	t	
 Rousseau (Pierre de Toulouse)	Rivale suivante (La)	comédie	1	vers	t	f	1747-08-03
-Rousseau (Pierre, de Toulouse)	Méprises (Les)	comédie	1	vers libres	f	t	
-Rousseau (Pierre, de Toulouse)	Ruse inutile (La)	comédie	1	vers libres	f	f	1749-10-06
+Rousseau (Pierre de Toulouse)	Ruse inutile (La)	comédie	1	vers libres	f	f	1749-10-06
 Rousseau (Pierre-Joseph)	Méprises (Les)	comédie	1	vers libres	f	t	1754-04-25
+Rowe (Nicholas), auteur / Laplace (Pierre-Antoine de) ou Séran de La Tour (abbé) ou Mauprié (marquis de), traducteur	Caliste ou la Belle pénitente	tragédie (traduite de l'anglais)	5	vers	f	f	1750-04-27
 Roy (Pierre-Charles) ; La Font (Joseph de)	Captifs (Les)	comédie	3	vers	t	t	1714-09-28
 Sablier (Charles)	Suivante généreuse (La)	comédie		vers	f	f	1759-05-23
 Saint-Chamond (Claire-Marie Mazarelli, marquise de)	Amants sans le savoir (Les)	comédie	3	prose	f	f	1771-07-06
@@ -1018,8 +1022,8 @@ Saint-Foix (Germain-François Poullain de)	Rival supposé (Le)	comédie	1	prose	
 Saint-Foix (Germain-François Poullain de)	Égérie	comédie	1	prose	f	t	1747-09-09
 Saint-Foix (Germain-François Poullain de)	Île sauvage (L')	comédie	3	prose	t	t	1743-07-08
 Saint-Gilles Lenfant (de)	Ariarathe	tragédie	5	vers	f	f	1699-10-30
-Saint-Glas (Pierre de, abbé de Saint-Ussans)	Bouts-rimés (Les)	comédie	1	prose	f	f	
-Saint-Yon (pièce attribuée à Palaprat (Jean)	Mœurs du temps (Les) ou Les Façons du temps	comédie	5	prose	f	f	1685-12-13
+Saint-Glas (Pierre de, abbé de Saint-Ussans)	Bouts-rimés (Les)	comédie	1	prose	f	f	1682-05-25
+Saint-Yon 	Mœurs du temps ou les Façons du temps (Les)	comédie	5	prose	f	f	1685-12-13
 Saurin (Bernard-Joseph)	Aménophis	tragédie	5	vers	f	f	1750-11-12
 Saurin (Bernard-Joseph)	Beverlei	tragédie bourgeoise	5	vers libres	f	f	1768-05-07
 Saurin (Bernard-Joseph)	Blanche et Guiscard	tragédie	5	vers	f	f	1763-09-26
@@ -1043,15 +1047,15 @@ Simon-Chauvot	Chirurgien de village (Le)	comédie	1	prose	f	f	1781-08-10
 Simonet de Maisonneuve (Louis-Jean-Baptiste)	Faux insouciant (Le)	comédie	5	vers	f	f	1792-07-05
 Simonet de Maisonneuve (Louis-Jean-Baptiste)	Odmard et Zulna	tragédie	5	vers	f	f	1788-01-02
 Simonet de Maisonneuve (Louis-Jean-Baptiste)	Roxelane et Mustapha	tragédie	5	vers	f	f	1785-06-06
-Subligny (Adrien-Thomas Perdou de)	Le Désespoir extravagant	comédie		0	f	f	
+Subligny (Adrien-Thomas Perdou de)	Le Désespoir extravagant	comédie		""	f	f	1670-08-01
 Séguineau (Mr) ; Pralard (René)	Aégiste	tragédie	5	vers	f	f	1721-11-18
-Ségur (Joseph-Alexandre Pierre, vicomte de)	Dorval ou le Fou par amour	drame historique	1	vers	f	f	1791-01-29
-Ségur (Joseph-Alexandre de)	Rosaline et Floricourt	comédie	3	vers libres	f	f	1787-11-17
-Ségur (Joseph-Alexandre-Pierre, vicomte de)	Retour du mari (Le)	comédie	1	vers	f	f	1792-01-25
+Ségur (Joseph-Alexandre-Pierre de)	Dorval ou le Fou par amour	drame historique	1	vers	f	f	1791-01-29
+Ségur (Joseph-Alexandre-Pierre de)	Retour du mari (Le)	comédie	1	vers	f	f	1792-01-25
+Ségur (Joseph-Alexandre-Pierre de)	Rosaline et Floricourt	comédie	3	vers libres	f	f	1787-11-17
 Thibouville (Henri Lambert d'Herbigny, marquis de)	Namir	tragédie	5	vers	f	f	1759-11-12
-Tristan L'Hermite	Marianne (La)	tragédie	5	vers	f	f	
+Tristan L'Hermite	Marianne (Le)	tragédie	5	vers	f	f	
 Tristan L'Hermite	Parasite (Le)	comédie	5	vers	f	f	
-Tronchin (François)	Marie Stuart, reine d'Écosse	tragédie	5	vers	f	f	1734-05-03
+Tronchin (François)	Marie Stuart	tragédie	5	vers	f	f	1734-05-03
 Vadé (Jean-Joseph)	Visites du jour de l'an (Les)	comédie	1	vers libres	f	t	1749-01-03
 Valois d'Orville (Adrien-Joseph de) ; Dubois	Souhaits pour le roi (Les)	comédie	1	vers libres	f	t	1745-08-30
 Vaure (Jacques du) 	Le Faux savant ou l'Amant précepteur 	comédie	5	prose	f	f	1728-06-21
@@ -1063,22 +1067,23 @@ Vigée (Louis-Jean-Baptiste-Étienne)	Matinée d'une jolie femme (La)	comédie	1
 Vigée (Louis-Jean-Baptiste-Étienne)	Vivacité à l'épreuve (La)	comédie	3	vers	f	f	1793-07-05
 Villemain d'Abancourt (François-Jean)	Bienfaisance de Voltaire (La)	pièces dramatique	1	vers	f	f	1791-05-30
 Voiron	Apelle et Campaspe	drame héroïque	1	vers	f	t	1786-10-16
-Voisenon (Claude-Henri de Fusée de)	Ombre de Molière (L')	prologue	1	vers	f	f	
-Voisenon (Claude-Henri de Fusée de)	Retour de l'Ombre de Molière (Le)	comédie	1	vers	f	f	
-Voisenon (Claude-Henri de Fusée de)	École du monde (L')	dialogue	1	vers	t	f	
+Voisenon (Claude-Henri de Fusée de)	Ombre de Molière (L')	prologue	1	vers	f	f	1739-10-14
+Voisenon (Claude-Henri de Fusée de)	Retour de l'Ombre de Molière (Le)	comédie	1	vers	f	f	1739-11-21
+Voisenon (Claude-Henri de Fusée de)	École du monde (L')	dialogue	1	vers	t	f	1739-10-14
 Voltaire	Feythere	tragedie					
-Voltaire (François-Marie Arouet dit )	Le Droit du seigneur	comédie	3	vers	f	f	1779-06-12
 Voltaire (François-Marie Arouet dit)	Adélaïde du Guesclin	tragédie	5	vers	f	f	1734-01-18
 Voltaire (François-Marie Arouet dit)	Agathocle	tragédie	5	vers	f	f	1779-05-31
 Voltaire (François-Marie Arouet dit)	Alzire ou les Américains	tragédie	5	vers	f	f	1736-01-27
 Voltaire (François-Marie Arouet dit)	Amélie ou le Duc de Foix ou Le Duc de Foix	tragédie	5	vers	f	f	1752-08-17
+Voltaire (François-Marie Arouet dit)	Artémire	tragédie	5	vers	f	f	1720-02-15
 Voltaire (François-Marie Arouet dit)	Brutus	tragédie	5	vers	f	f	1730-12-11
 Voltaire (François-Marie Arouet dit)	Café ou l'Écossaise (Le) ou L'Écossaire ou le Café	comédie	5	prose	f	f	1760-07-26
 Voltaire (François-Marie Arouet dit)	Enfant prodigue ou L'École de la jeunesse (L')	comédie	5	vers	f	f	1736-10-10
 Voltaire (François-Marie Arouet dit)	Fanatisme ou Mahomet le prophète (Le)	tragédie	5	vers	f	f	1742-08-09
-Voltaire (François-Marie Arouet dit)	Hérode et Mariamne	tragédie	5	vers	f	f	1725-04-10
+Voltaire (François-Marie Arouet dit)	Hérode et Mariamne ;  Mariamne (titre initial)	tragédie	5	vers	f	f	1725-04-10
 Voltaire (François-Marie Arouet dit)	Indiscret (L')	comédie	1	vers	f	f	1725-08-18
 Voltaire (François-Marie Arouet dit)	Irène	tragédie	5	vers	f	f	1778-03-16
+Voltaire (François-Marie Arouet dit)	Le Droit du seigneur	comédie	3	vers	f	f	1779-06-12
 Voltaire (François-Marie Arouet dit)	Mort de César (La)	tragédie	3	vers	f	f	1743-08-29
 Voltaire (François-Marie Arouet dit)	Mérope	tragédie	5	vers	f	f	1743-02-20
 Voltaire (François-Marie Arouet dit)	Nanine ou le Préjugé vaincu	comédie	3	vers	f	f	1749-06-16
@@ -1086,17 +1091,16 @@ Voltaire (François-Marie Arouet dit)	Octave et le jeune Pompée ou le Triumvira
 Voltaire (François-Marie Arouet dit)	Olympie	tragédie	5	vers	f	f	1764-03-17
 Voltaire (François-Marie Arouet dit)	Oreste	tragédie	5	vers	f	f	1750-01-12
 Voltaire (François-Marie Arouet dit)	Orphelin de la Chine (L')	tragédie	5	vers	f	f	1755-08-20
-Voltaire (François-Marie Arouet dit)	Rome sauvée ou Catilina ou Rome Sauvée	tragédie	5	vers	f	f	1752-02-24
+Voltaire (François-Marie Arouet dit)	Rome sauvée ou Catilina	tragédie	5	vers	f	f	1752-02-24
 Voltaire (François-Marie Arouet dit)	Scythes (Les)	tragédie	5	vers	f	f	1767-03-26
 Voltaire (François-Marie Arouet dit)	Sophonisbe	tragédie	5	vers	f	f	1774-01-15
 Voltaire (François-Marie Arouet dit)	Sémiramis	tragédie	5	vers	f	f	1748-08-29
 Voltaire (François-Marie Arouet dit)	Tancrède	tragédie	5	vers	f	f	1760-09-03
 Voltaire (François-Marie Arouet dit)	Zaïre	tragédie	5	vers	f	f	1732-08-13
 Voltaire (François-Marie Arouet dit)	Zulime	tragédie	5	vers	f	f	1740-06-08
-Voltaire (François-Marie Arouet dit)	Écueil du sage (L')	comédie	5	vers	f	f	1762-01-18
+Voltaire (François-Marie Arouet dit)	Écueil du sage (L') / Le Droit du seigneur (titre alt.)	comédie	5	vers	f	f	1762-01-18
+Voltaire (François-Marie Arouet dit)	Ériphile	tragédie	5	vers	f	f	1732-03-07
 Voltaire (François-Marie Arouet dit)	Œdipe	tragédie	5	vers	f	f	1718-11-18
-Voltaire (François-Marie Arouet, dit)	Artémire	tragédie	5	vers	f	f	1720-02-15
-Voltaire (François-Marie Arouet, dit)	Ériphile	tragédie	5	vers	f	f	1732-03-07
 Ximénès (Augustin-Louis de)	Amalazonte	tragédie	5	vers	f	f	1754-05-30
 Ximénès (Augustin-Louis de)	Épicaris ou la Mort de Néron	tragédie	5	vers	f	f	1753-01-02
 Yon	Folie et l'Amour (La)	comédie	1	vers libres	f	t	1754-10-02
